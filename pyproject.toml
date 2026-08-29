@@ -54,6 +54,10 @@ lint.select = [
 lint.ignore = [
   "E501", # line too long (handled by the formatter)
 ]
+# Explicit rather than relying on auto-detection: local and CI runs
+# disagreed on whether `hush_hush` counts as first-party, producing a
+# different import order in each and a lint failure only in one of them.
+lint.isort.known-first-party = ["hush_hush"]
 lint.per-file-ignores = { "tests/conftest.py" = [
   "N815",
 ] } # do_GET/do_POST/... names are BaseHTTPRequestHandler's API, not ours to rename

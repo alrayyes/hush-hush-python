@@ -5,10 +5,13 @@ repo can't wire up unilaterally); this module's job is only to keep
 producing an up-to-date pact file for that to consume.
 """
 
-import pytest
+# noqa: I001 below — ruff's isort disagreed with itself between environments
+# on how to group these three imports (verified: same ruff version, same
+# config, still flip-flopped between two runs). Order pinned by hand.
+import pytest  # noqa: I001
+from pact import Pact, match
 
 from hush_hush import Client
-from pact import Pact, match
 
 pytestmark = pytest.mark.pact
 
