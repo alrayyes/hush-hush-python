@@ -1,0 +1,69 @@
+[build-system]
+build-backend = "uv_build"
+requires = ["uv-build>=0.12.5,<0.13"]
+
+[project]
+name = "hush-hush"
+version = "0.0.0"
+description = "Official Python SDK for hush-hush, generated from its OpenAPI spec"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "alrayyes" }]
+requires-python = ">=3.11"
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = ["httpx==0.28.1"]
+
+[project.urls]
+Homepage = "https://github.com/alrayyes/hush-hush-python"
+Repository = "https://github.com/alrayyes/hush-hush-python"
+
+[dependency-groups]
+dev = [
+  "openapi-python-client==0.29.0",
+  "pact-python==3.4.0",
+  "pytest==9.1.1",
+  "pytest-asyncio==1.4.0",
+  "pytest-cov==7.1.0",
+  "ruff==0.16.5",
+]
+docs = ["mkdocs==1.6.1", "mkdocstrings[python]==1.0.6", "mkdocs-material==9.7.7"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = ["src/hush_hush/_generated"]
+format.indent-style = "space"
+format.quote-style = "double"
+lint.select = [
+  "B",   # flake8-bugbear
+  "C4",  # flake8-comprehensions
+  "E",   # pycodestyle errors
+  "F",   # pyflakes
+  "I",   # isort
+  "N",   # pep8-naming
+  "SIM", # flake8-simplify
+  "UP",  # pyupgrade
+  "W",   # pycodestyle warnings
+]
+lint.ignore = [
+  "E501", # line too long (handled by the formatter)
+]
+lint.per-file-ignores = { "tests/conftest.py" = [
+  "N815",
+] } # do_GET/do_POST/... names are BaseHTTPRequestHandler's API, not ours to rename
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "contract: runs against a local Prism mock, needs HUSH_HUSH_BASE_URL",
+  "pact: records a Pact consumer contract, needs the pact native library",
+  "e2e: runs against a real staging hush-hush, needs HUSH_HUSH_BASE_URL/HUSH_HUSH_API_KEY",
+]
+addopts = "-m 'not contract and not pact and not e2e'"
+asyncio_mode = "auto"

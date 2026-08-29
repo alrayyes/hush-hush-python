@@ -1,0 +1,165 @@
+# The gate. Every command in here has a twin in lefthook.yml, so a green
+# pre-commit means a green pipeline and neither can drift into being the only
+# place a rule is enforced.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_VERSION: "0.12.7"
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
+
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --all-extras
+      - run: uv run ruff format --check .
+      - run: uv run ruff check .
+
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --all-extras
+      - name: pytest (hand-written layer only; see design.md's testing layers)
+        run: uv run pytest --cov=hush_hush --cov-report=term-missing
+
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv build
+
+  # Proves the generated client wasn't hand-edited: regenerating from the
+  # pinned submodule commit must produce a byte-identical tree. See
+  # design.md's "Generated/hand-written boundary" decision.
+  codegen-drift:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --all-extras
+      - run: ./scripts/generate.sh
+      - run: git diff --exit-code src/hush_hush/_generated
+
+  markdown:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      - name: bun install
+        run: bun install --frozen-lockfile
+      - name: prettier --check
+        run: bun run format:check
+      - name: markdownlint
+        run: bun run lint:md
+
+  # Contract-test the client against a mock server built from the same pinned
+  # spec, per rules/sdk-generation.md's "testing against the spec, not a
+  # hand-written stub".
+  contract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --all-extras
+      - name: Start Prism mock from the pinned spec
+        run: |
+          docker run -d --name prism -p 4010:4010 \
+            -v "$(pwd)/hush-hush/api:/spec:ro" \
+            stoplight/prism:5 mock -h 0.0.0.0 -m false /spec/openapi.yaml
+          # -m false: Prism's default multiprocess (Node cluster) mode
+          # crashes on startup in this image — see hush-hush-go's CLAUDE.md
+          # for the reproduction.
+          for _ in $(seq 1 30); do
+            curl -sf http://localhost:4010 >/dev/null 2>&1 && break
+            sleep 1
+          done
+      - name: Run contract tests against the mock
+        run: uv run pytest tests/contract -m contract
+        env:
+          HUSH_HUSH_BASE_URL: http://localhost:4010
+      - name: Prism logs
+        if: failure()
+        run: docker logs prism
+
+  # Records the client's real interactions as a Pact consumer contract.
+  # Provider verification against hush-hush's actual server has to run in
+  # hush-hush's own CI (see design.md's Risks — an external dependency this
+  # repo can't wire up unilaterally); this job's job is only to keep
+  # producing an up-to-date pact file for that to consume.
+  pact-consumer:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --all-extras
+      - run: uv run pytest tests/pact -m pact
+      - uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: hush-hush-python-pact
+          path: pact/pacts/*.json
+
+  commits:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - name: commitlint
+        run: |
+          bunx commitlint \
+            --from "${{ github.event.pull_request.base.sha }}" \
+            --to "${{ github.event.pull_request.head.sha }}" \
+            --verbose
