@@ -1,6 +1,7 @@
 # hush-hush-python
 
 [![ci](https://github.com/alrayyes/hush-hush-python/actions/workflows/ci.yml/badge.svg)](https://github.com/alrayyes/hush-hush-python/actions/workflows/ci.yml)
+[![Codecov](https://codecov.io/gh/alrayyes/hush-hush-python/graph/badge.svg)](https://codecov.io/gh/alrayyes/hush-hush-python)
 [![PyPI](https://img.shields.io/pypi/v/hush-hush)](https://pypi.org/project/hush-hush/)
 [![release](https://img.shields.io/github/v/release/alrayyes/hush-hush-python)](https://github.com/alrayyes/hush-hush-python/releases)
 [![license](https://img.shields.io/github/license/alrayyes/hush-hush-python)](LICENSE)
