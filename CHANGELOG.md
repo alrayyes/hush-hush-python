@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/alrayyes/hush-hush-python/compare/v1.1.0...v1.1.1) (2026-08-31)
+
+
+### Bug Fixes
+
+* **ci:** don't fail CI on Codecov's Dependabot-token gap ([#15](https://github.com/alrayyes/hush-hush-python/issues/15)) ([5c65b6d](https://github.com/alrayyes/hush-hush-python/commit/5c65b6dd31bd66e1c320ff264356cf28646b7bd9))
+
 ## [1.1.0](https://github.com/alrayyes/hush-hush-python/compare/v1.0.0...v1.1.0) (2026-08-31)
 
 
