@@ -45,6 +45,7 @@ def test_query_audit_log():
                     "object_id": match.like("my-object"),
                     "action": match.regex("read", regex="create|read|update|delete"),
                     "timestamp": match.timestamp(),
+                    "ip": match.regex("203.0.113.1", regex=r"\d{1,3}(\.\d{1,3}){3}"),
                 },
                 min=1,
             ),

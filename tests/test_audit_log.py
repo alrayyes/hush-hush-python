@@ -8,7 +8,14 @@ def test_query_audit_log_filters(make_server):
 
     def handler(req):
         got_query["value"] = req.path.split("?", 1)[1] if "?" in req.path else ""
-        entries = [{"object_id": "obj-1", "action": "read", "timestamp": "1970-01-01T00:00:00Z"}]
+        entries = [
+            {
+                "object_id": "obj-1",
+                "action": "read",
+                "timestamp": "1970-01-01T00:00:00Z",
+                "ip": "203.0.113.1",
+            }
+        ]
         req.send_json(200, json.dumps(entries).encode())
 
     server = make_server(handler)
@@ -25,7 +32,12 @@ def test_query_audit_log_returns_full_result_set_no_iterator(make_server):
     # test of real pagination behavior.
     def handler(req):
         entries = [
-            {"object_id": "obj", "action": "read", "timestamp": "1970-01-01T00:00:00Z"}
+            {
+                "object_id": "obj",
+                "action": "read",
+                "timestamp": "1970-01-01T00:00:00Z",
+                "ip": "203.0.113.1",
+            }
             for _ in range(250)
         ]
         req.send_json(200, json.dumps(entries).encode())
