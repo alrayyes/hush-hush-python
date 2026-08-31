@@ -22,12 +22,19 @@ class AuditLogEntry:
         object_id (str):
         action (AuditLogEntryAction):
         timestamp (datetime.datetime):
+        ip (str): The request's source IP. Unlike caller, this is never
+            self-reported - it's the one piece of the request nobody gets
+            to lie about via a header. Currently the immediate TCP peer's
+            address; this service isn't deployed behind a reverse proxy or
+            load balancer, so X-Forwarded-For (or similar) support isn't
+            implemented yet.
         caller (str | Unset): The caller's presented identity, if any.
     """
 
     object_id: str
     action: AuditLogEntryAction
     timestamp: datetime.datetime
+    ip: str
     caller: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -38,6 +45,8 @@ class AuditLogEntry:
 
         timestamp = self.timestamp.isoformat()
 
+        ip = self.ip
+
         caller = self.caller
 
         field_dict: dict[str, Any] = {}
@@ -47,6 +56,7 @@ class AuditLogEntry:
                 "object_id": object_id,
                 "action": action,
                 "timestamp": timestamp,
+                "ip": ip,
             }
         )
         if caller is not UNSET:
@@ -63,12 +73,15 @@ class AuditLogEntry:
 
         timestamp = datetime.datetime.fromisoformat(d.pop("timestamp"))
 
+        ip = d.pop("ip")
+
         caller = d.pop("caller", UNSET)
 
         audit_log_entry = cls(
             object_id=object_id,
             action=action,
             timestamp=timestamp,
+            ip=ip,
             caller=caller,
         )
 
