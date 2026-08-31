@@ -60,7 +60,19 @@ jobs:
 
       - name: Install oasdiff
         if: steps.moved.outputs.changed == 'true'
-        run: go install github.com/oasdiff/oasdiff@v1.11.6
+        # go install alone doesn't put it on PATH for the next step - a
+        # plain `run:` is a fresh non-login shell each time, and this
+        # runner's preinstalled Go was never set up via actions/setup-go,
+        # which is what would normally add $(go env GOPATH)/bin itself.
+        # Silently broke every run: the classify step's `oasdiff` call
+        # failed with "command not found", and its own error handling
+        # (any non-zero exit from `oasdiff breaking` counts as breaking)
+        # mislabeled every regeneration as breaking regardless of the
+        # real spec diff - confirmed live on PR #12, which oasdiff (run
+        # manually, once actually on PATH) classifies as non-breaking.
+        run: |
+          go install github.com/oasdiff/oasdiff@v1.11.6
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
 
       - name: Classify the spec change
         if: steps.moved.outputs.changed == 'true'
@@ -118,8 +130,17 @@ jobs:
           branch: codegen/regenerate
           labels: kind/chore,topic/codegen
 
-      - name: Auto-merge on green CI
-        if: steps.moved.outputs.changed == 'true' && steps.pr.outputs.pull-request-number
+      # Only a non-breaking regeneration auto-merges. A breaking one still
+      # opens the PR (labels/body make the classification visible either
+      # way) but needs a real look before it ships - rules/sdk-generation.md:
+      # "review that pull request as real review, not the standing
+      # Renovate/Dependabot self-merge exception... the size of the diff
+      # says nothing about the size of the underlying change." This job's
+      # own auto-merge step used to run unconditionally, which is exactly
+      # what that rule is written against - fixed here, not worked around
+      # downstream.
+      - name: Auto-merge on green CI (non-breaking only)
+        if: steps.moved.outputs.changed == 'true' && steps.pr.outputs.pull-request-number && steps.classify.outputs.breaking != 'true'
         run: gh pr merge --auto --squash "${{ steps.pr.outputs.pull-request-url }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
