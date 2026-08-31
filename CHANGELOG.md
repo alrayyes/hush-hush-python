@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/alrayyes/hush-hush-python/compare/v1.0.0...v1.1.0) (2026-08-31)
+
+
+### Features
+
+* regenerate client from updated hush-hush spec ([#12](https://github.com/alrayyes/hush-hush-python/issues/12)) ([820fd98](https://github.com/alrayyes/hush-hush-python/commit/820fd982b2e4833c0b0074b9202f611418fe4095))
+
+
+### Bug Fixes
+
+* **codegen:** oasdiff never reached PATH, silently breaking classification ([#13](https://github.com/alrayyes/hush-hush-python/issues/13)) ([fc59bca](https://github.com/alrayyes/hush-hush-python/commit/fc59bcab307f9febebf6539bff5c78376c5845bf))
+
 ## [1.0.0](https://github.com/alrayyes/hush-hush-python/compare/v0.1.1...v1.0.0) (2026-08-30)
 
 
