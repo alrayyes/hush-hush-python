@@ -9,6 +9,7 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.audit_log_entry import AuditLogEntry
+from ...models.error import Error
 from ...types import UNSET, Response, Unset
 
 
@@ -49,7 +50,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> list[AuditLogEntry] | None:
+) -> Error | list[AuditLogEntry] | None:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -60,6 +61,11 @@ def _parse_response(
 
         return response_200
 
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+        return response_400
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -68,7 +74,7 @@ def _parse_response(
 
 def _build_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Response[list[AuditLogEntry]]:
+) -> Response[Error | list[AuditLogEntry]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -84,7 +90,7 @@ def sync_detailed(
     caller: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
-) -> Response[list[AuditLogEntry]]:
+) -> Response[Error | list[AuditLogEntry]]:
     r"""Query the audit log
 
      Every create, read, update, and delete call is recorded here -
@@ -103,7 +109,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list[AuditLogEntry]]
+        Response[Error | list[AuditLogEntry]]
     """
 
     kwargs = _get_kwargs(
@@ -127,7 +133,7 @@ def sync(
     caller: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
-) -> list[AuditLogEntry] | None:
+) -> Error | list[AuditLogEntry] | None:
     r"""Query the audit log
 
      Every create, read, update, and delete call is recorded here -
@@ -146,7 +152,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list[AuditLogEntry]
+        Error | list[AuditLogEntry]
     """
 
     return sync_detailed(
@@ -165,7 +171,7 @@ async def asyncio_detailed(
     caller: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
-) -> Response[list[AuditLogEntry]]:
+) -> Response[Error | list[AuditLogEntry]]:
     r"""Query the audit log
 
      Every create, read, update, and delete call is recorded here -
@@ -184,7 +190,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list[AuditLogEntry]]
+        Response[Error | list[AuditLogEntry]]
     """
 
     kwargs = _get_kwargs(
@@ -206,7 +212,7 @@ async def asyncio(
     caller: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
-) -> list[AuditLogEntry] | None:
+) -> Error | list[AuditLogEntry] | None:
     r"""Query the audit log
 
      Every create, read, update, and delete call is recorded here -
@@ -225,7 +231,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list[AuditLogEntry]
+        Error | list[AuditLogEntry]
     """
 
     return (
