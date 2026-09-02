@@ -13,7 +13,7 @@ hush-hush issue [#77](https://github.com/alrayyes/hush-hush/issues/77) asks for 
 - Testing: unit tests cover only the hand-written layer (retry, auth, pagination, error mapping) against a fake transport; contract tests run the client against a Prism mock generated from the same spec; a Pact consumer contract records real interactions for provider verification against hush-hush itself (verification step lives in hush-hush's own CI — external dependency).
 - Docs: docstrings on all public classes/methods, built into a docs site via mkdocs; a hand-written README quickstart covering install, auth setup, and one real call.
 - Targets Python 3.11+ — corrected during implementation (2026-08-29) from an initial 3.10+ floor after finding `openapi-python-client` 0.29.0 itself requires Python >=3.11; a floor the generator can't run on isn't a real floor.
-- Packaging via `uv` — the org's actual current Python convention (confirmed against `scaffold-python-cli`, not assumed from a generic example), not Poetry; publishing to PyPI is a deliberate manual step tracked in [#76](https://github.com/alrayyes/hush-hush/issues/76), not automated in this repo's CI.
+- Packaging via `uv` — the org's actual current Python convention (confirmed against `scaffold-python-cli`, not assumed from a generic example), not Poetry. Publishing to PyPI was initially a deliberate manual step tracked in [#76](https://github.com/alrayyes/hush-hush/issues/76); automated in the release job once a PyPI account and Trusted Publisher were in place (see [#21](https://github.com/alrayyes/hush-hush-python/issues/21)).
 
 ## Capabilities
 

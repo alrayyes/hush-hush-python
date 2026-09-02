@@ -83,7 +83,8 @@ even though it doesn't gate the merge.
 
 [release-please](https://github.com/googleapis/release-please) reads the
 Conventional Commits on `main` and keeps a release pull request open with
-the next version and changelog entry; merging that one tags the release.
-Nobody picks a version by hand. Publishing the tagged release to PyPI is a
-deliberate manual step (see hush-hush issue #76), not automated in this
-repo's CI.
+the next version and changelog entry; merging that one tags the release,
+which publishes the package to PyPI via
+[Trusted Publishing](https://docs.pypi.org/trusted-publishers/) (OIDC, no
+API token held as a repo secret) — see `.github/workflows/release.yml`.
+Nobody picks a version by hand, and nobody runs a manual upload either.
