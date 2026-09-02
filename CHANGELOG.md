@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/alrayyes/hush-hush-python/compare/v1.2.3...v1.2.4) (2026-09-02)
+
+
+### Bug Fixes
+
+* **ci:** use RELEASE_TOKEN for the codegen PR, not GITHUB_TOKEN ([#34](https://github.com/alrayyes/hush-hush-python/issues/34)) ([e80f6ce](https://github.com/alrayyes/hush-hush-python/commit/e80f6cedc6c6aa910b6d19286f9fd3d5be6b3018)), closes [#33](https://github.com/alrayyes/hush-hush-python/issues/33)
+
 ## [1.2.3](https://github.com/alrayyes/hush-hush-python/compare/v1.2.2...v1.2.3) (2026-09-02)
 
 
