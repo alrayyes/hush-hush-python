@@ -29,6 +29,11 @@ pre-commit:
       glob: ".github/workflows/*.{yml,yaml}"
       run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
 
+    - name: pyproject-fmt
+      glob: "pyproject.toml"
+      run: uvx pyproject-fmt@2.29.3 --keep-full-version {staged_files}
+      stage_fixed: true
+
 commit-msg:
   jobs:
     - name: commitlint
@@ -45,6 +50,9 @@ pre-push:
 
     - name: pip-audit
       run: uv run pip-audit
+
+    - name: pyproject-fmt
+      run: uvx pyproject-fmt@2.29.3 --keep-full-version --check pyproject.toml
 
     - name: prettier
       run: bun run format:check

@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "uv_build"
-requires = ["uv-build>=0.12.5,<0.13"]
+requires = [ "uv-build>=0.12.5,<0.13" ]
 
 [project]
 name = "hush-hush"
@@ -8,7 +8,7 @@ version = "1.1.1"
 description = "Official Python SDK for hush-hush, generated from its OpenAPI spec"
 readme = "README.md"
 license = "MIT"
-authors = [{ name = "alrayyes" }]
+authors = [ { name = "alrayyes" } ]
 requires-python = ">=3.11"
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
@@ -17,11 +17,9 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
 ]
-dependencies = ["httpx==0.28.1"]
-
-[project.urls]
-Homepage = "https://github.com/alrayyes/hush-hush-python"
-Repository = "https://github.com/alrayyes/hush-hush-python"
+dependencies = [ "httpx==0.28.1" ]
+urls.Homepage = "https://github.com/alrayyes/hush-hush-python"
+urls.Repository = "https://github.com/alrayyes/hush-hush-python"
 
 [dependency-groups]
 dev = [
@@ -33,12 +31,12 @@ dev = [
   "pytest-cov==7.1.0",
   "ruff==0.16.5",
 ]
-docs = ["mkdocs==1.6.1", "mkdocstrings[python]==1.0.6", "mkdocs-material==9.7.7"]
+docs = [ "mkdocs==1.6.1", "mkdocs-material==9.7.7", "mkdocstrings[python]==1.0.6" ]
 
 [tool.ruff]
 target-version = "py311"
 line-length = 100
-extend-exclude = ["src/hush_hush/_generated"]
+extend-exclude = [ "src/hush_hush/_generated" ]
 format.indent-style = "space"
 format.quote-style = "double"
 lint.select = [
@@ -55,20 +53,20 @@ lint.select = [
 lint.ignore = [
   "E501", # line too long (handled by the formatter)
 ]
+lint.per-file-ignores = { "tests/conftest.py" = [
+  "N815",
+] }  # do_GET/do_POST/... names are BaseHTTPRequestHandler's API, not ours to rename
 # Explicit rather than relying on auto-detection: local and CI runs
 # disagreed on whether `hush_hush` counts as first-party, producing a
 # different import order in each and a lint failure only in one of them.
-lint.isort.known-first-party = ["hush_hush"]
-lint.per-file-ignores = { "tests/conftest.py" = [
-  "N815",
-] } # do_GET/do_POST/... names are BaseHTTPRequestHandler's API, not ours to rename
+lint.isort.known-first-party = [ "hush_hush" ]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-markers = [
+[tool.pytest]
+ini_options.testpaths = [ "tests" ]
+ini_options.addopts = "-m 'not contract and not pact and not e2e'"
+ini_options.markers = [
   "contract: runs against a local Prism mock, needs HUSH_HUSH_BASE_URL",
-  "pact: records a Pact consumer contract, needs the pact native library",
   "e2e: runs against a real staging hush-hush, needs HUSH_HUSH_BASE_URL/HUSH_HUSH_API_KEY",
+  "pact: records a Pact consumer contract, needs the pact native library",
 ]
-addopts = "-m 'not contract and not pact and not e2e'"
-asyncio_mode = "auto"
+ini_options.asyncio_mode = "auto"
