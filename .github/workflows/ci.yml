@@ -37,6 +37,7 @@ jobs:
       - run: uv sync --all-extras
       - run: uv run ruff format --check .
       - run: uv run ruff check .
+      - run: uvx pyproject-fmt@2.29.3 --keep-full-version --check pyproject.toml
 
   # dependencies.md: pinning stops a version drifting under you, not a
   # known CVE in the pinned version — run the ecosystem's own audit tool
