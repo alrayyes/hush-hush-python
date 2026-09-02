@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/alrayyes/hush-hush-python/compare/v1.2.1...v1.2.2) (2026-09-02)
+
+
+### Bug Fixes
+
+* correct release-please output keys for the publish job ([#28](https://github.com/alrayyes/hush-hush-python/issues/28)) ([614cd30](https://github.com/alrayyes/hush-hush-python/commit/614cd3007f28806081f09787162eb1fd7a314dc6))
+
 ## [1.2.1](https://github.com/alrayyes/hush-hush-python/compare/v1.2.0...v1.2.1) (2026-09-02)
 
 
