@@ -38,6 +38,19 @@ jobs:
       - run: uv run ruff format --check .
       - run: uv run ruff check .
 
+  # dependencies.md: pinning stops a version drifting under you, not a
+  # known CVE in the pinned version — run the ecosystem's own audit tool
+  # separately from whatever raises the update pull request.
+  pip-audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --all-extras
+      - run: uv run pip-audit
+
   test:
     runs-on: ubuntu-24.04
     steps:

@@ -27,6 +27,7 @@ Repository = "https://github.com/alrayyes/hush-hush-python"
 dev = [
   "openapi-python-client==0.29.0",
   "pact-python==3.4.0",
+  "pip-audit==2.10.1",
   "pytest==9.1.1",
   "pytest-asyncio==1.4.0",
   "pytest-cov==7.1.0",
