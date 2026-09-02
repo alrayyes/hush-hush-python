@@ -43,6 +43,9 @@ pre-push:
     - name: ruff
       run: uv run ruff check .
 
+    - name: pip-audit
+      run: uv run pip-audit
+
     - name: prettier
       run: bun run format:check
 
