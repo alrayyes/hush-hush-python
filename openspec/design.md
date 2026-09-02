@@ -15,7 +15,6 @@ See proposal.md for motivation. Same constraints as the Go SDK (see the equivale
 - A unified cross-language docs site.
 - Any change to hush-hush's server or its spec.
 - Implementing Pact provider verification inside hush-hush's own CI.
-- Automating the PyPI publish step — deliberately manual, tracked in hush-hush issue #76.
 
 ## Decisions
 
@@ -37,7 +36,9 @@ See proposal.md for motivation. Same constraints as the Go SDK (see the equivale
 
 **Errors: a typed exception hierarchy** (e.g. `HushHushError` base, `APIError` subclass) carrying status, an optional request-ID attribute (populated when a documented header is present, empty otherwise), and the parsed error body.
 
-**Packaging: `uv`, not Poetry.** Corrected during implementation (2026-08-29): checking the org's actual current scaffold (`scaffold-python-cli`) rather than relying on CLAUDE.md's illustrative "npm / poetry / go mod" example shows `uv` is the real, current convention — Poetry was never a settled decision, just an unverified assumption. PyPI publish is a manual maintainer step, not CI-automated, per hush-hush issue #76.
+**Packaging: `uv`, not Poetry.** Corrected during implementation (2026-08-29): checking the org's actual current scaffold (`scaffold-python-cli`) rather than relying on CLAUDE.md's illustrative "npm / poetry / go mod" example shows `uv` is the real, current convention — Poetry was never a settled decision, just an unverified assumption.
+
+**PyPI publish: Trusted Publishing, automated in the release job.** Corrected 2026-09-02, reversing this doc's earlier Non-Goal — a PyPI account and pending Trusted Publisher now exist, so a tagged release publishes itself via `pypa/gh-action-pypi-publish` with OIDC rather than staying a manual maintainer step tracked only in hush-hush issue #76. No API token to hold as a repo secret; `id-token: write` plus the `pypi` environment is the whole mechanism.
 
 ## Risks / Trade-offs
 

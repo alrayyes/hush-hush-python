@@ -44,3 +44,4 @@
 - [x] 7.1 Once the repo has real content and passes CI, request hush-hush's README be updated to link to it (coordinate with whoever owns that repo), and verify the link is live — alrayyes/hush-hush#84, merged, link confirmed live in the README's SDKs section
 - [x] 7.2 Close hush-hush issue #77, linking to the new repo, and verify the issue is closed with that link in its final comment
 - [x] 7.3 Note in hush-hush issue #76 that the Python package is ready for manual PyPI publish
+- [x] 7.4 Wire up PyPI Trusted Publishing in the release job once a PyPI account and pending publisher exist — hush-hush-python#21
