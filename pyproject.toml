@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.12.5,<0.13" ]
 
 [project]
 name = "hush-hush"
-version = "1.2.1"
+version = "1.2.2"
 description = "Official Python SDK for hush-hush, generated from its OpenAPI spec"
 readme = "README.md"
 license = "MIT"
