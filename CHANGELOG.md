@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/alrayyes/hush-hush-python/compare/v1.2.0...v1.2.1) (2026-09-02)
+
+
+### Documentation
+
+* add GitHub issue and PR templates ([#26](https://github.com/alrayyes/hush-hush-python/issues/26)) ([51c35d0](https://github.com/alrayyes/hush-hush-python/commit/51c35d063c7dfab9dc7984656186bd790a8bea98))
+
 ## [1.2.0](https://github.com/alrayyes/hush-hush-python/compare/v1.1.2...v1.2.0) (2026-09-02)
 
 
