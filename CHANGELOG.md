@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/alrayyes/hush-hush-python/compare/v1.1.2...v1.2.0) (2026-09-02)
+
+
+### Features
+
+* publish releases to PyPI via Trusted Publishing ([#22](https://github.com/alrayyes/hush-hush-python/issues/22)) ([0ccfe09](https://github.com/alrayyes/hush-hush-python/commit/0ccfe09588d4feac6065cb073ebb02c0836a8101)), closes [#21](https://github.com/alrayyes/hush-hush-python/issues/21)
+
 ## [1.1.2](https://github.com/alrayyes/hush-hush-python/compare/v1.1.1...v1.1.2) (2026-09-02)
 
 
