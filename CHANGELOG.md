@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/alrayyes/hush-hush-python/compare/v1.2.2...v1.2.3) (2026-09-02)
+
+
+### Bug Fixes
+
+* pin gh-action-pypi-publish to its commit SHA, not the tag object SHA ([#30](https://github.com/alrayyes/hush-hush-python/issues/30)) ([ad563f8](https://github.com/alrayyes/hush-hush-python/commit/ad563f8ed59a741f9d506a40324bb48f7a51d6d2))
+
 ## [1.2.2](https://github.com/alrayyes/hush-hush-python/compare/v1.2.1...v1.2.2) (2026-09-02)
 
 
