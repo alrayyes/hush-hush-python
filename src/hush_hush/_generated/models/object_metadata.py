@@ -20,10 +20,14 @@ class ObjectMetadata:
         id (str):
         used_by (list[str] | Unset): The consumers (repos or hosts) recorded as depending on this
             object. Set at creation; unaffected by later value updates.
+        description (str | Unset): A free-text label set at creation, for a reader who only knows the
+            id. Fixed at creation - the same as used_by, it is unaffected by a
+            later value update.
     """
 
     id: str
     used_by: list[str] | Unset = UNSET
+    description: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -32,6 +36,8 @@ class ObjectMetadata:
         used_by: list[str] | Unset = UNSET
         if not isinstance(self.used_by, Unset):
             used_by = self.used_by
+
+        description = self.description
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -42,6 +48,8 @@ class ObjectMetadata:
         )
         if used_by is not UNSET:
             field_dict["used_by"] = used_by
+        if description is not UNSET:
+            field_dict["description"] = description
 
         return field_dict
 
@@ -52,9 +60,12 @@ class ObjectMetadata:
 
         used_by = cast(list[str], d.pop("used_by", UNSET))
 
+        description = d.pop("description", UNSET)
+
         object_metadata = cls(
             id=id,
             used_by=used_by,
+            description=description,
         )
 
         object_metadata.additional_properties = d

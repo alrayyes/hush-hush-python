@@ -84,8 +84,8 @@ def sync_detailed(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id and used_by metadata are preserved unchanged - this
-    endpoint only ever touches the value.
+    object's id, used_by, and description metadata are preserved
+    unchanged - this endpoint only ever touches the value.
 
     Args:
         id (str):
@@ -123,8 +123,8 @@ def sync(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id and used_by metadata are preserved unchanged - this
-    endpoint only ever touches the value.
+    object's id, used_by, and description metadata are preserved
+    unchanged - this endpoint only ever touches the value.
 
     Args:
         id (str):
@@ -157,8 +157,8 @@ async def asyncio_detailed(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id and used_by metadata are preserved unchanged - this
-    endpoint only ever touches the value.
+    object's id, used_by, and description metadata are preserved
+    unchanged - this endpoint only ever touches the value.
 
     Args:
         id (str):
@@ -194,8 +194,8 @@ async def asyncio(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id and used_by metadata are preserved unchanged - this
-    endpoint only ever touches the value.
+    object's id, used_by, and description metadata are preserved
+    unchanged - this endpoint only ever touches the value.
 
     Args:
         id (str):
