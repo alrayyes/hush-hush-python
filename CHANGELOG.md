@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5](https://github.com/alrayyes/hush-hush-python/compare/v1.2.4...v1.2.5) (2026-09-03)
+
+
+### Bug Fixes
+
+* **ci:** remove codegen's leftover auto-merge step ([#38](https://github.com/alrayyes/hush-hush-python/issues/38)) ([8b361ef](https://github.com/alrayyes/hush-hush-python/commit/8b361ef64f515c48f10f147b45ee5c1eb9b3ac72))
+
 ## [1.2.4](https://github.com/alrayyes/hush-hush-python/compare/v1.2.3...v1.2.4) (2026-09-02)
 
 
