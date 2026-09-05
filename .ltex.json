@@ -1,0 +1,27 @@
+{
+	"ltex": {
+		"language": "en-US",
+		"dictionary": {
+			"en-US": [
+				"CI",
+				"Codecov",
+				"OpenAPI",
+				"Quickstart",
+				"ci",
+				"commitlint",
+				"lefthook",
+				"markdownlint",
+				"uv"
+			]
+		},
+		"disabledRules": {
+			"en-US": [
+				"PASSIVE_VOICE",
+				"UPPERCASE_SENTENCE_START",
+				"EN_COMPOUNDS_HAND_WRITTEN",
+				"PREPOSITION_VERB",
+				"A_INFINITIVE"
+			]
+		}
+	}
+}
