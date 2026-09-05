@@ -39,8 +39,8 @@ for entry in client.query_audit_log():
     print(entry.action, entry.object_id, entry.timestamp)
 ```
 
-An `AsyncClient` with the same methods (`await client.get_object(...)`) is
-available for async code. The API key is only required for write operations
+`AsyncClient` offers the same methods (`await client.get_object(...)`) for
+async code. The API key is only required for write operations
 (create/update/delete); reads (get, used-by, audit-log query) work without
 one. `caller`, accepted by most methods, is optional. See the
 [full API reference](https://alrayyes.github.io/hush-hush-python/) for

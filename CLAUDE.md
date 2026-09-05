@@ -30,9 +30,6 @@ specific to this repo.
   underlying generated client and retry transport — simpler than trying to
   share one instance across sync and async code paths, at the cost of two
   connections if a caller uses both.
-- **No Vale/ltex prose-quality tier.** Markdown gets Prettier + markdownlint
-  (mechanics), not grammar/style checking — same deliberate scope cut as
-  `hush-hush-go`.
 - **`HUSH_HUSH_STAGING_URL`/`HUSH_HUSH_STAGING_API_KEY` secrets aren't set
   yet.** `e2e.yml`'s smoke tests skip cleanly until a maintainer adds them —
   Actions secrets can't be read or set by anyone but the repo owner.
