@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.8](https://github.com/alrayyes/hush-hush-python/compare/v1.2.7...v1.2.8) (2026-09-05)
+
+
+### Documentation
+
+* add LTeX and Vale prose linting ([#46](https://github.com/alrayyes/hush-hush-python/issues/46)) ([093a45b](https://github.com/alrayyes/hush-hush-python/commit/093a45b02c5eace422916d5abb6cffafd28d3702)), closes [#45](https://github.com/alrayyes/hush-hush-python/issues/45)
+
 ## [1.2.7](https://github.com/alrayyes/hush-hush-python/compare/v1.2.6...v1.2.7) (2026-09-04)
 
 
