@@ -62,10 +62,10 @@ def sync_detailed(
     *,
     client: AuthenticatedClient | Client,
 ) -> Response[Error | UsedBy]:
-    r"""Query what depends on an object
+    """Query what depends on an object
 
      Returns the recorded list of consumers (repos or hosts) for an
-    object - the \"what depends on this\" mapping, kept queryable rather
+    object - the "what depends on this" mapping, kept queryable rather
     than left as an implied convention.
 
     Args:
@@ -95,10 +95,10 @@ def sync(
     *,
     client: AuthenticatedClient | Client,
 ) -> Error | UsedBy | None:
-    r"""Query what depends on an object
+    """Query what depends on an object
 
      Returns the recorded list of consumers (repos or hosts) for an
-    object - the \"what depends on this\" mapping, kept queryable rather
+    object - the "what depends on this" mapping, kept queryable rather
     than left as an implied convention.
 
     Args:
@@ -123,10 +123,10 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient | Client,
 ) -> Response[Error | UsedBy]:
-    r"""Query what depends on an object
+    """Query what depends on an object
 
      Returns the recorded list of consumers (repos or hosts) for an
-    object - the \"what depends on this\" mapping, kept queryable rather
+    object - the "what depends on this" mapping, kept queryable rather
     than left as an implied convention.
 
     Args:
@@ -154,10 +154,10 @@ async def asyncio(
     *,
     client: AuthenticatedClient | Client,
 ) -> Error | UsedBy | None:
-    r"""Query what depends on an object
+    """Query what depends on an object
 
      Returns the recorded list of consumers (repos or hosts) for an
-    object - the \"what depends on this\" mapping, kept queryable rather
+    object - the "what depends on this" mapping, kept queryable rather
     than left as an implied convention.
 
     Args:
