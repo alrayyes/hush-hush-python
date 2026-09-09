@@ -23,13 +23,13 @@ urls.Repository = "https://github.com/alrayyes/hush-hush-python"
 
 [dependency-groups]
 dev = [
-  "openapi-python-client==0.29.0",
+  "openapi-python-client==0.29.1",
   "pact-python==3.4.0",
   "pip-audit==2.10.1",
   "pytest==9.1.1",
   "pytest-asyncio==1.4.0",
   "pytest-cov==7.1.0",
-  "ruff==0.16.5",
+  "ruff==0.16.6",
 ]
 docs = [ "mkdocs==1.6.1", "mkdocs-material==9.7.7", "mkdocstrings[python]==1.0.6" ]
 

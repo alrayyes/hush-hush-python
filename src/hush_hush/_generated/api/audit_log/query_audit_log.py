@@ -91,10 +91,10 @@ def sync_detailed(
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
 ) -> Response[Error | list[AuditLogEntry]]:
-    r"""Query the audit log
+    """Query the audit log
 
      Every create, read, update, and delete call is recorded here -
-    this is what answers \"did anyone fetch this ciphertext\" during a
+    this is what answers "did anyone fetch this ciphertext" during a
     rotation or incident, since v1 has no pre-fetch access check.
     Filters combine with AND when more than one is given.
 
@@ -134,10 +134,10 @@ def sync(
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
 ) -> Error | list[AuditLogEntry] | None:
-    r"""Query the audit log
+    """Query the audit log
 
      Every create, read, update, and delete call is recorded here -
-    this is what answers \"did anyone fetch this ciphertext\" during a
+    this is what answers "did anyone fetch this ciphertext" during a
     rotation or incident, since v1 has no pre-fetch access check.
     Filters combine with AND when more than one is given.
 
@@ -172,10 +172,10 @@ async def asyncio_detailed(
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
 ) -> Response[Error | list[AuditLogEntry]]:
-    r"""Query the audit log
+    """Query the audit log
 
      Every create, read, update, and delete call is recorded here -
-    this is what answers \"did anyone fetch this ciphertext\" during a
+    this is what answers "did anyone fetch this ciphertext" during a
     rotation or incident, since v1 has no pre-fetch access check.
     Filters combine with AND when more than one is given.
 
@@ -213,10 +213,10 @@ async def asyncio(
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
 ) -> Error | list[AuditLogEntry] | None:
-    r"""Query the audit log
+    """Query the audit log
 
      Every create, read, update, and delete call is recorded here -
-    this is what answers \"did anyone fetch this ciphertext\" during a
+    this is what answers "did anyone fetch this ciphertext" during a
     rotation or incident, since v1 has no pre-fetch access check.
     Filters combine with AND when more than one is given.
 

@@ -69,12 +69,12 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     x_caller: str | Unset = UNSET,
 ) -> Response[Error | File]:
-    r"""Fetch an object's sealed ciphertext
+    """Fetch an object's sealed ciphertext
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
     the service never decrypts it. Needs no authorization beyond
-    knowing the id: v1's confidentiality boundary is entirely \"who
-    holds a matching private key,\" and every fetch is recorded to the
+    knowing the id: v1's confidentiality boundary is entirely "who
+    holds a matching private key," and every fetch is recorded to the
     audit log regardless of who made it.
 
     Args:
@@ -107,12 +107,12 @@ def sync(
     client: AuthenticatedClient | Client,
     x_caller: str | Unset = UNSET,
 ) -> Error | File | None:
-    r"""Fetch an object's sealed ciphertext
+    """Fetch an object's sealed ciphertext
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
     the service never decrypts it. Needs no authorization beyond
-    knowing the id: v1's confidentiality boundary is entirely \"who
-    holds a matching private key,\" and every fetch is recorded to the
+    knowing the id: v1's confidentiality boundary is entirely "who
+    holds a matching private key," and every fetch is recorded to the
     audit log regardless of who made it.
 
     Args:
@@ -140,12 +140,12 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     x_caller: str | Unset = UNSET,
 ) -> Response[Error | File]:
-    r"""Fetch an object's sealed ciphertext
+    """Fetch an object's sealed ciphertext
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
     the service never decrypts it. Needs no authorization beyond
-    knowing the id: v1's confidentiality boundary is entirely \"who
-    holds a matching private key,\" and every fetch is recorded to the
+    knowing the id: v1's confidentiality boundary is entirely "who
+    holds a matching private key," and every fetch is recorded to the
     audit log regardless of who made it.
 
     Args:
@@ -176,12 +176,12 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     x_caller: str | Unset = UNSET,
 ) -> Error | File | None:
-    r"""Fetch an object's sealed ciphertext
+    """Fetch an object's sealed ciphertext
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
     the service never decrypts it. Needs no authorization beyond
-    knowing the id: v1's confidentiality boundary is entirely \"who
-    holds a matching private key,\" and every fetch is recorded to the
+    knowing the id: v1's confidentiality boundary is entirely "who
+    holds a matching private key," and every fetch is recorded to the
     audit log regardless of who made it.
 
     Args:
