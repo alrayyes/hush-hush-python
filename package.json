@@ -10,6 +10,9 @@
     "markdownlint-cli2": "0.23.2",
     "prettier": "3.9.6"
   },
+  "overrides": {
+    "smol-toml": "1.7.2"
+  },
   "trustedDependencies": ["lefthook"],
   "scripts": {
     "prepare": "lefthook install",
