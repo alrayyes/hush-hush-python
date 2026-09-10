@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.11](https://github.com/alrayyes/hush-hush-python/compare/v1.2.10...v1.2.11) (2026-09-10)
+
+
+### Bug Fixes
+
+* **deps:** override smol-toml for a DoS advisory ([#56](https://github.com/alrayyes/hush-hush-python/issues/56)) ([9b3379d](https://github.com/alrayyes/hush-hush-python/commit/9b3379dfd3bf08e2adfe270a4bec3f837e0d21da))
+
 ## [1.2.10](https://github.com/alrayyes/hush-hush-python/compare/v1.2.9...v1.2.10) (2026-09-10)
 
 
