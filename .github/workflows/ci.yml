@@ -63,7 +63,7 @@ jobs:
           version: ${{ env.UV_VERSION }}
       - run: uv sync --all-extras
       - name: pytest (hand-written layer only; see design.md's testing layers)
-        run: uv run pytest --cov=hush_hush --cov-report=term-missing --cov-report=xml
+        run: uv run pytest --cov=hush_hush --cov-report=term-missing --cov-report=xml --junitxml=junit.xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
@@ -77,6 +77,19 @@ jobs:
           # would fail every Dependabot PR's CI on that basis alone
           # (confirmed on the sibling hush-hush-php repo's PRs #13/#14,
           # where the tests themselves passed clean).
+          fail_ci_if_error: false
+
+      # Codecov Test Analytics: per-test failure/flake detail, not just a
+      # coverage delta. !cancelled(), not always() - still runs when pytest
+      # above failed (junit.xml exists either way), but not if the whole run
+      # was cancelled out from under it. Same Dependabot-token gap as above.
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: junit.xml
+          report-type: test_results
           fail_ci_if_error: false
 
   build:
