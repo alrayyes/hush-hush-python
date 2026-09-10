@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.10](https://github.com/alrayyes/hush-hush-python/compare/v1.2.9...v1.2.10) (2026-09-10)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump the python-dependencies group with 2 updates ([#51](https://github.com/alrayyes/hush-hush-python/issues/51)) ([84cfa9f](https://github.com/alrayyes/hush-hush-python/commit/84cfa9f7fcb18366ba2da1d2c465f83595b7fc1e))
+
 ## [1.2.9](https://github.com/alrayyes/hush-hush-python/compare/v1.2.8...v1.2.9) (2026-09-05)
 
 
