@@ -17,10 +17,14 @@ def _get_kwargs(
     *,
     body: CreateObjectRequest,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
     if not isinstance(x_caller, Unset):
         headers["X-Caller"] = x_caller
+
+    if not isinstance(x_csrf_token, Unset):
+        headers["X-CSRF-Token"] = x_csrf_token
 
     _kwargs: dict[str, Any] = {
         "method": "post",
@@ -75,15 +79,20 @@ def sync_detailed(
     client: AuthenticatedClient,
     body: CreateObjectRequest,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[Error | ObjectMetadata]:
     """Create a new sealed object
 
      Stores an already-sealed value under a new object id. The value is
     opaque ciphertext to this service - it is never decrypted, and the
-    service has no notion of which recipients it was sealed to.
+    service has no notion of which recipients it was sealed to. A
+    session-authenticated call needs its CSRF token too; a
+    bearer-token-authenticated one doesn't, since there's no session
+    to have one.
 
     Args:
         x_caller (str | Unset):
+        x_csrf_token (str | Unset):
         body (CreateObjectRequest):
 
     Raises:
@@ -97,6 +106,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         body=body,
         x_caller=x_caller,
+        x_csrf_token=x_csrf_token,
     )
 
     response = client.get_httpx_client().request(
@@ -111,15 +121,20 @@ def sync(
     client: AuthenticatedClient,
     body: CreateObjectRequest,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Error | ObjectMetadata | None:
     """Create a new sealed object
 
      Stores an already-sealed value under a new object id. The value is
     opaque ciphertext to this service - it is never decrypted, and the
-    service has no notion of which recipients it was sealed to.
+    service has no notion of which recipients it was sealed to. A
+    session-authenticated call needs its CSRF token too; a
+    bearer-token-authenticated one doesn't, since there's no session
+    to have one.
 
     Args:
         x_caller (str | Unset):
+        x_csrf_token (str | Unset):
         body (CreateObjectRequest):
 
     Raises:
@@ -134,6 +149,7 @@ def sync(
         client=client,
         body=body,
         x_caller=x_caller,
+        x_csrf_token=x_csrf_token,
     ).parsed
 
 
@@ -142,15 +158,20 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     body: CreateObjectRequest,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[Error | ObjectMetadata]:
     """Create a new sealed object
 
      Stores an already-sealed value under a new object id. The value is
     opaque ciphertext to this service - it is never decrypted, and the
-    service has no notion of which recipients it was sealed to.
+    service has no notion of which recipients it was sealed to. A
+    session-authenticated call needs its CSRF token too; a
+    bearer-token-authenticated one doesn't, since there's no session
+    to have one.
 
     Args:
         x_caller (str | Unset):
+        x_csrf_token (str | Unset):
         body (CreateObjectRequest):
 
     Raises:
@@ -164,6 +185,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         body=body,
         x_caller=x_caller,
+        x_csrf_token=x_csrf_token,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -176,15 +198,20 @@ async def asyncio(
     client: AuthenticatedClient,
     body: CreateObjectRequest,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Error | ObjectMetadata | None:
     """Create a new sealed object
 
      Stores an already-sealed value under a new object id. The value is
     opaque ciphertext to this service - it is never decrypted, and the
-    service has no notion of which recipients it was sealed to.
+    service has no notion of which recipients it was sealed to. A
+    session-authenticated call needs its CSRF token too; a
+    bearer-token-authenticated one doesn't, since there's no session
+    to have one.
 
     Args:
         x_caller (str | Unset):
+        x_csrf_token (str | Unset):
         body (CreateObjectRequest):
 
     Raises:
@@ -200,5 +227,6 @@ async def asyncio(
             client=client,
             body=body,
             x_caller=x_caller,
+            x_csrf_token=x_csrf_token,
         )
     ).parsed

@@ -10,6 +10,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.audit_log_entry_action import AuditLogEntryAction
+from ..models.audit_log_entry_actor_type import AuditLogEntryActorType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="AuditLogEntry")
@@ -29,6 +30,11 @@ class AuditLogEntry:
             load balancer, so X-Forwarded-For (or similar) support isn't
             implemented yet.
         caller (str | Unset): The caller's presented identity, if any.
+        actor_type (AuditLogEntryActorType | Unset): The kind of verified credential that authenticated this call -
+            absent for an unauthenticated read. Unlike caller, this is
+            never self-reported.
+        actor_id (str | Unset): The specific token id or admin account this call was
+            authenticated as - absent for an unauthenticated read.
     """
 
     object_id: str
@@ -36,6 +42,8 @@ class AuditLogEntry:
     timestamp: datetime.datetime
     ip: str
     caller: str | Unset = UNSET
+    actor_type: AuditLogEntryActorType | Unset = UNSET
+    actor_id: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -49,6 +57,12 @@ class AuditLogEntry:
 
         caller = self.caller
 
+        actor_type: str | Unset = UNSET
+        if not isinstance(self.actor_type, Unset):
+            actor_type = self.actor_type.value
+
+        actor_id = self.actor_id
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -61,6 +75,10 @@ class AuditLogEntry:
         )
         if caller is not UNSET:
             field_dict["caller"] = caller
+        if actor_type is not UNSET:
+            field_dict["actor_type"] = actor_type
+        if actor_id is not UNSET:
+            field_dict["actor_id"] = actor_id
 
         return field_dict
 
@@ -77,12 +95,23 @@ class AuditLogEntry:
 
         caller = d.pop("caller", UNSET)
 
+        _actor_type = d.pop("actor_type", UNSET)
+        actor_type: AuditLogEntryActorType | Unset
+        if isinstance(_actor_type, Unset):
+            actor_type = UNSET
+        else:
+            actor_type = AuditLogEntryActorType(_actor_type)
+
+        actor_id = d.pop("actor_id", UNSET)
+
         audit_log_entry = cls(
             object_id=object_id,
             action=action,
             timestamp=timestamp,
             ip=ip,
             caller=caller,
+            actor_type=actor_type,
+            actor_id=actor_id,
         )
 
         audit_log_entry.additional_properties = d

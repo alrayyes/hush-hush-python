@@ -4,6 +4,7 @@
 
 from .audit_log_entry import AuditLogEntry
 from .audit_log_entry_action import AuditLogEntryAction
+from .audit_log_entry_actor_type import AuditLogEntryActorType
 from .create_object_request import CreateObjectRequest
 from .create_token_request import CreateTokenRequest
 from .credential import Credential
@@ -25,6 +26,7 @@ from .used_by import UsedBy
 __all__ = (
     "AuditLogEntry",
     "AuditLogEntryAction",
+    "AuditLogEntryActorType",
     "CreateObjectRequest",
     "CreateTokenRequest",
     "Credential",

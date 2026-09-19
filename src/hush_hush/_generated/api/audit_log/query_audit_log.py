@@ -17,6 +17,7 @@ def _get_kwargs(
     *,
     object_id: str | Unset = UNSET,
     caller: str | Unset = UNSET,
+    actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
 ) -> dict[str, Any]:
@@ -26,6 +27,8 @@ def _get_kwargs(
     params["object_id"] = object_id
 
     params["caller"] = caller
+
+    params["actor"] = actor
 
     json_from_: str | Unset = UNSET
     if not isinstance(from_, Unset):
@@ -88,6 +91,7 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     object_id: str | Unset = UNSET,
     caller: str | Unset = UNSET,
+    actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
 ) -> Response[Error | list[AuditLogEntry]]:
@@ -101,6 +105,7 @@ def sync_detailed(
     Args:
         object_id (str | Unset):
         caller (str | Unset):
+        actor (str | Unset):
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
 
@@ -115,6 +120,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         object_id=object_id,
         caller=caller,
+        actor=actor,
         from_=from_,
         to=to,
     )
@@ -131,6 +137,7 @@ def sync(
     client: AuthenticatedClient | Client,
     object_id: str | Unset = UNSET,
     caller: str | Unset = UNSET,
+    actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
 ) -> Error | list[AuditLogEntry] | None:
@@ -144,6 +151,7 @@ def sync(
     Args:
         object_id (str | Unset):
         caller (str | Unset):
+        actor (str | Unset):
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
 
@@ -159,6 +167,7 @@ def sync(
         client=client,
         object_id=object_id,
         caller=caller,
+        actor=actor,
         from_=from_,
         to=to,
     ).parsed
@@ -169,6 +178,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     object_id: str | Unset = UNSET,
     caller: str | Unset = UNSET,
+    actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
 ) -> Response[Error | list[AuditLogEntry]]:
@@ -182,6 +192,7 @@ async def asyncio_detailed(
     Args:
         object_id (str | Unset):
         caller (str | Unset):
+        actor (str | Unset):
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
 
@@ -196,6 +207,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         object_id=object_id,
         caller=caller,
+        actor=actor,
         from_=from_,
         to=to,
     )
@@ -210,6 +222,7 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     object_id: str | Unset = UNSET,
     caller: str | Unset = UNSET,
+    actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
 ) -> Error | list[AuditLogEntry] | None:
@@ -223,6 +236,7 @@ async def asyncio(
     Args:
         object_id (str | Unset):
         caller (str | Unset):
+        actor (str | Unset):
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
 
@@ -239,6 +253,7 @@ async def asyncio(
             client=client,
             object_id=object_id,
             caller=caller,
+            actor=actor,
             from_=from_,
             to=to,
         )

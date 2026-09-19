@@ -16,10 +16,14 @@ def _get_kwargs(
     id: str,
     *,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
     if not isinstance(x_caller, Unset):
         headers["X-Caller"] = x_caller
+
+    if not isinstance(x_csrf_token, Unset):
+        headers["X-CSRF-Token"] = x_csrf_token
 
     _kwargs: dict[str, Any] = {
         "method": "delete",
@@ -71,15 +75,18 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[Any | Error]:
     """Remove an object
 
      Permanently removes an object. A subsequent fetch by this id
-    returns 404.
+    returns 404. A session-authenticated call needs its CSRF token
+    too; a bearer-token-authenticated one doesn't.
 
     Args:
         id (str):
         x_caller (str | Unset):
+        x_csrf_token (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -92,6 +99,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         id=id,
         x_caller=x_caller,
+        x_csrf_token=x_csrf_token,
     )
 
     response = client.get_httpx_client().request(
@@ -106,15 +114,18 @@ def sync(
     *,
     client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Any | Error | None:
     """Remove an object
 
      Permanently removes an object. A subsequent fetch by this id
-    returns 404.
+    returns 404. A session-authenticated call needs its CSRF token
+    too; a bearer-token-authenticated one doesn't.
 
     Args:
         id (str):
         x_caller (str | Unset):
+        x_csrf_token (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -128,6 +139,7 @@ def sync(
         id=id,
         client=client,
         x_caller=x_caller,
+        x_csrf_token=x_csrf_token,
     ).parsed
 
 
@@ -136,15 +148,18 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[Any | Error]:
     """Remove an object
 
      Permanently removes an object. A subsequent fetch by this id
-    returns 404.
+    returns 404. A session-authenticated call needs its CSRF token
+    too; a bearer-token-authenticated one doesn't.
 
     Args:
         id (str):
         x_caller (str | Unset):
+        x_csrf_token (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -157,6 +172,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         id=id,
         x_caller=x_caller,
+        x_csrf_token=x_csrf_token,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -169,15 +185,18 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Any | Error | None:
     """Remove an object
 
      Permanently removes an object. A subsequent fetch by this id
-    returns 404.
+    returns 404. A session-authenticated call needs its CSRF token
+    too; a bearer-token-authenticated one doesn't.
 
     Args:
         id (str):
         x_caller (str | Unset):
+        x_csrf_token (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -192,5 +211,6 @@ async def asyncio(
             id=id,
             client=client,
             x_caller=x_caller,
+            x_csrf_token=x_csrf_token,
         )
     ).parsed

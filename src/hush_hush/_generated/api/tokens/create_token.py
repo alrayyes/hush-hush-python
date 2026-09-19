@@ -16,8 +16,10 @@ from ...types import Response
 def _get_kwargs(
     *,
     body: CreateTokenRequest,
+    x_csrf_token: str,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
+    headers["X-CSRF-Token"] = x_csrf_token
 
     _kwargs: dict[str, Any] = {
         "method": "post",
@@ -71,6 +73,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: CreateTokenRequest,
+    x_csrf_token: str,
 ) -> Response[Error | TokenWithValue]:
     """Create a write bearer token
 
@@ -80,6 +83,7 @@ def sync_detailed(
     as a token issued via the `token` CLI command.
 
     Args:
+        x_csrf_token (str):
         body (CreateTokenRequest):
 
     Raises:
@@ -92,6 +96,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        x_csrf_token=x_csrf_token,
     )
 
     response = client.get_httpx_client().request(
@@ -105,6 +110,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: CreateTokenRequest,
+    x_csrf_token: str,
 ) -> Error | TokenWithValue | None:
     """Create a write bearer token
 
@@ -114,6 +120,7 @@ def sync(
     as a token issued via the `token` CLI command.
 
     Args:
+        x_csrf_token (str):
         body (CreateTokenRequest):
 
     Raises:
@@ -127,6 +134,7 @@ def sync(
     return sync_detailed(
         client=client,
         body=body,
+        x_csrf_token=x_csrf_token,
     ).parsed
 
 
@@ -134,6 +142,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: CreateTokenRequest,
+    x_csrf_token: str,
 ) -> Response[Error | TokenWithValue]:
     """Create a write bearer token
 
@@ -143,6 +152,7 @@ async def asyncio_detailed(
     as a token issued via the `token` CLI command.
 
     Args:
+        x_csrf_token (str):
         body (CreateTokenRequest):
 
     Raises:
@@ -155,6 +165,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        x_csrf_token=x_csrf_token,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -166,6 +177,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: CreateTokenRequest,
+    x_csrf_token: str,
 ) -> Error | TokenWithValue | None:
     """Create a write bearer token
 
@@ -175,6 +187,7 @@ async def asyncio(
     as a token issued via the `token` CLI command.
 
     Args:
+        x_csrf_token (str):
         body (CreateTokenRequest):
 
     Raises:
@@ -189,5 +202,6 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             body=body,
+            x_csrf_token=x_csrf_token,
         )
     ).parsed
