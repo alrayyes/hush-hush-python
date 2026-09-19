@@ -16,19 +16,27 @@ class Health:
     """
     Attributes:
         status (Literal['ok']):
+        version (str): The running server's own version, as goreleaser stamped it -
+            "dev" for a plain `go build`. The web UI's footer links this
+            to the changelog page rather than hardcoding a version that
+            would drift from what's actually running.
     """
 
     status: Literal["ok"]
+    version: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         status = self.status
+
+        version = self.version
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "status": status,
+                "version": version,
             }
         )
 
@@ -41,8 +49,11 @@ class Health:
         if status != "ok":
             raise ValueError(f"status must match const 'ok', got '{status}'")
 
+        version = d.pop("version")
+
         health = cls(
             status=status,
+            version=version,
         )
 
         health.additional_properties = d
