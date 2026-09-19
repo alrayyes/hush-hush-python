@@ -38,10 +38,14 @@ def test_query_audit_log():
         pact.upon_receiving("a request to query the audit log")
         .given("the audit log has at least one entry")
         .with_request("GET", "/audit-log")
+        # query_audit_log() doesn't expose limit, so the generated client
+        # always sends its default (50) on every real call.
+        .with_query_parameter("limit", "50")
         .will_respond_with(200)
         .with_body(
             match.each_like(
                 {
+                    "id": match.like(1),
                     "object_id": match.like("my-object"),
                     "action": match.regex("read", regex="create|read|update|delete"),
                     "timestamp": match.timestamp(),

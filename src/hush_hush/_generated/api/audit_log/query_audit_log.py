@@ -20,6 +20,8 @@ def _get_kwargs(
     actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
+    after: int | Unset = UNSET,
+    limit: int | Unset = 50,
 ) -> dict[str, Any]:
 
     params: dict[str, Any] = {}
@@ -39,6 +41,10 @@ def _get_kwargs(
     if not isinstance(to, Unset):
         json_to = to.isoformat()
     params["to"] = json_to
+
+    params["after"] = after
+
+    params["limit"] = limit
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -94,6 +100,8 @@ def sync_detailed(
     actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
+    after: int | Unset = UNSET,
+    limit: int | Unset = 50,
 ) -> Response[Error | list[AuditLogEntry]]:
     """Query the audit log
 
@@ -108,6 +116,8 @@ def sync_detailed(
         actor (str | Unset):
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
+        after (int | Unset):
+        limit (int | Unset):  Default: 50.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -123,6 +133,8 @@ def sync_detailed(
         actor=actor,
         from_=from_,
         to=to,
+        after=after,
+        limit=limit,
     )
 
     response = client.get_httpx_client().request(
@@ -140,6 +152,8 @@ def sync(
     actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
+    after: int | Unset = UNSET,
+    limit: int | Unset = 50,
 ) -> Error | list[AuditLogEntry] | None:
     """Query the audit log
 
@@ -154,6 +168,8 @@ def sync(
         actor (str | Unset):
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
+        after (int | Unset):
+        limit (int | Unset):  Default: 50.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -170,6 +186,8 @@ def sync(
         actor=actor,
         from_=from_,
         to=to,
+        after=after,
+        limit=limit,
     ).parsed
 
 
@@ -181,6 +199,8 @@ async def asyncio_detailed(
     actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
+    after: int | Unset = UNSET,
+    limit: int | Unset = 50,
 ) -> Response[Error | list[AuditLogEntry]]:
     """Query the audit log
 
@@ -195,6 +215,8 @@ async def asyncio_detailed(
         actor (str | Unset):
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
+        after (int | Unset):
+        limit (int | Unset):  Default: 50.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -210,6 +232,8 @@ async def asyncio_detailed(
         actor=actor,
         from_=from_,
         to=to,
+        after=after,
+        limit=limit,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -225,6 +249,8 @@ async def asyncio(
     actor: str | Unset = UNSET,
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
+    after: int | Unset = UNSET,
+    limit: int | Unset = 50,
 ) -> Error | list[AuditLogEntry] | None:
     """Query the audit log
 
@@ -239,6 +265,8 @@ async def asyncio(
         actor (str | Unset):
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
+        after (int | Unset):
+        limit (int | Unset):  Default: 50.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -256,5 +284,7 @@ async def asyncio(
             actor=actor,
             from_=from_,
             to=to,
+            after=after,
+            limit=limit,
         )
     ).parsed
