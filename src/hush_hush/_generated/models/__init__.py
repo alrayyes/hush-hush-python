@@ -5,9 +5,20 @@
 from .audit_log_entry import AuditLogEntry
 from .audit_log_entry_action import AuditLogEntryAction
 from .create_object_request import CreateObjectRequest
+from .create_token_request import CreateTokenRequest
+from .credential import Credential
+from .credential_rename_request import CredentialRenameRequest
 from .error import Error
 from .health import Health
+from .login_finish_request import LoginFinishRequest
+from .login_finish_request_credential import LoginFinishRequestCredential
+from .login_options import LoginOptions
 from .object_metadata import ObjectMetadata
+from .registration_finish_request import RegistrationFinishRequest
+from .registration_finish_request_credential import RegistrationFinishRequestCredential
+from .registration_options import RegistrationOptions
+from .token_metadata import TokenMetadata
+from .token_with_value import TokenWithValue
 from .update_object_request import UpdateObjectRequest
 from .used_by import UsedBy
 
@@ -15,9 +26,20 @@ __all__ = (
     "AuditLogEntry",
     "AuditLogEntryAction",
     "CreateObjectRequest",
+    "CreateTokenRequest",
+    "Credential",
+    "CredentialRenameRequest",
     "Error",
     "Health",
+    "LoginFinishRequest",
+    "LoginFinishRequestCredential",
+    "LoginOptions",
     "ObjectMetadata",
+    "RegistrationFinishRequest",
+    "RegistrationFinishRequestCredential",
+    "RegistrationOptions",
+    "TokenMetadata",
+    "TokenWithValue",
     "UpdateObjectRequest",
     "UsedBy",
 )
