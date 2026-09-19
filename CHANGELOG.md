@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/alrayyes/hush-hush-python/compare/v1.2.15...v2.0.0) (2026-09-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* regenerate client from updated hush-hush spec ([#71](https://github.com/alrayyes/hush-hush-python/issues/71))
+
+### Bug Fixes
+
+* regenerate client from updated hush-hush spec ([#71](https://github.com/alrayyes/hush-hush-python/issues/71)) ([99f3741](https://github.com/alrayyes/hush-hush-python/commit/99f37410be47cf07fcc54a2aadfd17e1749afffe))
+
 ## [1.2.15](https://github.com/alrayyes/hush-hush-python/compare/v1.2.14...v1.2.15) (2026-09-19)
 
 
