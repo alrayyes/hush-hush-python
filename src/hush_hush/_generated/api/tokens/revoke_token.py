@@ -14,7 +14,11 @@ from ...types import Response
 
 def _get_kwargs(
     id: str,
+    *,
+    x_csrf_token: str,
 ) -> dict[str, Any]:
+    headers: dict[str, Any] = {}
+    headers["X-CSRF-Token"] = x_csrf_token
 
     _kwargs: dict[str, Any] = {
         "method": "delete",
@@ -23,6 +27,7 @@ def _get_kwargs(
         ),
     }
 
+    _kwargs["headers"] = headers
     return _kwargs
 
 
@@ -59,6 +64,7 @@ def sync_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
+    x_csrf_token: str,
 ) -> Response[Any | Error]:
     """Revoke a write bearer token
 
@@ -68,6 +74,7 @@ def sync_detailed(
 
     Args:
         id (str):
+        x_csrf_token (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -79,6 +86,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         id=id,
+        x_csrf_token=x_csrf_token,
     )
 
     response = client.get_httpx_client().request(
@@ -92,6 +100,7 @@ def sync(
     id: str,
     *,
     client: AuthenticatedClient,
+    x_csrf_token: str,
 ) -> Any | Error | None:
     """Revoke a write bearer token
 
@@ -101,6 +110,7 @@ def sync(
 
     Args:
         id (str):
+        x_csrf_token (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -113,6 +123,7 @@ def sync(
     return sync_detailed(
         id=id,
         client=client,
+        x_csrf_token=x_csrf_token,
     ).parsed
 
 
@@ -120,6 +131,7 @@ async def asyncio_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
+    x_csrf_token: str,
 ) -> Response[Any | Error]:
     """Revoke a write bearer token
 
@@ -129,6 +141,7 @@ async def asyncio_detailed(
 
     Args:
         id (str):
+        x_csrf_token (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -140,6 +153,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         id=id,
+        x_csrf_token=x_csrf_token,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -151,6 +165,7 @@ async def asyncio(
     id: str,
     *,
     client: AuthenticatedClient,
+    x_csrf_token: str,
 ) -> Any | Error | None:
     """Revoke a write bearer token
 
@@ -160,6 +175,7 @@ async def asyncio(
 
     Args:
         id (str):
+        x_csrf_token (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -173,5 +189,6 @@ async def asyncio(
         await asyncio_detailed(
             id=id,
             client=client,
+            x_csrf_token=x_csrf_token,
         )
     ).parsed

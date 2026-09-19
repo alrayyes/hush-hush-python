@@ -75,10 +75,14 @@ def sync_detailed(
     """List stored objects
 
      Returns every stored object's metadata (id, used_by, description) -
-    never the sealed value. Gated by a write token unlike every other
-    read path here: an id-scoped read only ever discloses what a
-    caller already knows the id of, but enumerating every object is a
-    capability none of those reads grant on their own.
+    never the sealed value. Gated by a write token or a session unlike
+    every other read path here: an id-scoped read only ever discloses
+    what a caller already knows the id of, but enumerating every
+    object is a capability none of those reads grant on their own.
+    The web UI holds a session, never a bearer token, and uses this
+    for its secrets overview - the two credentials are equally valid
+    here (auth/spec.md's "A session authenticates secret-object
+    access" requirement).
 
     Args:
         used_by (str | Unset):
@@ -110,10 +114,14 @@ def sync(
     """List stored objects
 
      Returns every stored object's metadata (id, used_by, description) -
-    never the sealed value. Gated by a write token unlike every other
-    read path here: an id-scoped read only ever discloses what a
-    caller already knows the id of, but enumerating every object is a
-    capability none of those reads grant on their own.
+    never the sealed value. Gated by a write token or a session unlike
+    every other read path here: an id-scoped read only ever discloses
+    what a caller already knows the id of, but enumerating every
+    object is a capability none of those reads grant on their own.
+    The web UI holds a session, never a bearer token, and uses this
+    for its secrets overview - the two credentials are equally valid
+    here (auth/spec.md's "A session authenticates secret-object
+    access" requirement).
 
     Args:
         used_by (str | Unset):
@@ -140,10 +148,14 @@ async def asyncio_detailed(
     """List stored objects
 
      Returns every stored object's metadata (id, used_by, description) -
-    never the sealed value. Gated by a write token unlike every other
-    read path here: an id-scoped read only ever discloses what a
-    caller already knows the id of, but enumerating every object is a
-    capability none of those reads grant on their own.
+    never the sealed value. Gated by a write token or a session unlike
+    every other read path here: an id-scoped read only ever discloses
+    what a caller already knows the id of, but enumerating every
+    object is a capability none of those reads grant on their own.
+    The web UI holds a session, never a bearer token, and uses this
+    for its secrets overview - the two credentials are equally valid
+    here (auth/spec.md's "A session authenticates secret-object
+    access" requirement).
 
     Args:
         used_by (str | Unset):
@@ -173,10 +185,14 @@ async def asyncio(
     """List stored objects
 
      Returns every stored object's metadata (id, used_by, description) -
-    never the sealed value. Gated by a write token unlike every other
-    read path here: an id-scoped read only ever discloses what a
-    caller already knows the id of, but enumerating every object is a
-    capability none of those reads grant on their own.
+    never the sealed value. Gated by a write token or a session unlike
+    every other read path here: an id-scoped read only ever discloses
+    what a caller already knows the id of, but enumerating every
+    object is a capability none of those reads grant on their own.
+    The web UI holds a session, never a bearer token, and uses this
+    for its secrets overview - the two credentials are equally valid
+    here (auth/spec.md's "A session authenticates secret-object
+    access" requirement).
 
     Args:
         used_by (str | Unset):
