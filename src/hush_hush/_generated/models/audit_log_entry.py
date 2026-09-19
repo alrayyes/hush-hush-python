@@ -20,6 +20,8 @@ T = TypeVar("T", bound="AuditLogEntry")
 class AuditLogEntry:
     """
     Attributes:
+        id (int): This entry's own id - stable and strictly increasing, so it
+            doubles as the cursor for the `after` query parameter.
         object_id (str):
         action (AuditLogEntryAction):
         timestamp (datetime.datetime):
@@ -37,6 +39,7 @@ class AuditLogEntry:
             authenticated as - absent for an unauthenticated read.
     """
 
+    id: int
     object_id: str
     action: AuditLogEntryAction
     timestamp: datetime.datetime
@@ -47,6 +50,8 @@ class AuditLogEntry:
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        id = self.id
+
         object_id = self.object_id
 
         action = self.action.value
@@ -67,6 +72,7 @@ class AuditLogEntry:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "id": id,
                 "object_id": object_id,
                 "action": action,
                 "timestamp": timestamp,
@@ -85,6 +91,8 @@ class AuditLogEntry:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
+        id = d.pop("id")
+
         object_id = d.pop("object_id")
 
         action = AuditLogEntryAction(d.pop("action"))
@@ -105,6 +113,7 @@ class AuditLogEntry:
         actor_id = d.pop("actor_id", UNSET)
 
         audit_log_entry = cls(
+            id=id,
             object_id=object_id,
             action=action,
             timestamp=timestamp,
