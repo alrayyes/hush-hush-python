@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.15](https://github.com/alrayyes/hush-hush-python/compare/v1.2.14...v1.2.15) (2026-09-19)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump ruff in the python-dependencies group ([#66](https://github.com/alrayyes/hush-hush-python/issues/66)) ([ca5f9c3](https://github.com/alrayyes/hush-hush-python/commit/ca5f9c354001689b5d5ba5184272ff19d24935ce))
+* regenerate client from updated hush-hush spec ([#69](https://github.com/alrayyes/hush-hush-python/issues/69)) ([99f9028](https://github.com/alrayyes/hush-hush-python/commit/99f90286d080146ee4584a1ac1f336146b2ac85e))
+
 ## [1.2.14](https://github.com/alrayyes/hush-hush-python/compare/v1.2.13...v1.2.14) (2026-09-13)
 
 
