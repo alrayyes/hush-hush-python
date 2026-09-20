@@ -29,6 +29,7 @@ class TokenWithValue:
         owner (str | Unset): The admin account that created this token over HTTP. Absent
             for a token issued via the `token` CLI command, which has no
             session to attribute to - never a guessed value.
+        last_used_at (datetime.datetime | Unset): Absent if this token has never authenticated a request.
     """
 
     id: str
@@ -38,6 +39,7 @@ class TokenWithValue:
     revoked: bool
     value: str
     owner: str | Unset = UNSET
+    last_used_at: datetime.datetime | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -55,6 +57,10 @@ class TokenWithValue:
 
         owner = self.owner
 
+        last_used_at: str | Unset = UNSET
+        if not isinstance(self.last_used_at, Unset):
+            last_used_at = self.last_used_at.isoformat()
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -69,6 +75,8 @@ class TokenWithValue:
         )
         if owner is not UNSET:
             field_dict["owner"] = owner
+        if last_used_at is not UNSET:
+            field_dict["last_used_at"] = last_used_at
 
         return field_dict
 
@@ -89,6 +97,13 @@ class TokenWithValue:
 
         owner = d.pop("owner", UNSET)
 
+        _last_used_at = d.pop("last_used_at", UNSET)
+        last_used_at: datetime.datetime | Unset
+        if isinstance(_last_used_at, Unset):
+            last_used_at = UNSET
+        else:
+            last_used_at = datetime.datetime.fromisoformat(_last_used_at)
+
         token_with_value = cls(
             id=id,
             description=description,
@@ -97,6 +112,7 @@ class TokenWithValue:
             revoked=revoked,
             value=value,
             owner=owner,
+            last_used_at=last_used_at,
         )
 
         token_with_value.additional_properties = d
