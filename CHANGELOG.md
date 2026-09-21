@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.0.0](https://github.com/alrayyes/hush-hush-python/compare/v2.0.3...v3.0.0) (2026-09-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* regenerate client from updated hush-hush spec ([#98](https://github.com/alrayyes/hush-hush-python/issues/98))
+* regenerate client from updated hush-hush spec ([#97](https://github.com/alrayyes/hush-hush-python/issues/97))
+
+### Bug Fixes
+
+* **ci:** drop the wretry.action wrapper from release.yml ([#100](https://github.com/alrayyes/hush-hush-python/issues/100)) ([d97171f](https://github.com/alrayyes/hush-hush-python/commit/d97171f7d76bbcf3ba4df3a193a598eafe27295f))
+* **ci:** gate codegen-auto-merge on the breaking-change marker ([#91](https://github.com/alrayyes/hush-hush-python/issues/91)) ([948da05](https://github.com/alrayyes/hush-hush-python/commit/948da053fbc9e23bbeb2109e531a935ff9977085)), closes [#90](https://github.com/alrayyes/hush-hush-python/issues/90)
+* **deps-dev:** bump pact-python in the python-dependencies group ([#96](https://github.com/alrayyes/hush-hush-python/issues/96)) ([3bb57af](https://github.com/alrayyes/hush-hush-python/commit/3bb57af5d9da8d5eb903c68b39b3ce4c4fbea646))
+* **deps-dev:** bump ruff in the python-dependencies group ([#81](https://github.com/alrayyes/hush-hush-python/issues/81)) ([b4eb63f](https://github.com/alrayyes/hush-hush-python/commit/b4eb63fcc944a95b76ad987a130bf160409413a8))
+* regenerate client from updated hush-hush spec ([760bfc2](https://github.com/alrayyes/hush-hush-python/commit/760bfc230593de805cce3476f6fb143cd10f68ee))
+* regenerate client from updated hush-hush spec ([5f60b9d](https://github.com/alrayyes/hush-hush-python/commit/5f60b9d91bb21227a764a8ecb908c4d529b07e7d))
+* regenerate client from updated hush-hush spec ([e636b2f](https://github.com/alrayyes/hush-hush-python/commit/e636b2f0159082fd314fd766de68514ce1dd7fbd))
+* regenerate client from updated hush-hush spec ([92b4237](https://github.com/alrayyes/hush-hush-python/commit/92b42373cd50f606e8a29f146454c349d08c2709))
+* regenerate client from updated hush-hush spec ([19ce0ca](https://github.com/alrayyes/hush-hush-python/commit/19ce0ca4286b8b34ed1f6d62e60fa684692b4ae8))
+* regenerate client from updated hush-hush spec ([ecd4181](https://github.com/alrayyes/hush-hush-python/commit/ecd4181a7756abba33a144a4dd96b5a6bc29cb03))
+* regenerate client from updated hush-hush spec ([#85](https://github.com/alrayyes/hush-hush-python/issues/85)) ([9cc0385](https://github.com/alrayyes/hush-hush-python/commit/9cc0385b9c5e2c9978fee86970174f7f7ba117e2))
+* regenerate client from updated hush-hush spec ([#86](https://github.com/alrayyes/hush-hush-python/issues/86)) ([3e15233](https://github.com/alrayyes/hush-hush-python/commit/3e15233632f37e636d4d5d9de87db8856cad7c40))
+* regenerate client from updated hush-hush spec ([#87](https://github.com/alrayyes/hush-hush-python/issues/87)) ([112dbfa](https://github.com/alrayyes/hush-hush-python/commit/112dbfaf2a235b2915f97fb9acf34b484f56b61a))
+* regenerate client from updated hush-hush spec ([#88](https://github.com/alrayyes/hush-hush-python/issues/88)) ([966ac1b](https://github.com/alrayyes/hush-hush-python/commit/966ac1bad5b530c097d76065a50d880fb54be426))
+* regenerate client from updated hush-hush spec ([#89](https://github.com/alrayyes/hush-hush-python/issues/89)) ([6691e4c](https://github.com/alrayyes/hush-hush-python/commit/6691e4c50220a58607c4431fba7f449f05ed8574))
+* regenerate client from updated hush-hush spec ([#97](https://github.com/alrayyes/hush-hush-python/issues/97)) ([c4cd7f4](https://github.com/alrayyes/hush-hush-python/commit/c4cd7f4b01f6729416ebadb51eca6672d4283d40))
+* regenerate client from updated hush-hush spec ([#98](https://github.com/alrayyes/hush-hush-python/issues/98)) ([b8083c1](https://github.com/alrayyes/hush-hush-python/commit/b8083c1e716b0c04e415fbf438180139f7e08fdc))
+
 ## [2.0.3](https://github.com/alrayyes/hush-hush-python/compare/v2.0.2...v2.0.3) (2026-09-19)
 
 
