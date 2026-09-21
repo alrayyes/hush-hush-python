@@ -19,10 +19,11 @@ class ObjectMetadata:
     Attributes:
         id (str):
         used_by (list[str] | Unset): The consumers (repos or hosts) recorded as depending on this
-            object. Set at creation; unaffected by later value updates.
+            object. Set at creation, and replaceable later via
+            UpdateObjectRequest's own used_by field - a plain value update
+            that omits it leaves the list as it was.
         description (str | Unset): A free-text label set at creation, for a reader who only knows the
-            id. Fixed at creation - the same as used_by, it is unaffected by a
-            later value update.
+            id. Fixed at creation - there is no way to change it later.
     """
 
     id: str
