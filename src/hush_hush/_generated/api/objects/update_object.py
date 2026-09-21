@@ -89,8 +89,10 @@ def sync_detailed(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id, used_by, and description metadata are preserved
-    unchanged - this endpoint only ever touches the value. A
+    object's id and description metadata are always preserved
+    unchanged. used_by is preserved too, unless the request body
+    includes it - in which case it fully replaces the object's
+    recorded consumers, the same way creating an object sets it. A
     session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 
@@ -133,8 +135,10 @@ def sync(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id, used_by, and description metadata are preserved
-    unchanged - this endpoint only ever touches the value. A
+    object's id and description metadata are always preserved
+    unchanged. used_by is preserved too, unless the request body
+    includes it - in which case it fully replaces the object's
+    recorded consumers, the same way creating an object sets it. A
     session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 
@@ -172,8 +176,10 @@ async def asyncio_detailed(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id, used_by, and description metadata are preserved
-    unchanged - this endpoint only ever touches the value. A
+    object's id and description metadata are always preserved
+    unchanged. used_by is preserved too, unless the request body
+    includes it - in which case it fully replaces the object's
+    recorded consumers, the same way creating an object sets it. A
     session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 
@@ -214,8 +220,10 @@ async def asyncio(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id, used_by, and description metadata are preserved
-    unchanged - this endpoint only ever touches the value. A
+    object's id and description metadata are always preserved
+    unchanged. used_by is preserved too, unless the request body
+    includes it - in which case it fully replaces the object's
+    recorded consumers, the same way creating an object sets it. A
     session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 

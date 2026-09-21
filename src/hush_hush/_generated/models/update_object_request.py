@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="UpdateObjectRequest")
 
@@ -16,13 +18,22 @@ class UpdateObjectRequest:
     """
     Attributes:
         value (str): The new sealed (encrypted) value, base64-encoded.
+        used_by (list[str] | Unset): The consumers (repos or hosts) recorded as depending on this
+            object. Set at creation, and replaceable later via
+            UpdateObjectRequest's own used_by field - a plain value update
+            that omits it leaves the list as it was.
     """
 
     value: str
+    used_by: list[str] | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         value = self.value
+
+        used_by: list[str] | Unset = UNSET
+        if not isinstance(self.used_by, Unset):
+            used_by = self.used_by
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -31,6 +42,8 @@ class UpdateObjectRequest:
                 "value": value,
             }
         )
+        if used_by is not UNSET:
+            field_dict["used_by"] = used_by
 
         return field_dict
 
@@ -39,8 +52,11 @@ class UpdateObjectRequest:
         d = dict(src_dict)
         value = d.pop("value")
 
+        used_by = cast(list[str], d.pop("used_by", UNSET))
+
         update_object_request = cls(
             value=value,
+            used_by=used_by,
         )
 
         update_object_request.additional_properties = d
