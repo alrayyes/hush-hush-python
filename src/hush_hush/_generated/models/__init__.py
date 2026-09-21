@@ -6,6 +6,8 @@ from .audit_log_entry import AuditLogEntry
 from .audit_log_entry_action import AuditLogEntryAction
 from .audit_log_entry_actor_type import AuditLogEntryActorType
 from .auth_status import AuthStatus
+from .consumer_entry import ConsumerEntry
+from .consumers_page import ConsumersPage
 from .create_object_request import CreateObjectRequest
 from .create_token_request import CreateTokenRequest
 from .credential import Credential
@@ -29,6 +31,8 @@ __all__ = (
     "AuditLogEntryAction",
     "AuditLogEntryActorType",
     "AuthStatus",
+    "ConsumerEntry",
+    "ConsumersPage",
     "CreateObjectRequest",
     "CreateTokenRequest",
     "Credential",
