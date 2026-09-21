@@ -7,15 +7,32 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.consumers_page import ConsumersPage
 from ...models.error import Error
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
-def _get_kwargs() -> dict[str, Any]:
+def _get_kwargs(
+    *,
+    q: str | Unset = UNSET,
+    page: int | Unset = UNSET,
+    page_size: int | Unset = 20,
+) -> dict[str, Any]:
+
+    params: dict[str, Any] = {}
+
+    params["q"] = q
+
+    params["page"] = page
+
+    params["page_size"] = page_size
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/consumers",
+        "params": params,
     }
 
     return _kwargs
@@ -23,11 +40,32 @@ def _get_kwargs() -> dict[str, Any]:
 
 def _parse_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Error | list[str] | None:
+) -> ConsumersPage | list[str] | Error | None:
     if response.status_code == 200:
-        response_200 = cast(list[str], response.json())
+
+        def _parse_response_200(data: object) -> ConsumersPage | list[str]:
+            try:
+                if not isinstance(data, list):
+                    raise TypeError()
+                response_200_type_0 = cast(list[str], data)
+
+                return response_200_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            if not isinstance(data, dict):
+                raise TypeError()
+            response_200_type_1 = ConsumersPage.from_dict(data)
+
+            return response_200_type_1
+
+        response_200 = _parse_response_200(response.json())
 
         return response_200
+
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+        return response_400
 
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
@@ -42,7 +80,7 @@ def _parse_response(
 
 def _build_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Response[Error | list[str]]:
+) -> Response[ConsumersPage | list[str] | Error]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,23 +92,45 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-) -> Response[Error | list[str]]:
+    q: str | Unset = UNSET,
+    page: int | Unset = UNSET,
+    page_size: int | Unset = 20,
+) -> Response[ConsumersPage | list[str] | Error]:
     """List every distinct recorded consumer
 
      Returns every distinct consumer name currently present in any
-    object's `used_by` list, sorted, with no duplicates - gated the
-    same way `GET /objects` is (a write token or a session), since
-    listing needs no id the caller already holds.
+    object's `used_by` list - gated the same way `GET /objects` is (a
+    write token or a session), since listing needs no id the caller
+    already holds.
+
+    Called with none of `q`, `page`, or `page_size`, it returns the
+    original plain, unpaginated array of names, sorted, with no
+    duplicates - `consumer-combobox`'s (alrayyes/hush-hush#251) own
+    call site depends on this shape staying unchanged. Given any of
+    the three, it instead returns a `ConsumersPage`: one page of
+    consumers whose name contains `q` (case-insensitive) when given,
+    each with a count of the secret objects that reference it, plus
+    the total matching count so a caller can render page-number
+    navigation.
+
+    Args:
+        q (str | Unset):
+        page (int | Unset):
+        page_size (int | Unset):  Default: 20.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[str]]
+        Response[ConsumersPage | list[str] | Error]
     """
 
-    kwargs = _get_kwargs()
+    kwargs = _get_kwargs(
+        q=q,
+        page=page,
+        page_size=page_size,
+    )
 
     response = client.get_httpx_client().request(
         **kwargs,
@@ -82,47 +142,90 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-) -> Error | list[str] | None:
+    q: str | Unset = UNSET,
+    page: int | Unset = UNSET,
+    page_size: int | Unset = 20,
+) -> ConsumersPage | list[str] | Error | None:
     """List every distinct recorded consumer
 
      Returns every distinct consumer name currently present in any
-    object's `used_by` list, sorted, with no duplicates - gated the
-    same way `GET /objects` is (a write token or a session), since
-    listing needs no id the caller already holds.
+    object's `used_by` list - gated the same way `GET /objects` is (a
+    write token or a session), since listing needs no id the caller
+    already holds.
+
+    Called with none of `q`, `page`, or `page_size`, it returns the
+    original plain, unpaginated array of names, sorted, with no
+    duplicates - `consumer-combobox`'s (alrayyes/hush-hush#251) own
+    call site depends on this shape staying unchanged. Given any of
+    the three, it instead returns a `ConsumersPage`: one page of
+    consumers whose name contains `q` (case-insensitive) when given,
+    each with a count of the secret objects that reference it, plus
+    the total matching count so a caller can render page-number
+    navigation.
+
+    Args:
+        q (str | Unset):
+        page (int | Unset):
+        page_size (int | Unset):  Default: 20.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[str]
+        ConsumersPage | list[str] | Error
     """
 
     return sync_detailed(
         client=client,
+        q=q,
+        page=page,
+        page_size=page_size,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-) -> Response[Error | list[str]]:
+    q: str | Unset = UNSET,
+    page: int | Unset = UNSET,
+    page_size: int | Unset = 20,
+) -> Response[ConsumersPage | list[str] | Error]:
     """List every distinct recorded consumer
 
      Returns every distinct consumer name currently present in any
-    object's `used_by` list, sorted, with no duplicates - gated the
-    same way `GET /objects` is (a write token or a session), since
-    listing needs no id the caller already holds.
+    object's `used_by` list - gated the same way `GET /objects` is (a
+    write token or a session), since listing needs no id the caller
+    already holds.
+
+    Called with none of `q`, `page`, or `page_size`, it returns the
+    original plain, unpaginated array of names, sorted, with no
+    duplicates - `consumer-combobox`'s (alrayyes/hush-hush#251) own
+    call site depends on this shape staying unchanged. Given any of
+    the three, it instead returns a `ConsumersPage`: one page of
+    consumers whose name contains `q` (case-insensitive) when given,
+    each with a count of the secret objects that reference it, plus
+    the total matching count so a caller can render page-number
+    navigation.
+
+    Args:
+        q (str | Unset):
+        page (int | Unset):
+        page_size (int | Unset):  Default: 20.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[str]]
+        Response[ConsumersPage | list[str] | Error]
     """
 
-    kwargs = _get_kwargs()
+    kwargs = _get_kwargs(
+        q=q,
+        page=page,
+        page_size=page_size,
+    )
 
     response = await client.get_async_httpx_client().request(**kwargs)
 
@@ -132,24 +235,45 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-) -> Error | list[str] | None:
+    q: str | Unset = UNSET,
+    page: int | Unset = UNSET,
+    page_size: int | Unset = 20,
+) -> ConsumersPage | list[str] | Error | None:
     """List every distinct recorded consumer
 
      Returns every distinct consumer name currently present in any
-    object's `used_by` list, sorted, with no duplicates - gated the
-    same way `GET /objects` is (a write token or a session), since
-    listing needs no id the caller already holds.
+    object's `used_by` list - gated the same way `GET /objects` is (a
+    write token or a session), since listing needs no id the caller
+    already holds.
+
+    Called with none of `q`, `page`, or `page_size`, it returns the
+    original plain, unpaginated array of names, sorted, with no
+    duplicates - `consumer-combobox`'s (alrayyes/hush-hush#251) own
+    call site depends on this shape staying unchanged. Given any of
+    the three, it instead returns a `ConsumersPage`: one page of
+    consumers whose name contains `q` (case-insensitive) when given,
+    each with a count of the secret objects that reference it, plus
+    the total matching count so a caller can render page-number
+    navigation.
+
+    Args:
+        q (str | Unset):
+        page (int | Unset):
+        page_size (int | Unset):  Default: 20.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[str]
+        ConsumersPage | list[str] | Error
     """
 
     return (
         await asyncio_detailed(
             client=client,
+            q=q,
+            page=page,
+            page_size=page_size,
         )
     ).parsed
