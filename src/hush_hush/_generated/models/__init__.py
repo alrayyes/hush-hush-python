@@ -2,9 +2,12 @@
 
 """Contains all the data models used in inputs/outputs"""
 
+from .add_consumer_request import AddConsumerRequest
+from .audit_actor_option import AuditActorOption
 from .audit_log_entry import AuditLogEntry
 from .audit_log_entry_action import AuditLogEntryAction
 from .audit_log_entry_actor_type import AuditLogEntryActorType
+from .audit_log_filter_options import AuditLogFilterOptions
 from .auth_status import AuthStatus
 from .consumer_entry import ConsumerEntry
 from .consumers_page import ConsumersPage
@@ -28,9 +31,12 @@ from .update_object_request import UpdateObjectRequest
 from .used_by import UsedBy
 
 __all__ = (
+    "AddConsumerRequest",
+    "AuditActorOption",
     "AuditLogEntry",
     "AuditLogEntryAction",
     "AuditLogEntryActorType",
+    "AuditLogFilterOptions",
     "AuthStatus",
     "ConsumerEntry",
     "ConsumersPage",
