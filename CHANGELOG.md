@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.8](https://github.com/alrayyes/hush-hush-python/compare/v3.0.7...v3.0.8) (2026-09-22)
+
+
+### Bug Fixes
+
+* regenerate client from updated hush-hush spec ([6ee3db5](https://github.com/alrayyes/hush-hush-python/commit/6ee3db5a0e68ad8e778e978af6cdb8a5bfe51019))
+* regenerate client from updated hush-hush spec ([0743bc3](https://github.com/alrayyes/hush-hush-python/commit/0743bc3e34546e7fef6e5300ef60395d300cdf7f))
+
 ## [3.0.7](https://github.com/alrayyes/hush-hush-python/compare/v3.0.6...v3.0.7) (2026-09-22)
 
 
