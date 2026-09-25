@@ -20,6 +20,8 @@ from .health import Health
 from .login_finish_request import LoginFinishRequest
 from .login_finish_request_credential import LoginFinishRequestCredential
 from .login_options import LoginOptions
+from .mcp_body import McpBody
+from .mcp_response_200 import McpResponse200
 from .object_metadata import ObjectMetadata
 from .registration_finish_request import RegistrationFinishRequest
 from .registration_finish_request_credential import RegistrationFinishRequestCredential
@@ -49,6 +51,8 @@ __all__ = (
     "LoginFinishRequest",
     "LoginFinishRequestCredential",
     "LoginOptions",
+    "McpBody",
+    "McpResponse200",
     "ObjectMetadata",
     "RegistrationFinishRequest",
     "RegistrationFinishRequestCredential",
