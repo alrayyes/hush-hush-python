@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.0.11](https://github.com/alrayyes/hush-hush-python/compare/v3.0.10...v3.0.11) (2026-09-25)
+
+
+### Bug Fixes
+
+* regenerate client from updated hush-hush spec ([08a8a70](https://github.com/alrayyes/hush-hush-python/commit/08a8a702972c4f35a0a793ea8c41c77282117695))
+* regenerate client from updated hush-hush spec ([085cd3b](https://github.com/alrayyes/hush-hush-python/commit/085cd3b41908978c04d39d87eb02c968399db396))
+* **security:** allowlist hush-hush spec's fake audit-actor token ([99b9e5e](https://github.com/alrayyes/hush-hush-python/commit/99b9e5ec66e80ce77d7e0e40fe6a7bb08ee2bd01))
+
 ## [3.0.10](https://github.com/alrayyes/hush-hush-python/compare/v3.0.9...v3.0.10) (2026-09-22)
 
 
