@@ -17,11 +17,13 @@
 # and doesn't carry forward past its own session) - PR #17 landed that way
 # with no human review. Removed - this job stops at opening the pull
 # request, matching hush-hush-go/-node/-php.
+#
+# No cron: Hush-Hush's release.yml fires repository_dispatch
+# (spec-updated) on every release, so a schedule fallback only added
+# noise once that path was proven working (alrayyes/Hush-Hush#224).
 name: codegen
 
 on:
-  schedule:
-    - cron: "0 6 * * *" # daily, 06:00 UTC
   workflow_dispatch:
   repository_dispatch:
     types: [spec-updated]
