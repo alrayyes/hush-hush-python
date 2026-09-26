@@ -1,0 +1,20 @@
+# hush-hush-python
+
+> Official Python SDK for hush-hush, a secrets-management service. This SDK
+> is generated from hush-hush's OpenAPI spec and kept in sync with it
+> automatically; `Client` and `AsyncClient` cover create/get/update/delete
+> on objects, querying the audit log, and checking what consumes a secret.
+
+Requires Python 3.11+. `pip install hush-hush`. An API key
+(`HUSH_HUSH_API_KEY` or passed explicitly) is only needed for write
+operations — reads (get, used-by, audit-log query) work without one.
+
+## Docs
+
+- [API reference](https://alrayyes.github.io/hush-hush-python/reference/): full reference for `Client`, `AsyncClient` and `APIError`, generated from the source docstrings.
+- [GitHub repository](https://github.com/alrayyes/hush-hush-python): README with install/quickstart, CONTRIBUTING.md for how a spec change becomes a release, and the source itself.
+- [PyPI package](https://pypi.org/project/hush-hush/): the published `hush-hush` package.
+
+## hush-hush
+
+- [hush-hush](https://github.com/alrayyes/hush-hush): the service this SDK talks to, and the source of the OpenAPI spec this SDK is generated from.
