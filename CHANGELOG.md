@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.14](https://github.com/alrayyes/hush-hush-python/compare/v3.0.13...v3.0.14) (2026-09-26)
+
+
+### Documentation
+
+* add llms.txt to the published docs site ([4952a88](https://github.com/alrayyes/hush-hush-python/commit/4952a887d261c912f8bea29784a8be7444302925))
+* add llms.txt to the published docs site ([e5acb58](https://github.com/alrayyes/hush-hush-python/commit/e5acb5866a8d011f38c1caa3f3542c9c974fa867)), closes [#138](https://github.com/alrayyes/hush-hush-python/issues/138)
+
 ## [3.0.13](https://github.com/alrayyes/hush-hush-python/compare/v3.0.12...v3.0.13) (2026-09-25)
 
 
