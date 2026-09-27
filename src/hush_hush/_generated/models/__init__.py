@@ -27,6 +27,7 @@ from .owner_identity import OwnerIdentity
 from .registration_finish_request import RegistrationFinishRequest
 from .registration_finish_request_credential import RegistrationFinishRequestCredential
 from .registration_options import RegistrationOptions
+from .rotate_token_request import RotateTokenRequest
 from .token_metadata import TokenMetadata
 from .token_with_value import TokenWithValue
 from .update_consumer_request import UpdateConsumerRequest
@@ -59,6 +60,7 @@ __all__ = (
     "RegistrationFinishRequest",
     "RegistrationFinishRequestCredential",
     "RegistrationOptions",
+    "RotateTokenRequest",
     "TokenMetadata",
     "TokenWithValue",
     "UpdateConsumerRequest",
