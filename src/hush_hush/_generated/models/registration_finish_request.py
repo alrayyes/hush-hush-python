@@ -24,16 +24,41 @@ class RegistrationFinishRequest:
         credential (RegistrationFinishRequestCredential): The browser's attestation response, exactly as
             `navigator.credentials.create()` returned it.
         nickname (str | Unset): A human-readable label for this credential, shown in the credentials list.
+        wrapped_identity (str | Unset): This credential's own copy of the user's escrowed writer
+            identity private key, wrapped client-side with a key derived
+            from this credential's WebAuthn PRF extension output and
+            base64-encoded. Omitted when the browser's registration
+            reported no PRF support for this credential - the server
+            never generates, verifies, or unwraps this value, only stores
+            it.
+        public_key (str | Unset): The escrowed writer identity's age recipient string, sent
+            only on the account's first-ever registration - a repeat
+            registration resending this is a no-op against the identity
+            already recorded, never an overwrite.
+        recovery_wrapped_identity (str | Unset): The escrowed writer identity's private key, wrapped
+            client-side with a key derived from the one-time break-glass
+            recovery phrase, sent only on the account's first-ever
+            registration. The server never sees the phrase itself, only
+            this already-wrapped copy.
     """
 
     credential: RegistrationFinishRequestCredential
     nickname: str | Unset = UNSET
+    wrapped_identity: str | Unset = UNSET
+    public_key: str | Unset = UNSET
+    recovery_wrapped_identity: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         credential = self.credential.to_dict()
 
         nickname = self.nickname
+
+        wrapped_identity = self.wrapped_identity
+
+        public_key = self.public_key
+
+        recovery_wrapped_identity = self.recovery_wrapped_identity
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -44,6 +69,12 @@ class RegistrationFinishRequest:
         )
         if nickname is not UNSET:
             field_dict["nickname"] = nickname
+        if wrapped_identity is not UNSET:
+            field_dict["wrapped_identity"] = wrapped_identity
+        if public_key is not UNSET:
+            field_dict["public_key"] = public_key
+        if recovery_wrapped_identity is not UNSET:
+            field_dict["recovery_wrapped_identity"] = recovery_wrapped_identity
 
         return field_dict
 
@@ -58,9 +89,18 @@ class RegistrationFinishRequest:
 
         nickname = d.pop("nickname", UNSET)
 
+        wrapped_identity = d.pop("wrapped_identity", UNSET)
+
+        public_key = d.pop("public_key", UNSET)
+
+        recovery_wrapped_identity = d.pop("recovery_wrapped_identity", UNSET)
+
         registration_finish_request = cls(
             credential=credential,
             nickname=nickname,
+            wrapped_identity=wrapped_identity,
+            public_key=public_key,
+            recovery_wrapped_identity=recovery_wrapped_identity,
         )
 
         registration_finish_request.additional_properties = d

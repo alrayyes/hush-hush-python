@@ -22,12 +22,20 @@ class Credential:
         nickname (str):
         created_at (datetime.datetime):
         last_used_at (datetime.datetime | Unset): Absent if this credential has never been used to log in.
+        wrapped_identity (str | Unset): This credential's own copy of the user's escrowed writer
+            identity private key, wrapped with a key derived from this
+            credential's WebAuthn PRF extension output and
+            base64-encoded. Absent for a credential that doesn't support
+            PRF. Safe to return to the authenticated owner: it's already
+            wrapped, and only unwrappable with that same credential's own
+            PRF secret or the break-glass recovery phrase.
     """
 
     id: str
     nickname: str
     created_at: datetime.datetime
     last_used_at: datetime.datetime | Unset = UNSET
+    wrapped_identity: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -41,6 +49,8 @@ class Credential:
         if not isinstance(self.last_used_at, Unset):
             last_used_at = self.last_used_at.isoformat()
 
+        wrapped_identity = self.wrapped_identity
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -52,6 +62,8 @@ class Credential:
         )
         if last_used_at is not UNSET:
             field_dict["last_used_at"] = last_used_at
+        if wrapped_identity is not UNSET:
+            field_dict["wrapped_identity"] = wrapped_identity
 
         return field_dict
 
@@ -71,11 +83,14 @@ class Credential:
         else:
             last_used_at = datetime.datetime.fromisoformat(_last_used_at)
 
+        wrapped_identity = d.pop("wrapped_identity", UNSET)
+
         credential = cls(
             id=id,
             nickname=nickname,
             created_at=created_at,
             last_used_at=last_used_at,
+            wrapped_identity=wrapped_identity,
         )
 
         credential.additional_properties = d
