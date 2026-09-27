@@ -26,9 +26,9 @@ from .object_metadata import ObjectMetadata
 from .registration_finish_request import RegistrationFinishRequest
 from .registration_finish_request_credential import RegistrationFinishRequestCredential
 from .registration_options import RegistrationOptions
-from .rename_consumer_request import RenameConsumerRequest
 from .token_metadata import TokenMetadata
 from .token_with_value import TokenWithValue
+from .update_consumer_request import UpdateConsumerRequest
 from .update_object_request import UpdateObjectRequest
 from .used_by import UsedBy
 
@@ -57,9 +57,9 @@ __all__ = (
     "RegistrationFinishRequest",
     "RegistrationFinishRequestCredential",
     "RegistrationOptions",
-    "RenameConsumerRequest",
     "TokenMetadata",
     "TokenWithValue",
+    "UpdateConsumerRequest",
     "UpdateObjectRequest",
     "UsedBy",
 )

@@ -8,6 +8,8 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..types import UNSET, Unset
+
 T = TypeVar("T", bound="ConsumerEntry")
 
 
@@ -20,16 +22,24 @@ class ConsumerEntry:
     Attributes:
         name (str): A distinct consumer name recorded in some object's used_by list.
         secret_count (int): How many stored secret objects' used_by list includes this consumer.
+        public_key (str | Unset): The consumer's registered age public key, safe to store and
+            return server-side since it's public - a private key is never
+            sent to or stored by this API. Absent entirely when no key has
+            been registered for this consumer, rather than present as an
+            error or `null`.
     """
 
     name: str
     secret_count: int
+    public_key: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         name = self.name
 
         secret_count = self.secret_count
+
+        public_key = self.public_key
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -39,6 +49,8 @@ class ConsumerEntry:
                 "secret_count": secret_count,
             }
         )
+        if public_key is not UNSET:
+            field_dict["public_key"] = public_key
 
         return field_dict
 
@@ -49,9 +61,12 @@ class ConsumerEntry:
 
         secret_count = d.pop("secret_count")
 
+        public_key = d.pop("public_key", UNSET)
+
         consumer_entry = cls(
             name=name,
             secret_count=secret_count,
+            public_key=public_key,
         )
 
         consumer_entry.additional_properties = d
