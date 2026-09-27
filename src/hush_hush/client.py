@@ -118,13 +118,18 @@ class Client:
         return response.parsed
 
     def create_object(
-        self, id: str, value: bytes, *, used_by: list[str] | None = None, caller: str | None = None
+        self,
+        slug: str,
+        value: bytes,
+        *,
+        used_by: list[str] | None = None,
+        caller: str | None = None,
     ) -> ObjectMetadata:
-        """Stores an already-sealed value under a new object id. Requires a
-        credential (see `api_key`/`HUSH_HUSH_API_KEY`).
+        """Stores an already-sealed value under a new, caller-chosen slug.
+        Requires a credential (see `api_key`/`HUSH_HUSH_API_KEY`).
 
         Args:
-            id: The new object's id. Must match hush-hush's id pattern
+            slug: The new object's slug. Must match hush-hush's slug pattern
                 (lowercase alphanumeric, `-`/`_`).
             value: The already-sealed (encrypted) value. This SDK never
                 encrypts or decrypts anything — hush-hush stores whatever
@@ -141,10 +146,10 @@ class Client:
         Raises:
             APIError: If the server responds with anything other than 201
                 (for example, 401 for a missing/invalid credential, or 409
-                if an object already exists under that id).
+                if an object already exists under that slug).
         """
         body = _CreateObjectRequestBody(
-            id=id, value=base64.b64encode(value).decode("ascii"), used_by=used_by or UNSET
+            slug=slug, value=base64.b64encode(value).decode("ascii"), used_by=used_by or UNSET
         )
         response = _create_object.sync_detailed(
             client=self._client, body=body, x_caller=caller or UNSET
@@ -153,12 +158,12 @@ class Client:
         assert isinstance(response.parsed, ObjectMetadata)
         return response.parsed
 
-    def get_object(self, id: str, *, caller: str | None = None) -> bytes:
+    def get_object(self, slug: str, *, caller: str | None = None) -> bytes:
         """Fetches an object's sealed ciphertext exactly as stored — this
         SDK never decrypts it, the same as the server. Needs no credential.
 
         Args:
-            id: The object's id.
+            slug: The object's slug.
             caller: Recorded in the audit log as the calling program's
                 self-reported identity. Not verified by the server.
 
@@ -167,19 +172,23 @@ class Client:
 
         Raises:
             APIError: If the server responds with anything other than 200
-                (for example, 404 if no object exists under that id).
+                (for example, 404 if no object exists under that slug).
         """
-        response = _get_object.sync_detailed(id=id, client=self._client, x_caller=caller or UNSET)
+        response = _get_object.sync_detailed(
+            slug=slug, client=self._client, x_caller=caller or UNSET
+        )
         _raise_for_status(response, 200)
         return response.content
 
-    def update_object(self, id: str, value: bytes, *, caller: str | None = None) -> ObjectMetadata:
+    def update_object(
+        self, slug: str, value: bytes, *, caller: str | None = None
+    ) -> ObjectMetadata:
         """Replaces the stored ciphertext for an existing object. The
-        object's id and used-by metadata are unchanged. Requires a
+        object's slug and used-by metadata are unchanged. Requires a
         credential.
 
         Args:
-            id: The existing object's id.
+            slug: The existing object's slug.
             value: The new already-sealed (encrypted) value.
             caller: Recorded in the audit log as the calling program's
                 self-reported identity. Not verified by the server.
@@ -193,18 +202,18 @@ class Client:
         """
         body = _UpdateObjectRequestBody(value=base64.b64encode(value).decode("ascii"))
         response = _update_object.sync_detailed(
-            id=id, client=self._client, body=body, x_caller=caller or UNSET
+            slug=slug, client=self._client, body=body, x_caller=caller or UNSET
         )
         _raise_for_status(response, 200)
         assert isinstance(response.parsed, ObjectMetadata)
         return response.parsed
 
-    def delete_object(self, id: str, *, caller: str | None = None) -> None:
-        """Permanently removes an object. A subsequent get by this id
+    def delete_object(self, slug: str, *, caller: str | None = None) -> None:
+        """Permanently removes an object. A subsequent get by this slug
         returns a 404 APIError. Requires a credential.
 
         Args:
-            id: The object's id.
+            slug: The object's slug.
             caller: Recorded in the audit log as the calling program's
                 self-reported identity. Not verified by the server.
 
@@ -213,25 +222,25 @@ class Client:
                 (for example, 401 or 404).
         """
         response = _delete_object.sync_detailed(
-            id=id, client=self._client, x_caller=caller or UNSET
+            slug=slug, client=self._client, x_caller=caller or UNSET
         )
         _raise_for_status(response, 204)
 
-    def get_object_used_by(self, id: str) -> UsedBy:
+    def get_object_used_by(self, slug: str) -> UsedBy:
         """Returns the recorded list of consumers for an object — the "what
         depends on this" mapping set at creation. Needs no credential.
 
         Args:
-            id: The object's id.
+            slug: The object's slug.
 
         Returns:
             The object's recorded consumers.
 
         Raises:
             APIError: If the server responds with anything other than 200
-                (for example, 404 if no object exists under that id).
+                (for example, 404 if no object exists under that slug).
         """
-        response = _get_object_used_by.sync_detailed(id=id, client=self._client)
+        response = _get_object_used_by.sync_detailed(slug=slug, client=self._client)
         _raise_for_status(response, 200)
         assert isinstance(response.parsed, UsedBy)
         return response.parsed
@@ -312,11 +321,16 @@ class AsyncClient:
         return response.parsed
 
     async def create_object(
-        self, id: str, value: bytes, *, used_by: list[str] | None = None, caller: str | None = None
+        self,
+        slug: str,
+        value: bytes,
+        *,
+        used_by: list[str] | None = None,
+        caller: str | None = None,
     ) -> ObjectMetadata:
         """See [Client.create_object][hush_hush.Client.create_object]."""
         body = _CreateObjectRequestBody(
-            id=id, value=base64.b64encode(value).decode("ascii"), used_by=used_by or UNSET
+            slug=slug, value=base64.b64encode(value).decode("ascii"), used_by=used_by or UNSET
         )
         response = await _create_object.asyncio_detailed(
             client=self._client, body=body, x_caller=caller or UNSET
@@ -325,36 +339,36 @@ class AsyncClient:
         assert isinstance(response.parsed, ObjectMetadata)
         return response.parsed
 
-    async def get_object(self, id: str, *, caller: str | None = None) -> bytes:
+    async def get_object(self, slug: str, *, caller: str | None = None) -> bytes:
         """See [Client.get_object][hush_hush.Client.get_object]."""
         response = await _get_object.asyncio_detailed(
-            id=id, client=self._client, x_caller=caller or UNSET
+            slug=slug, client=self._client, x_caller=caller or UNSET
         )
         _raise_for_status(response, 200)
         return response.content
 
     async def update_object(
-        self, id: str, value: bytes, *, caller: str | None = None
+        self, slug: str, value: bytes, *, caller: str | None = None
     ) -> ObjectMetadata:
         """See [Client.update_object][hush_hush.Client.update_object]."""
         body = _UpdateObjectRequestBody(value=base64.b64encode(value).decode("ascii"))
         response = await _update_object.asyncio_detailed(
-            id=id, client=self._client, body=body, x_caller=caller or UNSET
+            slug=slug, client=self._client, body=body, x_caller=caller or UNSET
         )
         _raise_for_status(response, 200)
         assert isinstance(response.parsed, ObjectMetadata)
         return response.parsed
 
-    async def delete_object(self, id: str, *, caller: str | None = None) -> None:
+    async def delete_object(self, slug: str, *, caller: str | None = None) -> None:
         """See [Client.delete_object][hush_hush.Client.delete_object]."""
         response = await _delete_object.asyncio_detailed(
-            id=id, client=self._client, x_caller=caller or UNSET
+            slug=slug, client=self._client, x_caller=caller or UNSET
         )
         _raise_for_status(response, 204)
 
-    async def get_object_used_by(self, id: str) -> UsedBy:
+    async def get_object_used_by(self, slug: str) -> UsedBy:
         """See [Client.get_object_used_by][hush_hush.Client.get_object_used_by]."""
-        response = await _get_object_used_by.asyncio_detailed(id=id, client=self._client)
+        response = await _get_object_used_by.asyncio_detailed(slug=slug, client=self._client)
         _raise_for_status(response, 200)
         assert isinstance(response.parsed, UsedBy)
         return response.parsed

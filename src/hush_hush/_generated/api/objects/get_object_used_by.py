@@ -14,13 +14,13 @@ from ...types import Response
 
 
 def _get_kwargs(
-    id: str,
+    slug: str,
 ) -> dict[str, Any]:
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/objects/{id}/used-by".format(
-            id=quote(str(id), safe=""),
+        "url": "/objects/{slug}/used-by".format(
+            slug=quote(str(slug), safe=""),
         ),
     }
 
@@ -58,7 +58,7 @@ def _build_response(
 
 
 def sync_detailed(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient | Client,
 ) -> Response[Error | UsedBy]:
@@ -69,7 +69,11 @@ def sync_detailed(
     than left as an implied convention.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -80,7 +84,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
-        id=id,
+        slug=slug,
     )
 
     response = client.get_httpx_client().request(
@@ -91,7 +95,7 @@ def sync_detailed(
 
 
 def sync(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient | Client,
 ) -> Error | UsedBy | None:
@@ -102,7 +106,11 @@ def sync(
     than left as an implied convention.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -113,13 +121,13 @@ def sync(
     """
 
     return sync_detailed(
-        id=id,
+        slug=slug,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient | Client,
 ) -> Response[Error | UsedBy]:
@@ -130,7 +138,11 @@ async def asyncio_detailed(
     than left as an implied convention.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -141,7 +153,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
-        id=id,
+        slug=slug,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -150,7 +162,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient | Client,
 ) -> Error | UsedBy | None:
@@ -161,7 +173,11 @@ async def asyncio(
     than left as an implied convention.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -173,7 +189,7 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
-            id=id,
+            slug=slug,
             client=client,
         )
     ).parsed

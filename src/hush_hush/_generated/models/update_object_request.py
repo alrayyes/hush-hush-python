@@ -22,10 +22,26 @@ class UpdateObjectRequest:
             object. Set at creation, and replaceable later via
             UpdateObjectRequest's own used_by field - a plain value update
             that omits it leaves the list as it was.
+        keep_readable_copy (bool | Unset): Requests that the owner's own escrowed identity public key be
+            included as an additional decrypt recipient, alongside whatever
+            consumer recipients the client already resolved
+            (specs/secret-objects/spec.md's "Opt-in owner-recipient inclusion
+            at create time" requirement). Omitting this field (the default)
+            means the owner is not added as a recipient - this service never
+            makes ownership imply decrypt access on its own.
+
+            This is a client-side sealing instruction, not something this
+            service enforces or verifies: it never decrypts, and never adds a
+            recipient to `value` itself - the caller has to add the owner's
+            public key (`GET /auth/identity`) to its own recipient list before
+            sealing. A create or update response echoes back exactly what that
+            same request asked for; it isn't persisted, so a later fetch never
+            carries this field.
     """
 
     value: str
     used_by: list[str] | Unset = UNSET
+    keep_readable_copy: bool | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -34,6 +50,8 @@ class UpdateObjectRequest:
         used_by: list[str] | Unset = UNSET
         if not isinstance(self.used_by, Unset):
             used_by = self.used_by
+
+        keep_readable_copy = self.keep_readable_copy
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -44,6 +62,8 @@ class UpdateObjectRequest:
         )
         if used_by is not UNSET:
             field_dict["used_by"] = used_by
+        if keep_readable_copy is not UNSET:
+            field_dict["keep_readable_copy"] = keep_readable_copy
 
         return field_dict
 
@@ -54,9 +74,12 @@ class UpdateObjectRequest:
 
         used_by = cast(list[str], d.pop("used_by", UNSET))
 
+        keep_readable_copy = d.pop("keep_readable_copy", UNSET)
+
         update_object_request = cls(
             value=value,
             used_by=used_by,
+            keep_readable_copy=keep_readable_copy,
         )
 
         update_object_request.additional_properties = d
