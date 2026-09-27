@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.0.0](https://github.com/alrayyes/hush-hush-python/compare/v3.0.16...v4.0.0) (2026-09-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* regenerate client from updated hush-hush spec
+
+### Bug Fixes
+
+* regenerate client from updated hush-hush spec ([ecbfbdb](https://github.com/alrayyes/hush-hush-python/commit/ecbfbdb3b76291c0a1700ebcd12c6d5880d7b96e))
+* rename object id to slug in hand-written client and tests ([0767c33](https://github.com/alrayyes/hush-hush-python/commit/0767c33699afb3686d37a749605f19f3d2f63787))
+
 ## [3.0.16](https://github.com/alrayyes/hush-hush-python/compare/v3.0.15...v3.0.16) (2026-09-27)
 
 
