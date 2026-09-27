@@ -14,7 +14,7 @@ from ...types import UNSET, File, Response, Unset
 
 
 def _get_kwargs(
-    id: str,
+    slug: str,
     *,
     x_caller: str | Unset = UNSET,
 ) -> dict[str, Any]:
@@ -24,8 +24,8 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/objects/{id}".format(
-            id=quote(str(id), safe=""),
+        "url": "/objects/{slug}".format(
+            slug=quote(str(slug), safe=""),
         ),
     }
 
@@ -64,7 +64,7 @@ def _build_response(
 
 
 def sync_detailed(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient | Client,
     x_caller: str | Unset = UNSET,
@@ -73,12 +73,16 @@ def sync_detailed(
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
     the service never decrypts it. Needs no authorization beyond
-    knowing the id: v1's confidentiality boundary is entirely "who
+    knowing the slug: v1's confidentiality boundary is entirely "who
     holds a matching private key," and every fetch is recorded to the
     audit log regardless of who made it.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
 
     Raises:
@@ -90,7 +94,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
-        id=id,
+        slug=slug,
         x_caller=x_caller,
     )
 
@@ -102,7 +106,7 @@ def sync_detailed(
 
 
 def sync(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient | Client,
     x_caller: str | Unset = UNSET,
@@ -111,12 +115,16 @@ def sync(
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
     the service never decrypts it. Needs no authorization beyond
-    knowing the id: v1's confidentiality boundary is entirely "who
+    knowing the slug: v1's confidentiality boundary is entirely "who
     holds a matching private key," and every fetch is recorded to the
     audit log regardless of who made it.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
 
     Raises:
@@ -128,14 +136,14 @@ def sync(
     """
 
     return sync_detailed(
-        id=id,
+        slug=slug,
         client=client,
         x_caller=x_caller,
     ).parsed
 
 
 async def asyncio_detailed(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient | Client,
     x_caller: str | Unset = UNSET,
@@ -144,12 +152,16 @@ async def asyncio_detailed(
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
     the service never decrypts it. Needs no authorization beyond
-    knowing the id: v1's confidentiality boundary is entirely "who
+    knowing the slug: v1's confidentiality boundary is entirely "who
     holds a matching private key," and every fetch is recorded to the
     audit log regardless of who made it.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
 
     Raises:
@@ -161,7 +173,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
-        id=id,
+        slug=slug,
         x_caller=x_caller,
     )
 
@@ -171,7 +183,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient | Client,
     x_caller: str | Unset = UNSET,
@@ -180,12 +192,16 @@ async def asyncio(
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
     the service never decrypts it. Needs no authorization beyond
-    knowing the id: v1's confidentiality boundary is entirely "who
+    knowing the slug: v1's confidentiality boundary is entirely "who
     holds a matching private key," and every fetch is recorded to the
     audit log regardless of who made it.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
 
     Raises:
@@ -198,7 +214,7 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
-            id=id,
+            slug=slug,
             client=client,
             x_caller=x_caller,
         )

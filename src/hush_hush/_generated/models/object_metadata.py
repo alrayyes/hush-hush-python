@@ -17,22 +17,42 @@ T = TypeVar("T", bound="ObjectMetadata")
 class ObjectMetadata:
     """
     Attributes:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         used_by (list[str] | Unset): The consumers (repos or hosts) recorded as depending on this
             object. Set at creation, and replaceable later via
             UpdateObjectRequest's own used_by field - a plain value update
             that omits it leaves the list as it was.
         description (str | Unset): A free-text label set at creation, for a reader who only knows the
-            id. Fixed at creation - there is no way to change it later.
+            slug. Fixed at creation - there is no way to change it later.
+        keep_readable_copy (bool | Unset): Requests that the owner's own escrowed identity public key be
+            included as an additional decrypt recipient, alongside whatever
+            consumer recipients the client already resolved
+            (specs/secret-objects/spec.md's "Opt-in owner-recipient inclusion
+            at create time" requirement). Omitting this field (the default)
+            means the owner is not added as a recipient - this service never
+            makes ownership imply decrypt access on its own.
+
+            This is a client-side sealing instruction, not something this
+            service enforces or verifies: it never decrypts, and never adds a
+            recipient to `value` itself - the caller has to add the owner's
+            public key (`GET /auth/identity`) to its own recipient list before
+            sealing. A create or update response echoes back exactly what that
+            same request asked for; it isn't persisted, so a later fetch never
+            carries this field.
     """
 
-    id: str
+    slug: str
     used_by: list[str] | Unset = UNSET
     description: str | Unset = UNSET
+    keep_readable_copy: bool | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        id = self.id
+        slug = self.slug
 
         used_by: list[str] | Unset = UNSET
         if not isinstance(self.used_by, Unset):
@@ -40,33 +60,40 @@ class ObjectMetadata:
 
         description = self.description
 
+        keep_readable_copy = self.keep_readable_copy
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "id": id,
+                "slug": slug,
             }
         )
         if used_by is not UNSET:
             field_dict["used_by"] = used_by
         if description is not UNSET:
             field_dict["description"] = description
+        if keep_readable_copy is not UNSET:
+            field_dict["keep_readable_copy"] = keep_readable_copy
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        id = d.pop("id")
+        slug = d.pop("slug")
 
         used_by = cast(list[str], d.pop("used_by", UNSET))
 
         description = d.pop("description", UNSET)
 
+        keep_readable_copy = d.pop("keep_readable_copy", UNSET)
+
         object_metadata = cls(
-            id=id,
+            slug=slug,
             used_by=used_by,
             description=description,
+            keep_readable_copy=keep_readable_copy,
         )
 
         object_metadata.additional_properties = d

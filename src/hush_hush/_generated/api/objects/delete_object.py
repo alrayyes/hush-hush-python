@@ -13,7 +13,7 @@ from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
-    id: str,
+    slug: str,
     *,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
@@ -27,8 +27,8 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "delete",
-        "url": "/objects/{id}".format(
-            id=quote(str(id), safe=""),
+        "url": "/objects/{slug}".format(
+            slug=quote(str(slug), safe=""),
         ),
     }
 
@@ -71,7 +71,7 @@ def _build_response(
 
 
 def sync_detailed(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
@@ -79,12 +79,16 @@ def sync_detailed(
 ) -> Response[Any | Error]:
     """Remove an object
 
-     Permanently removes an object. A subsequent fetch by this id
+     Permanently removes an object. A subsequent fetch by this slug
     returns 404. A session-authenticated call needs its CSRF token
     too; a bearer-token-authenticated one doesn't.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
 
@@ -97,7 +101,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
-        id=id,
+        slug=slug,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     )
@@ -110,7 +114,7 @@ def sync_detailed(
 
 
 def sync(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
@@ -118,12 +122,16 @@ def sync(
 ) -> Any | Error | None:
     """Remove an object
 
-     Permanently removes an object. A subsequent fetch by this id
+     Permanently removes an object. A subsequent fetch by this slug
     returns 404. A session-authenticated call needs its CSRF token
     too; a bearer-token-authenticated one doesn't.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
 
@@ -136,7 +144,7 @@ def sync(
     """
 
     return sync_detailed(
-        id=id,
+        slug=slug,
         client=client,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
@@ -144,7 +152,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
@@ -152,12 +160,16 @@ async def asyncio_detailed(
 ) -> Response[Any | Error]:
     """Remove an object
 
-     Permanently removes an object. A subsequent fetch by this id
+     Permanently removes an object. A subsequent fetch by this slug
     returns 404. A session-authenticated call needs its CSRF token
     too; a bearer-token-authenticated one doesn't.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
 
@@ -170,7 +182,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
-        id=id,
+        slug=slug,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     )
@@ -181,7 +193,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
@@ -189,12 +201,16 @@ async def asyncio(
 ) -> Any | Error | None:
     """Remove an object
 
-     Permanently removes an object. A subsequent fetch by this id
+     Permanently removes an object. A subsequent fetch by this slug
     returns 404. A session-authenticated call needs its CSRF token
     too; a bearer-token-authenticated one doesn't.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
 
@@ -208,7 +224,7 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
-            id=id,
+            slug=slug,
             client=client,
             x_caller=x_caller,
             x_csrf_token=x_csrf_token,

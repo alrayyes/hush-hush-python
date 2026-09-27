@@ -15,7 +15,7 @@ from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
-    id: str,
+    slug: str,
     *,
     body: UpdateObjectRequest,
     x_caller: str | Unset = UNSET,
@@ -30,8 +30,8 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "put",
-        "url": "/objects/{id}".format(
-            id=quote(str(id), safe=""),
+        "url": "/objects/{slug}".format(
+            slug=quote(str(slug), safe=""),
         ),
     }
 
@@ -79,7 +79,7 @@ def _build_response(
 
 
 def sync_detailed(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
@@ -89,7 +89,7 @@ def sync_detailed(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id and description metadata are always preserved
+    object's slug and description metadata are always preserved
     unchanged. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
     recorded consumers, the same way creating an object sets it. A
@@ -97,7 +97,11 @@ def sync_detailed(
     bearer-token-authenticated one doesn't.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -111,7 +115,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
-        id=id,
+        slug=slug,
         body=body,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
@@ -125,7 +129,7 @@ def sync_detailed(
 
 
 def sync(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
@@ -135,7 +139,7 @@ def sync(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id and description metadata are always preserved
+    object's slug and description metadata are always preserved
     unchanged. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
     recorded consumers, the same way creating an object sets it. A
@@ -143,7 +147,11 @@ def sync(
     bearer-token-authenticated one doesn't.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -157,7 +165,7 @@ def sync(
     """
 
     return sync_detailed(
-        id=id,
+        slug=slug,
         client=client,
         body=body,
         x_caller=x_caller,
@@ -166,7 +174,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
@@ -176,7 +184,7 @@ async def asyncio_detailed(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id and description metadata are always preserved
+    object's slug and description metadata are always preserved
     unchanged. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
     recorded consumers, the same way creating an object sets it. A
@@ -184,7 +192,11 @@ async def asyncio_detailed(
     bearer-token-authenticated one doesn't.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -198,7 +210,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
-        id=id,
+        slug=slug,
         body=body,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
@@ -210,7 +222,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    id: str,
+    slug: str,
     *,
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
@@ -220,7 +232,7 @@ async def asyncio(
     """Rotate an object's value
 
      Replaces the stored ciphertext for an existing object. The
-    object's id and description metadata are always preserved
+    object's slug and description metadata are always preserved
     unchanged. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
     recorded consumers, the same way creating an object sets it. A
@@ -228,7 +240,11 @@ async def asyncio(
     bearer-token-authenticated one doesn't.
 
     Args:
-        id (str):
+        slug (str): A caller-chosen, unique identifier for an object - what every
+            documented request path (URL, CLI, API) addresses it by. The
+            object's internal id is a separate, opaque value never exposed to
+            or accepted from a caller (specs/secret-objects/spec.md's
+            "Internal id decoupled from user-facing slug" requirement).
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -243,7 +259,7 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
-            id=id,
+            slug=slug,
             client=client,
             body=body,
             x_caller=x_caller,

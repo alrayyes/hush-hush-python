@@ -83,12 +83,13 @@ def sync_detailed(
 ) -> Response[Error | ObjectMetadata]:
     """Create a new sealed object
 
-     Stores an already-sealed value under a new object id. The value is
-    opaque ciphertext to this service - it is never decrypted, and the
-    service has no notion of which recipients it was sealed to. A
-    session-authenticated call needs its CSRF token too; a
-    bearer-token-authenticated one doesn't, since there's no session
-    to have one.
+     Stores an already-sealed value under a new, caller-chosen slug -
+    the object's own internal id is generated server-side and never
+    returned as something addressable. The value is opaque ciphertext
+    to this service - it is never decrypted, and the service has no
+    notion of which recipients it was sealed to. A session-
+    authenticated call needs its CSRF token too; a bearer-token-
+    authenticated one doesn't, since there's no session to have one.
 
     Args:
         x_caller (str | Unset):
@@ -125,12 +126,13 @@ def sync(
 ) -> Error | ObjectMetadata | None:
     """Create a new sealed object
 
-     Stores an already-sealed value under a new object id. The value is
-    opaque ciphertext to this service - it is never decrypted, and the
-    service has no notion of which recipients it was sealed to. A
-    session-authenticated call needs its CSRF token too; a
-    bearer-token-authenticated one doesn't, since there's no session
-    to have one.
+     Stores an already-sealed value under a new, caller-chosen slug -
+    the object's own internal id is generated server-side and never
+    returned as something addressable. The value is opaque ciphertext
+    to this service - it is never decrypted, and the service has no
+    notion of which recipients it was sealed to. A session-
+    authenticated call needs its CSRF token too; a bearer-token-
+    authenticated one doesn't, since there's no session to have one.
 
     Args:
         x_caller (str | Unset):
@@ -162,12 +164,13 @@ async def asyncio_detailed(
 ) -> Response[Error | ObjectMetadata]:
     """Create a new sealed object
 
-     Stores an already-sealed value under a new object id. The value is
-    opaque ciphertext to this service - it is never decrypted, and the
-    service has no notion of which recipients it was sealed to. A
-    session-authenticated call needs its CSRF token too; a
-    bearer-token-authenticated one doesn't, since there's no session
-    to have one.
+     Stores an already-sealed value under a new, caller-chosen slug -
+    the object's own internal id is generated server-side and never
+    returned as something addressable. The value is opaque ciphertext
+    to this service - it is never decrypted, and the service has no
+    notion of which recipients it was sealed to. A session-
+    authenticated call needs its CSRF token too; a bearer-token-
+    authenticated one doesn't, since there's no session to have one.
 
     Args:
         x_caller (str | Unset):
@@ -202,12 +205,13 @@ async def asyncio(
 ) -> Error | ObjectMetadata | None:
     """Create a new sealed object
 
-     Stores an already-sealed value under a new object id. The value is
-    opaque ciphertext to this service - it is never decrypted, and the
-    service has no notion of which recipients it was sealed to. A
-    session-authenticated call needs its CSRF token too; a
-    bearer-token-authenticated one doesn't, since there's no session
-    to have one.
+     Stores an already-sealed value under a new, caller-chosen slug -
+    the object's own internal id is generated server-side and never
+    returned as something addressable. The value is opaque ciphertext
+    to this service - it is never decrypted, and the service has no
+    notion of which recipients it was sealed to. A session-
+    authenticated call needs its CSRF token too; a bearer-token-
+    authenticated one doesn't, since there's no session to have one.
 
     Args:
         x_caller (str | Unset):
