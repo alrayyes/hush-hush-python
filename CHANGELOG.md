@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.15](https://github.com/alrayyes/hush-hush-python/compare/v3.0.14...v3.0.15) (2026-09-27)
+
+
+### Documentation
+
+* link generated model types referenced from Client's public surface ([00e6ae9](https://github.com/alrayyes/hush-hush-python/commit/00e6ae90b62ce198fb951b8906f448e6d5380afb))
+* link generated model types referenced from Client's public surface ([0204b51](https://github.com/alrayyes/hush-hush-python/commit/0204b5104ae97d859ce2149e420ea41ae693f471)), closes [#142](https://github.com/alrayyes/hush-hush-python/issues/142)
+
 ## [3.0.14](https://github.com/alrayyes/hush-hush-python/compare/v3.0.13...v3.0.14) (2026-09-26)
 
 
