@@ -109,9 +109,10 @@ def sync_detailed(
     call site depends on this shape staying unchanged. Given any of
     the three, it instead returns a `ConsumersPage`: one page of
     consumers whose name contains `q` (case-insensitive) when given,
-    each with a count of the secret objects that reference it, plus
-    the total matching count so a caller can render page-number
-    navigation.
+    each with a count of the secret objects that reference it and its
+    registered age public key when one has been set (absent
+    otherwise), plus the total matching count so a caller can render
+    page-number navigation.
 
     Args:
         q (str | Unset):
@@ -159,9 +160,10 @@ def sync(
     call site depends on this shape staying unchanged. Given any of
     the three, it instead returns a `ConsumersPage`: one page of
     consumers whose name contains `q` (case-insensitive) when given,
-    each with a count of the secret objects that reference it, plus
-    the total matching count so a caller can render page-number
-    navigation.
+    each with a count of the secret objects that reference it and its
+    registered age public key when one has been set (absent
+    otherwise), plus the total matching count so a caller can render
+    page-number navigation.
 
     Args:
         q (str | Unset):
@@ -204,9 +206,10 @@ async def asyncio_detailed(
     call site depends on this shape staying unchanged. Given any of
     the three, it instead returns a `ConsumersPage`: one page of
     consumers whose name contains `q` (case-insensitive) when given,
-    each with a count of the secret objects that reference it, plus
-    the total matching count so a caller can render page-number
-    navigation.
+    each with a count of the secret objects that reference it and its
+    registered age public key when one has been set (absent
+    otherwise), plus the total matching count so a caller can render
+    page-number navigation.
 
     Args:
         q (str | Unset):
@@ -252,9 +255,10 @@ async def asyncio(
     call site depends on this shape staying unchanged. Given any of
     the three, it instead returns a `ConsumersPage`: one page of
     consumers whose name contains `q` (case-insensitive) when given,
-    each with a count of the secret objects that reference it, plus
-    the total matching count so a caller can render page-number
-    navigation.
+    each with a count of the secret objects that reference it and its
+    registered age public key when one has been set (absent
+    otherwise), plus the total matching count so a caller can render
+    page-number navigation.
 
     Args:
         q (str | Unset):
