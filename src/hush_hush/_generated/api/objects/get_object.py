@@ -41,6 +41,11 @@ def _parse_response(
 
         return response_200
 
+    if response.status_code == 401:
+        response_401 = Error.from_dict(response.json())
+
+        return response_401
+
     if response.status_code == 404:
         response_404 = Error.from_dict(response.json())
 
@@ -66,16 +71,24 @@ def _build_response(
 def sync_detailed(
     slug: str,
     *,
-    client: AuthenticatedClient | Client,
+    client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
 ) -> Response[Error | File]:
     """Fetch an object's sealed ciphertext
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
-    the service never decrypts it. Needs no authorization beyond
-    knowing the slug: v1's confidentiality boundary is entirely "who
-    holds a matching private key," and every fetch is recorded to the
-    audit log regardless of who made it.
+    the service never decrypts it. Requires a write bearer token, an
+    admin session, or a consumer read token whose bound consumer
+    appears in this object's `used_by` list - the confidentiality
+    boundary is still "who holds a matching private key," this adds
+    an access-control layer on top of it
+    (openspec/changes/consumer-read-tokens/proposal.md). Every fetch
+    is recorded to the audit log regardless of which credential
+    authenticated it.
+
+    A consumer token presented for an object outside its scope gets
+    the same 404 an unknown slug would, not 403 - so it can't be used
+    to enumerate which other slugs exist.
 
     Args:
         slug (str): A caller-chosen, unique identifier for an object - what every
@@ -108,16 +121,24 @@ def sync_detailed(
 def sync(
     slug: str,
     *,
-    client: AuthenticatedClient | Client,
+    client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
 ) -> Error | File | None:
     """Fetch an object's sealed ciphertext
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
-    the service never decrypts it. Needs no authorization beyond
-    knowing the slug: v1's confidentiality boundary is entirely "who
-    holds a matching private key," and every fetch is recorded to the
-    audit log regardless of who made it.
+    the service never decrypts it. Requires a write bearer token, an
+    admin session, or a consumer read token whose bound consumer
+    appears in this object's `used_by` list - the confidentiality
+    boundary is still "who holds a matching private key," this adds
+    an access-control layer on top of it
+    (openspec/changes/consumer-read-tokens/proposal.md). Every fetch
+    is recorded to the audit log regardless of which credential
+    authenticated it.
+
+    A consumer token presented for an object outside its scope gets
+    the same 404 an unknown slug would, not 403 - so it can't be used
+    to enumerate which other slugs exist.
 
     Args:
         slug (str): A caller-chosen, unique identifier for an object - what every
@@ -145,16 +166,24 @@ def sync(
 async def asyncio_detailed(
     slug: str,
     *,
-    client: AuthenticatedClient | Client,
+    client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
 ) -> Response[Error | File]:
     """Fetch an object's sealed ciphertext
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
-    the service never decrypts it. Needs no authorization beyond
-    knowing the slug: v1's confidentiality boundary is entirely "who
-    holds a matching private key," and every fetch is recorded to the
-    audit log regardless of who made it.
+    the service never decrypts it. Requires a write bearer token, an
+    admin session, or a consumer read token whose bound consumer
+    appears in this object's `used_by` list - the confidentiality
+    boundary is still "who holds a matching private key," this adds
+    an access-control layer on top of it
+    (openspec/changes/consumer-read-tokens/proposal.md). Every fetch
+    is recorded to the audit log regardless of which credential
+    authenticated it.
+
+    A consumer token presented for an object outside its scope gets
+    the same 404 an unknown slug would, not 403 - so it can't be used
+    to enumerate which other slugs exist.
 
     Args:
         slug (str): A caller-chosen, unique identifier for an object - what every
@@ -185,16 +214,24 @@ async def asyncio_detailed(
 async def asyncio(
     slug: str,
     *,
-    client: AuthenticatedClient | Client,
+    client: AuthenticatedClient,
     x_caller: str | Unset = UNSET,
 ) -> Error | File | None:
     """Fetch an object's sealed ciphertext
 
      Returns the stored ciphertext exactly as sealed, byte for byte -
-    the service never decrypts it. Needs no authorization beyond
-    knowing the slug: v1's confidentiality boundary is entirely "who
-    holds a matching private key," and every fetch is recorded to the
-    audit log regardless of who made it.
+    the service never decrypts it. Requires a write bearer token, an
+    admin session, or a consumer read token whose bound consumer
+    appears in this object's `used_by` list - the confidentiality
+    boundary is still "who holds a matching private key," this adds
+    an access-control layer on top of it
+    (openspec/changes/consumer-read-tokens/proposal.md). Every fetch
+    is recorded to the audit log regardless of which credential
+    authenticated it.
+
+    A consumer token presented for an object outside its scope gets
+    the same 404 an unknown slug would, not 403 - so it can't be used
+    to enumerate which other slugs exist.
 
     Args:
         slug (str): A caller-chosen, unique identifier for an object - what every
