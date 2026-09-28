@@ -10,16 +10,17 @@ from ...client import AuthenticatedClient, Client
 from ...models.consumer_token_with_value import ConsumerTokenWithValue
 from ...models.create_consumer_token_request import CreateConsumerTokenRequest
 from ...models.error import Error
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
     body: CreateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
-    headers["X-CSRF-Token"] = x_csrf_token
+    if not isinstance(x_csrf_token, Unset):
+        headers["X-CSRF-Token"] = x_csrf_token
 
     _kwargs: dict[str, Any] = {
         "method": "post",
@@ -73,16 +74,22 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: CreateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[ConsumerTokenWithValue | Error]:
     """Create a consumer read token
 
      Issues a new read token scoped to one consumer name. The raw
     token value is returned here only - it is never recoverable
-    again once this response is read.
+    again once this response is read. A write bearer token may mint
+    one too, not only an admin session - a narrowing delegation,
+    since the resulting token can only ever read as far as its one
+    bound consumer, never as far as the write token that issued it
+    (alrayyes/hush-hush#467). A session-authenticated call needs its
+    CSRF token too; a bearer-token-authenticated one doesn't, since
+    there's no session to have one.
 
     Args:
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
         body (CreateConsumerTokenRequest):
 
     Raises:
@@ -109,16 +116,22 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: CreateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> ConsumerTokenWithValue | Error | None:
     """Create a consumer read token
 
      Issues a new read token scoped to one consumer name. The raw
     token value is returned here only - it is never recoverable
-    again once this response is read.
+    again once this response is read. A write bearer token may mint
+    one too, not only an admin session - a narrowing delegation,
+    since the resulting token can only ever read as far as its one
+    bound consumer, never as far as the write token that issued it
+    (alrayyes/hush-hush#467). A session-authenticated call needs its
+    CSRF token too; a bearer-token-authenticated one doesn't, since
+    there's no session to have one.
 
     Args:
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
         body (CreateConsumerTokenRequest):
 
     Raises:
@@ -140,16 +153,22 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: CreateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[ConsumerTokenWithValue | Error]:
     """Create a consumer read token
 
      Issues a new read token scoped to one consumer name. The raw
     token value is returned here only - it is never recoverable
-    again once this response is read.
+    again once this response is read. A write bearer token may mint
+    one too, not only an admin session - a narrowing delegation,
+    since the resulting token can only ever read as far as its one
+    bound consumer, never as far as the write token that issued it
+    (alrayyes/hush-hush#467). A session-authenticated call needs its
+    CSRF token too; a bearer-token-authenticated one doesn't, since
+    there's no session to have one.
 
     Args:
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
         body (CreateConsumerTokenRequest):
 
     Raises:
@@ -174,16 +193,22 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: CreateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> ConsumerTokenWithValue | Error | None:
     """Create a consumer read token
 
      Issues a new read token scoped to one consumer name. The raw
     token value is returned here only - it is never recoverable
-    again once this response is read.
+    again once this response is read. A write bearer token may mint
+    one too, not only an admin session - a narrowing delegation,
+    since the resulting token can only ever read as far as its one
+    bound consumer, never as far as the write token that issued it
+    (alrayyes/hush-hush#467). A session-authenticated call needs its
+    CSRF token too; a bearer-token-authenticated one doesn't, since
+    there's no session to have one.
 
     Args:
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
         body (CreateConsumerTokenRequest):
 
     Raises:

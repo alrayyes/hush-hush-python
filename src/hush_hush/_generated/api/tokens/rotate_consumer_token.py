@@ -11,17 +11,18 @@ from ...client import AuthenticatedClient, Client
 from ...models.consumer_token_with_value import ConsumerTokenWithValue
 from ...models.error import Error
 from ...models.rotate_consumer_token_request import RotateConsumerTokenRequest
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     id: str,
     *,
     body: RotateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
-    headers["X-CSRF-Token"] = x_csrf_token
+    if not isinstance(x_csrf_token, Unset):
+        headers["X-CSRF-Token"] = x_csrf_token
 
     _kwargs: dict[str, Any] = {
         "method": "post",
@@ -83,7 +84,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: RotateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[ConsumerTokenWithValue | Error]:
     """Rotate a consumer read token
 
@@ -95,11 +96,12 @@ def sync_detailed(
     Unlike `revokeConsumerToken`, an id that's unknown, already
     revoked, or already expired is an error: a rotate response
     promises the caller a working new secret, and there's no valid
-    token to hand one to.
+    token to hand one to. A write bearer token may rotate one too,
+    the same as it may create one (alrayyes/hush-hush#467).
 
     Args:
         id (str):
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
         body (RotateConsumerTokenRequest):
 
     Raises:
@@ -128,7 +130,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: RotateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> ConsumerTokenWithValue | Error | None:
     """Rotate a consumer read token
 
@@ -140,11 +142,12 @@ def sync(
     Unlike `revokeConsumerToken`, an id that's unknown, already
     revoked, or already expired is an error: a rotate response
     promises the caller a working new secret, and there's no valid
-    token to hand one to.
+    token to hand one to. A write bearer token may rotate one too,
+    the same as it may create one (alrayyes/hush-hush#467).
 
     Args:
         id (str):
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
         body (RotateConsumerTokenRequest):
 
     Raises:
@@ -168,7 +171,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: RotateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[ConsumerTokenWithValue | Error]:
     """Rotate a consumer read token
 
@@ -180,11 +183,12 @@ async def asyncio_detailed(
     Unlike `revokeConsumerToken`, an id that's unknown, already
     revoked, or already expired is an error: a rotate response
     promises the caller a working new secret, and there's no valid
-    token to hand one to.
+    token to hand one to. A write bearer token may rotate one too,
+    the same as it may create one (alrayyes/hush-hush#467).
 
     Args:
         id (str):
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
         body (RotateConsumerTokenRequest):
 
     Raises:
@@ -211,7 +215,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: RotateConsumerTokenRequest,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> ConsumerTokenWithValue | Error | None:
     """Rotate a consumer read token
 
@@ -223,11 +227,12 @@ async def asyncio(
     Unlike `revokeConsumerToken`, an id that's unknown, already
     revoked, or already expired is an error: a rotate response
     promises the caller a working new secret, and there's no valid
-    token to hand one to.
+    token to hand one to. A write bearer token may rotate one too,
+    the same as it may create one (alrayyes/hush-hush#467).
 
     Args:
         id (str):
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
         body (RotateConsumerTokenRequest):
 
     Raises:
