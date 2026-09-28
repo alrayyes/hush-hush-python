@@ -9,16 +9,17 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.error import Error
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     id: str,
     *,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
-    headers["X-CSRF-Token"] = x_csrf_token
+    if not isinstance(x_csrf_token, Unset):
+        headers["X-CSRF-Token"] = x_csrf_token
 
     _kwargs: dict[str, Any] = {
         "method": "delete",
@@ -74,7 +75,7 @@ def sync_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[Any | Error]:
     """Permanently delete a dead consumer read token
 
@@ -83,11 +84,13 @@ def sync_detailed(
     soft-delete stays the only way to invalidate a still-active token.
     Unlike `revokeConsumerToken`, an audit-log entry attributed to a
     purged token's id no longer resolves to a description or owner
-    afterward - the accepted tradeoff for actually removing it.
+    afterward - the accepted tradeoff for actually removing it. A
+    write bearer token may purge one too, the same as it may create
+    one (alrayyes/hush-hush#467).
 
     Args:
         id (str):
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -113,7 +116,7 @@ def sync(
     id: str,
     *,
     client: AuthenticatedClient,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Any | Error | None:
     """Permanently delete a dead consumer read token
 
@@ -122,11 +125,13 @@ def sync(
     soft-delete stays the only way to invalidate a still-active token.
     Unlike `revokeConsumerToken`, an audit-log entry attributed to a
     purged token's id no longer resolves to a description or owner
-    afterward - the accepted tradeoff for actually removing it.
+    afterward - the accepted tradeoff for actually removing it. A
+    write bearer token may purge one too, the same as it may create
+    one (alrayyes/hush-hush#467).
 
     Args:
         id (str):
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -147,7 +152,7 @@ async def asyncio_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Response[Any | Error]:
     """Permanently delete a dead consumer read token
 
@@ -156,11 +161,13 @@ async def asyncio_detailed(
     soft-delete stays the only way to invalidate a still-active token.
     Unlike `revokeConsumerToken`, an audit-log entry attributed to a
     purged token's id no longer resolves to a description or owner
-    afterward - the accepted tradeoff for actually removing it.
+    afterward - the accepted tradeoff for actually removing it. A
+    write bearer token may purge one too, the same as it may create
+    one (alrayyes/hush-hush#467).
 
     Args:
         id (str):
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -184,7 +191,7 @@ async def asyncio(
     id: str,
     *,
     client: AuthenticatedClient,
-    x_csrf_token: str,
+    x_csrf_token: str | Unset = UNSET,
 ) -> Any | Error | None:
     """Permanently delete a dead consumer read token
 
@@ -193,11 +200,13 @@ async def asyncio(
     soft-delete stays the only way to invalidate a still-active token.
     Unlike `revokeConsumerToken`, an audit-log entry attributed to a
     purged token's id no longer resolves to a description or owner
-    afterward - the accepted tradeoff for actually removing it.
+    afterward - the accepted tradeoff for actually removing it. A
+    write bearer token may purge one too, the same as it may create
+    one (alrayyes/hush-hush#467).
 
     Args:
         id (str):
-        x_csrf_token (str):
+        x_csrf_token (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
