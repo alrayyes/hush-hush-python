@@ -10,7 +10,10 @@ from .audit_log_entry_actor_type import AuditLogEntryActorType
 from .audit_log_filter_options import AuditLogFilterOptions
 from .auth_status import AuthStatus
 from .consumer_entry import ConsumerEntry
+from .consumer_token_metadata import ConsumerTokenMetadata
+from .consumer_token_with_value import ConsumerTokenWithValue
 from .consumers_page import ConsumersPage
+from .create_consumer_token_request import CreateConsumerTokenRequest
 from .create_object_request import CreateObjectRequest
 from .create_token_request import CreateTokenRequest
 from .credential import Credential
@@ -27,6 +30,7 @@ from .owner_identity import OwnerIdentity
 from .registration_finish_request import RegistrationFinishRequest
 from .registration_finish_request_credential import RegistrationFinishRequestCredential
 from .registration_options import RegistrationOptions
+from .rotate_consumer_token_request import RotateConsumerTokenRequest
 from .rotate_token_request import RotateTokenRequest
 from .token_metadata import TokenMetadata
 from .token_with_value import TokenWithValue
@@ -44,6 +48,9 @@ __all__ = (
     "AuthStatus",
     "ConsumerEntry",
     "ConsumersPage",
+    "ConsumerTokenMetadata",
+    "ConsumerTokenWithValue",
+    "CreateConsumerTokenRequest",
     "CreateObjectRequest",
     "CreateTokenRequest",
     "Credential",
@@ -60,6 +67,7 @@ __all__ = (
     "RegistrationFinishRequest",
     "RegistrationFinishRequestCredential",
     "RegistrationOptions",
+    "RotateConsumerTokenRequest",
     "RotateTokenRequest",
     "TokenMetadata",
     "TokenWithValue",
