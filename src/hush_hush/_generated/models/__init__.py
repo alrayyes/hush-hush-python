@@ -36,7 +36,9 @@ from .registration_finish_request_credential import RegistrationFinishRequestCre
 from .registration_options import RegistrationOptions
 from .rotate_consumer_token_request import RotateConsumerTokenRequest
 from .rotate_token_request import RotateTokenRequest
+from .token_allowed_actions_item import TokenAllowedActionsItem
 from .token_metadata import TokenMetadata
+from .token_status import TokenStatus
 from .token_with_value import TokenWithValue
 from .update_consumer_request import UpdateConsumerRequest
 from .update_object_request import UpdateObjectRequest
@@ -77,7 +79,9 @@ __all__ = (
     "RegistrationOptions",
     "RotateConsumerTokenRequest",
     "RotateTokenRequest",
+    "TokenAllowedActionsItem",
     "TokenMetadata",
+    "TokenStatus",
     "TokenWithValue",
     "UpdateConsumerRequest",
     "UpdateObjectRequest",
