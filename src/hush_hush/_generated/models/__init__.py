@@ -2,6 +2,7 @@
 
 """Contains all the data models used in inputs/outputs"""
 
+from .actor import Actor
 from .add_consumer_request import AddConsumerRequest
 from .audit_actor_option import AuditActorOption
 from .audit_log_entry import AuditLogEntry
@@ -42,6 +43,7 @@ from .update_object_request import UpdateObjectRequest
 from .used_by import UsedBy
 
 __all__ = (
+    "Actor",
     "AddConsumerRequest",
     "AuditActorOption",
     "AuditLogEntry",

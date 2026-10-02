@@ -87,8 +87,9 @@ def sync_detailed(
 ) -> Response[Error | list[ObjectMetadata]]:
     """List stored objects
 
-     Returns every stored object's metadata (slug, used_by, description)
-    - never the sealed value, and never the internal id as something
+     Returns every stored object's metadata (slug, used_by, tags,
+    description, and who created and last updated it and when) - never
+    the sealed value, and never the internal id as something
     addressable. Gated by a write token or a session unlike every
     other read path here: a slug-scoped read only ever discloses what
     a caller already knows the slug of, but enumerating every object
@@ -130,8 +131,9 @@ def sync(
 ) -> Error | list[ObjectMetadata] | None:
     """List stored objects
 
-     Returns every stored object's metadata (slug, used_by, description)
-    - never the sealed value, and never the internal id as something
+     Returns every stored object's metadata (slug, used_by, tags,
+    description, and who created and last updated it and when) - never
+    the sealed value, and never the internal id as something
     addressable. Gated by a write token or a session unlike every
     other read path here: a slug-scoped read only ever discloses what
     a caller already knows the slug of, but enumerating every object
@@ -168,8 +170,9 @@ async def asyncio_detailed(
 ) -> Response[Error | list[ObjectMetadata]]:
     """List stored objects
 
-     Returns every stored object's metadata (slug, used_by, description)
-    - never the sealed value, and never the internal id as something
+     Returns every stored object's metadata (slug, used_by, tags,
+    description, and who created and last updated it and when) - never
+    the sealed value, and never the internal id as something
     addressable. Gated by a write token or a session unlike every
     other read path here: a slug-scoped read only ever discloses what
     a caller already knows the slug of, but enumerating every object
@@ -209,8 +212,9 @@ async def asyncio(
 ) -> Error | list[ObjectMetadata] | None:
     """List stored objects
 
-     Returns every stored object's metadata (slug, used_by, description)
-    - never the sealed value, and never the internal id as something
+     Returns every stored object's metadata (slug, used_by, tags,
+    description, and who created and last updated it and when) - never
+    the sealed value, and never the internal id as something
     addressable. Gated by a write token or a session unlike every
     other read path here: a slug-scoped read only ever discloses what
     a caller already knows the slug of, but enumerating every object

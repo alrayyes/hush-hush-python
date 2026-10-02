@@ -2,13 +2,18 @@
 
 from __future__ import annotations
 
+import datetime
 from collections.abc import Mapping
-from typing import Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.actor import Actor
+
 
 T = TypeVar("T", bound="ObjectMetadata")
 
@@ -48,6 +53,19 @@ class ObjectMetadata:
             sealing. A create or update response echoes back exactly what that
             same request asked for; it isn't persisted, so a later fetch never
             carries this field.
+        created_at (datetime.datetime | Unset): When the object was created. Returned by `GET /objects`; left
+            out of a create or update response.
+        updated_at (datetime.datetime | Unset): When the object's value was last replaced - equal to
+            `created_at` for an object never updated. Returned by
+            `GET /objects`; left out of a create or update response.
+        created_by (Actor | Unset): Who performed an audited write. `type` is `session` (the admin
+            account, `id` is its actor id), `token` (a write token, `id` is its
+            token id) or `consumer_token` (a consumer token, `id` is its id) -
+            the same values `GET /audit-log` reports.
+        updated_by (Actor | Unset): Who performed an audited write. `type` is `session` (the admin
+            account, `id` is its actor id), `token` (a write token, `id` is its
+            token id) or `consumer_token` (a consumer token, `id` is its id) -
+            the same values `GET /audit-log` reports.
     """
 
     slug: str
@@ -55,6 +73,10 @@ class ObjectMetadata:
     used_by: list[str] | Unset = UNSET
     description: str | Unset = UNSET
     keep_readable_copy: bool | Unset = UNSET
+    created_at: datetime.datetime | Unset = UNSET
+    updated_at: datetime.datetime | Unset = UNSET
+    created_by: Actor | Unset = UNSET
+    updated_by: Actor | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -70,6 +92,22 @@ class ObjectMetadata:
 
         keep_readable_copy = self.keep_readable_copy
 
+        created_at: str | Unset = UNSET
+        if not isinstance(self.created_at, Unset):
+            created_at = self.created_at.isoformat()
+
+        updated_at: str | Unset = UNSET
+        if not isinstance(self.updated_at, Unset):
+            updated_at = self.updated_at.isoformat()
+
+        created_by: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.created_by, Unset):
+            created_by = self.created_by.to_dict()
+
+        updated_by: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.updated_by, Unset):
+            updated_by = self.updated_by.to_dict()
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -84,11 +122,21 @@ class ObjectMetadata:
             field_dict["description"] = description
         if keep_readable_copy is not UNSET:
             field_dict["keep_readable_copy"] = keep_readable_copy
+        if created_at is not UNSET:
+            field_dict["created_at"] = created_at
+        if updated_at is not UNSET:
+            field_dict["updated_at"] = updated_at
+        if created_by is not UNSET:
+            field_dict["created_by"] = created_by
+        if updated_by is not UNSET:
+            field_dict["updated_by"] = updated_by
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.actor import Actor  # noqa: PLC0415
+
         d = dict(src_dict)
         slug = d.pop("slug")
 
@@ -100,12 +148,38 @@ class ObjectMetadata:
 
         keep_readable_copy = d.pop("keep_readable_copy", UNSET)
 
+        _created_at = d.pop("created_at", UNSET)
+        created_at: datetime.datetime | Unset
+        if isinstance(_created_at, Unset):
+            created_at = UNSET
+        else:
+            created_at = datetime.datetime.fromisoformat(_created_at)
+
+        _updated_at = d.pop("updated_at", UNSET)
+        updated_at: datetime.datetime | Unset
+        if isinstance(_updated_at, Unset):
+            updated_at = UNSET
+        else:
+            updated_at = datetime.datetime.fromisoformat(_updated_at)
+
+        _created_by = d.pop("created_by", UNSET)
+        created_by: Actor | Unset
+        created_by = UNSET if isinstance(_created_by, Unset) else Actor.from_dict(_created_by)
+
+        _updated_by = d.pop("updated_by", UNSET)
+        updated_by: Actor | Unset
+        updated_by = UNSET if isinstance(_updated_by, Unset) else Actor.from_dict(_updated_by)
+
         object_metadata = cls(
             slug=slug,
             tags=tags,
             used_by=used_by,
             description=description,
             keep_readable_copy=keep_readable_copy,
+            created_at=created_at,
+            updated_at=updated_at,
+            created_by=created_by,
+            updated_by=updated_by,
         )
 
         object_metadata.additional_properties = d
