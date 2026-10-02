@@ -15,11 +15,18 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     used_by: str | Unset = UNSET,
+    tag: list[str] | Unset = UNSET,
 ) -> dict[str, Any]:
 
     params: dict[str, Any] = {}
 
     params["used_by"] = used_by
+
+    json_tag: list[str] | Unset = UNSET
+    if not isinstance(tag, Unset):
+        json_tag = tag
+
+    params["tag"] = json_tag
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -44,6 +51,11 @@ def _parse_response(
             response_200.append(response_200_item)
 
         return response_200
+
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+        return response_400
 
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
@@ -71,6 +83,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     used_by: str | Unset = UNSET,
+    tag: list[str] | Unset = UNSET,
 ) -> Response[Error | list[ObjectMetadata]]:
     """List stored objects
 
@@ -87,6 +100,7 @@ def sync_detailed(
 
     Args:
         used_by (str | Unset):
+        tag (list[str] | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -98,6 +112,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         used_by=used_by,
+        tag=tag,
     )
 
     response = client.get_httpx_client().request(
@@ -111,6 +126,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     used_by: str | Unset = UNSET,
+    tag: list[str] | Unset = UNSET,
 ) -> Error | list[ObjectMetadata] | None:
     """List stored objects
 
@@ -127,6 +143,7 @@ def sync(
 
     Args:
         used_by (str | Unset):
+        tag (list[str] | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -139,6 +156,7 @@ def sync(
     return sync_detailed(
         client=client,
         used_by=used_by,
+        tag=tag,
     ).parsed
 
 
@@ -146,6 +164,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     used_by: str | Unset = UNSET,
+    tag: list[str] | Unset = UNSET,
 ) -> Response[Error | list[ObjectMetadata]]:
     """List stored objects
 
@@ -162,6 +181,7 @@ async def asyncio_detailed(
 
     Args:
         used_by (str | Unset):
+        tag (list[str] | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -173,6 +193,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         used_by=used_by,
+        tag=tag,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -184,6 +205,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     used_by: str | Unset = UNSET,
+    tag: list[str] | Unset = UNSET,
 ) -> Error | list[ObjectMetadata] | None:
     """List stored objects
 
@@ -200,6 +222,7 @@ async def asyncio(
 
     Args:
         used_by (str | Unset):
+        tag (list[str] | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -213,5 +236,6 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             used_by=used_by,
+            tag=tag,
         )
     ).parsed

@@ -8,6 +8,8 @@ from typing import Any, Literal, TypeVar, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..types import UNSET, Unset
+
 T = TypeVar("T", bound="Health")
 
 
@@ -20,16 +22,25 @@ class Health:
             "dev" for a plain `go build`. The web UI's footer links this
             to the changelog page rather than hardcoding a version that
             would drift from what's actually running.
+        environment (str | Unset): The operator's own short label for this instance, from the
+            `INSTANCE_LABEL` setting - for example `prod / homelab`. The
+            web UI's top bar shows it so an operator can tell instances
+            apart. Omitted when no label is set. This endpoint is
+            unauthenticated, so the label is public: never put anything
+            sensitive in it.
     """
 
     status: Literal["ok"]
     version: str
+    environment: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         status = self.status
 
         version = self.version
+
+        environment = self.environment
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -39,6 +50,8 @@ class Health:
                 "version": version,
             }
         )
+        if environment is not UNSET:
+            field_dict["environment"] = environment
 
         return field_dict
 
@@ -51,9 +64,12 @@ class Health:
 
         version = d.pop("version")
 
+        environment = d.pop("environment", UNSET)
+
         health = cls(
             status=status,
             version=version,
+            environment=environment,
         )
 
         health.additional_properties = d
