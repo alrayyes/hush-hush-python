@@ -11,7 +11,7 @@ def test_credential_from_environment(make_server, monkeypatch):
 
     def handler(req):
         got_auth["value"] = req.headers.get("Authorization")
-        req.send_json(201, json.dumps({"slug": "x"}).encode())
+        req.send_json(201, json.dumps({"slug": "x", "tags": []}).encode())
 
     server = make_server(handler)
     client = Client(server.base_url)
@@ -25,7 +25,7 @@ def test_explicit_credential_overrides_environment(make_server, monkeypatch):
 
     def handler(req):
         got_auth["value"] = req.headers.get("Authorization")
-        req.send_json(201, json.dumps({"slug": "x"}).encode())
+        req.send_json(201, json.dumps({"slug": "x", "tags": []}).encode())
 
     server = make_server(handler)
     client = Client(server.base_url, api_key="explicit-token")
