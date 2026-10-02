@@ -9,6 +9,8 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.token_allowed_actions_item import TokenAllowedActionsItem
+from ..models.token_status import TokenStatus
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="TokenMetadata")
@@ -27,6 +29,18 @@ class TokenMetadata:
             for a token issued via the `token` CLI command, which has no
             session to attribute to - never a guessed value.
         last_used_at (datetime.datetime | Unset): Absent if this token has never authenticated a request.
+        status (TokenStatus | Unset): What the token is right now, by the server's own clock: `revoked`
+            if it was revoked (even if it has also expired), `expired` if its
+            `expires_at` has passed, `active` otherwise. Always sent by this
+            server; optional in the schema so a client generated from it still
+            reads a response from an older one.
+        allowed_actions (list[TokenAllowedActionsItem] | Unset): What may be done to the token in its current state:
+            `rotate` and
+            `revoke` while it is `active`, only `purge` once it is `expired` or
+            `revoked`. The endpoints enforce the same rule themselves - a purge
+            of an active token is still a 409 - so a client that acts on a stale
+            view gets the server's answer. Hiding a button is cosmetic; this is
+            what to show.
     """
 
     id: str
@@ -36,6 +50,8 @@ class TokenMetadata:
     revoked: bool
     owner: str | Unset = UNSET
     last_used_at: datetime.datetime | Unset = UNSET
+    status: TokenStatus | Unset = UNSET
+    allowed_actions: list[TokenAllowedActionsItem] | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -55,6 +71,19 @@ class TokenMetadata:
         if not isinstance(self.last_used_at, Unset):
             last_used_at = self.last_used_at.isoformat()
 
+        status: str | Unset = UNSET
+        if not isinstance(self.status, Unset):
+            status = self.status.value
+
+        allowed_actions: list[str] | Unset = UNSET
+        if not isinstance(self.allowed_actions, Unset):
+            allowed_actions = []
+            for componentsschemas_token_allowed_actions_item_data in self.allowed_actions:
+                componentsschemas_token_allowed_actions_item = (
+                    componentsschemas_token_allowed_actions_item_data.value
+                )
+                allowed_actions.append(componentsschemas_token_allowed_actions_item)
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -70,6 +99,10 @@ class TokenMetadata:
             field_dict["owner"] = owner
         if last_used_at is not UNSET:
             field_dict["last_used_at"] = last_used_at
+        if status is not UNSET:
+            field_dict["status"] = status
+        if allowed_actions is not UNSET:
+            field_dict["allowed_actions"] = allowed_actions
 
         return field_dict
 
@@ -95,6 +128,21 @@ class TokenMetadata:
         else:
             last_used_at = datetime.datetime.fromisoformat(_last_used_at)
 
+        _status = d.pop("status", UNSET)
+        status: TokenStatus | Unset
+        status = UNSET if isinstance(_status, Unset) else TokenStatus(_status)
+
+        _allowed_actions = d.pop("allowed_actions", UNSET)
+        allowed_actions: list[TokenAllowedActionsItem] | Unset = UNSET
+        if _allowed_actions is not UNSET:
+            allowed_actions = []
+            for componentsschemas_token_allowed_actions_item_data in _allowed_actions:
+                componentsschemas_token_allowed_actions_item = TokenAllowedActionsItem(
+                    componentsschemas_token_allowed_actions_item_data
+                )
+
+                allowed_actions.append(componentsschemas_token_allowed_actions_item)
+
         token_metadata = cls(
             id=id,
             description=description,
@@ -103,6 +151,8 @@ class TokenMetadata:
             revoked=revoked,
             owner=owner,
             last_used_at=last_used_at,
+            status=status,
+            allowed_actions=allowed_actions,
         )
 
         token_metadata.additional_properties = d
