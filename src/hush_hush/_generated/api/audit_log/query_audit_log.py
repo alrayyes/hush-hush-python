@@ -10,6 +10,7 @@ from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.audit_log_entry import AuditLogEntry
 from ...models.error import Error
+from ...models.query_audit_log_order import QueryAuditLogOrder
 from ...types import UNSET, Response, Unset
 
 
@@ -21,6 +22,7 @@ def _get_kwargs(
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
     after: int | Unset = UNSET,
+    order: QueryAuditLogOrder | Unset = QueryAuditLogOrder.ASC,
     limit: int | Unset = 50,
 ) -> dict[str, Any]:
 
@@ -43,6 +45,12 @@ def _get_kwargs(
     params["to"] = json_to
 
     params["after"] = after
+
+    json_order: str | Unset = UNSET
+    if not isinstance(order, Unset):
+        json_order = order.value
+
+    params["order"] = json_order
 
     params["limit"] = limit
 
@@ -101,6 +109,7 @@ def sync_detailed(
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
     after: int | Unset = UNSET,
+    order: QueryAuditLogOrder | Unset = QueryAuditLogOrder.ASC,
     limit: int | Unset = 50,
 ) -> Response[Error | list[AuditLogEntry]]:
     """Query the audit log
@@ -121,6 +130,7 @@ def sync_detailed(
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
         after (int | Unset):
+        order (QueryAuditLogOrder | Unset):  Default: QueryAuditLogOrder.ASC.
         limit (int | Unset):  Default: 50.
 
     Raises:
@@ -138,6 +148,7 @@ def sync_detailed(
         from_=from_,
         to=to,
         after=after,
+        order=order,
         limit=limit,
     )
 
@@ -157,6 +168,7 @@ def sync(
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
     after: int | Unset = UNSET,
+    order: QueryAuditLogOrder | Unset = QueryAuditLogOrder.ASC,
     limit: int | Unset = 50,
 ) -> Error | list[AuditLogEntry] | None:
     """Query the audit log
@@ -177,6 +189,7 @@ def sync(
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
         after (int | Unset):
+        order (QueryAuditLogOrder | Unset):  Default: QueryAuditLogOrder.ASC.
         limit (int | Unset):  Default: 50.
 
     Raises:
@@ -195,6 +208,7 @@ def sync(
         from_=from_,
         to=to,
         after=after,
+        order=order,
         limit=limit,
     ).parsed
 
@@ -208,6 +222,7 @@ async def asyncio_detailed(
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
     after: int | Unset = UNSET,
+    order: QueryAuditLogOrder | Unset = QueryAuditLogOrder.ASC,
     limit: int | Unset = 50,
 ) -> Response[Error | list[AuditLogEntry]]:
     """Query the audit log
@@ -228,6 +243,7 @@ async def asyncio_detailed(
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
         after (int | Unset):
+        order (QueryAuditLogOrder | Unset):  Default: QueryAuditLogOrder.ASC.
         limit (int | Unset):  Default: 50.
 
     Raises:
@@ -245,6 +261,7 @@ async def asyncio_detailed(
         from_=from_,
         to=to,
         after=after,
+        order=order,
         limit=limit,
     )
 
@@ -262,6 +279,7 @@ async def asyncio(
     from_: datetime.datetime | Unset = UNSET,
     to: datetime.datetime | Unset = UNSET,
     after: int | Unset = UNSET,
+    order: QueryAuditLogOrder | Unset = QueryAuditLogOrder.ASC,
     limit: int | Unset = 50,
 ) -> Error | list[AuditLogEntry] | None:
     """Query the audit log
@@ -282,6 +300,7 @@ async def asyncio(
         from_ (datetime.datetime | Unset):
         to (datetime.datetime | Unset):
         after (int | Unset):
+        order (QueryAuditLogOrder | Unset):  Default: QueryAuditLogOrder.ASC.
         limit (int | Unset):  Default: 50.
 
     Raises:
@@ -301,6 +320,7 @@ async def asyncio(
             from_=from_,
             to=to,
             after=after,
+            order=order,
             limit=limit,
         )
     ).parsed

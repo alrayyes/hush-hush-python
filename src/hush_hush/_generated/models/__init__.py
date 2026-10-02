@@ -27,6 +27,7 @@ from .mcp_body import McpBody
 from .mcp_response_200 import McpResponse200
 from .object_metadata import ObjectMetadata
 from .owner_identity import OwnerIdentity
+from .query_audit_log_order import QueryAuditLogOrder
 from .registration_finish_request import RegistrationFinishRequest
 from .registration_finish_request_credential import RegistrationFinishRequestCredential
 from .registration_options import RegistrationOptions
@@ -64,6 +65,7 @@ __all__ = (
     "McpResponse200",
     "ObjectMetadata",
     "OwnerIdentity",
+    "QueryAuditLogOrder",
     "RegistrationFinishRequest",
     "RegistrationFinishRequestCredential",
     "RegistrationOptions",
