@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.0.5](https://github.com/alrayyes/hush-hush-python/compare/v4.0.4...v4.0.5) (2026-10-02)
+
+
+### Bug Fixes
+
+* **deps:** bump urllib3 to 2.8.0 for pip-audit advisories ([c4e54e1](https://github.com/alrayyes/hush-hush-python/commit/c4e54e1033dddf49358991be5a0b096a4eec1945))
+* **deps:** bump urllib3 to 2.8.0 for PYSEC-2026-4175/4176/4177 ([943ed98](https://github.com/alrayyes/hush-hush-python/commit/943ed98789a5882cc0f3323141eb5bda06354bee))
+* regenerate client from updated hush-hush spec ([b8b0b24](https://github.com/alrayyes/hush-hush-python/commit/b8b0b24921e6fee1e51e1441e17157ebc51b1c95))
+* regenerate client from updated hush-hush spec ([3f4fd1c](https://github.com/alrayyes/hush-hush-python/commit/3f4fd1c774df9d0338407406fb186c556528252f))
+
 ## [4.0.4](https://github.com/alrayyes/hush-hush-python/compare/v4.0.3...v4.0.4) (2026-09-28)
 
 
