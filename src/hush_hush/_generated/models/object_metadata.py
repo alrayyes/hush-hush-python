@@ -22,6 +22,11 @@ class ObjectMetadata:
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        tags (list[str]): Labels for grouping and filtering objects (`GET /objects?tag=`).
+            Free-form, 1 to 32 characters from `a-z 0-9 . _ / -`, at most 10
+            per object. Uppercase is converted to lowercase and duplicates are dropped.
+            Metadata only - never part of the sealed value. A response always
+            carries the array, empty when the object has none.
         used_by (list[str] | Unset): The consumers (repos or hosts) recorded as depending on this
             object. Set at creation, and replaceable later via
             UpdateObjectRequest's own used_by field - a plain value update
@@ -46,6 +51,7 @@ class ObjectMetadata:
     """
 
     slug: str
+    tags: list[str]
     used_by: list[str] | Unset = UNSET
     description: str | Unset = UNSET
     keep_readable_copy: bool | Unset = UNSET
@@ -53,6 +59,8 @@ class ObjectMetadata:
 
     def to_dict(self) -> dict[str, Any]:
         slug = self.slug
+
+        tags = self.tags
 
         used_by: list[str] | Unset = UNSET
         if not isinstance(self.used_by, Unset):
@@ -67,6 +75,7 @@ class ObjectMetadata:
         field_dict.update(
             {
                 "slug": slug,
+                "tags": tags,
             }
         )
         if used_by is not UNSET:
@@ -83,6 +92,8 @@ class ObjectMetadata:
         d = dict(src_dict)
         slug = d.pop("slug")
 
+        tags = cast(list[str], d.pop("tags"))
+
         used_by = cast(list[str], d.pop("used_by", UNSET))
 
         description = d.pop("description", UNSET)
@@ -91,6 +102,7 @@ class ObjectMetadata:
 
         object_metadata = cls(
             slug=slug,
+            tags=tags,
             used_by=used_by,
             description=description,
             keep_readable_copy=keep_readable_copy,

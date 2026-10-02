@@ -27,6 +27,11 @@ class CreateObjectRequest:
             object. Set at creation, and replaceable later via
             UpdateObjectRequest's own used_by field - a plain value update
             that omits it leaves the list as it was.
+        tags (list[str] | Unset): Labels for grouping and filtering objects (`GET /objects?tag=`).
+            Free-form, 1 to 32 characters from `a-z 0-9 . _ / -`, at most 10
+            per object. Uppercase is converted to lowercase and duplicates are dropped.
+            Metadata only - never part of the sealed value. A response always
+            carries the array, empty when the object has none.
         description (str | Unset): A free-text label set at creation, for a reader who only knows the
             slug. Fixed at creation - there is no way to change it later.
         keep_readable_copy (bool | Unset): Requests that the owner's own escrowed identity public key be
@@ -49,6 +54,7 @@ class CreateObjectRequest:
     slug: str
     value: str
     used_by: list[str] | Unset = UNSET
+    tags: list[str] | Unset = UNSET
     description: str | Unset = UNSET
     keep_readable_copy: bool | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -61,6 +67,10 @@ class CreateObjectRequest:
         used_by: list[str] | Unset = UNSET
         if not isinstance(self.used_by, Unset):
             used_by = self.used_by
+
+        tags: list[str] | Unset = UNSET
+        if not isinstance(self.tags, Unset):
+            tags = self.tags
 
         description = self.description
 
@@ -76,6 +86,8 @@ class CreateObjectRequest:
         )
         if used_by is not UNSET:
             field_dict["used_by"] = used_by
+        if tags is not UNSET:
+            field_dict["tags"] = tags
         if description is not UNSET:
             field_dict["description"] = description
         if keep_readable_copy is not UNSET:
@@ -92,6 +104,8 @@ class CreateObjectRequest:
 
         used_by = cast(list[str], d.pop("used_by", UNSET))
 
+        tags = cast(list[str], d.pop("tags", UNSET))
+
         description = d.pop("description", UNSET)
 
         keep_readable_copy = d.pop("keep_readable_copy", UNSET)
@@ -100,6 +114,7 @@ class CreateObjectRequest:
             slug=slug,
             value=value,
             used_by=used_by,
+            tags=tags,
             description=description,
             keep_readable_copy=keep_readable_copy,
         )
