@@ -25,9 +25,14 @@ def test_query_audit_log_filters(make_server):
     entries = client.query_audit_log(object_id="obj-1")
     assert len(entries) == 1
     assert entries[0].object_id == "obj-1"
-    # query_audit_log() doesn't expose limit, so the generated client always
-    # sends its default (50) alongside whatever filter was actually passed.
-    assert parse_qs(got_query["value"]) == {"object_id": ["obj-1"], "limit": ["50"]}
+    # query_audit_log() doesn't expose limit or order, so the generated client
+    # always sends their defaults (50, asc) alongside whatever filter was
+    # actually passed.
+    assert parse_qs(got_query["value"]) == {
+        "object_id": ["obj-1"],
+        "limit": ["50"],
+        "order": ["asc"],
+    }
 
 
 def test_query_audit_log_returns_full_result_set_no_iterator(make_server):
