@@ -62,11 +62,15 @@ def sync_detailed(
     own public key as an additional sealing recipient when the
     owner-recipient opt-in checkbox is checked
     (specs/secret-objects/spec.md's "Opt-in owner-recipient inclusion
-    at create time" requirement). Session-gated, unlike
-    `GET /auth/status`: an age public key isn't secret on its own, but
-    every other endpoint that exposes stored data (`GET /consumers`
-    included) stays behind a session or bearer token, and this keeps
-    that same posture rather than carving out an exception.
+    at create time" requirement). An SDK client reads it too, with a
+    write bearer token and no session, to honour `keep_readable_copy`
+    on a create or update: the key is the same whichever credential
+    asks, since there is one user to read it from. Credentialed,
+    unlike `GET /auth/status`: an age public key isn't secret on its
+    own, but every other endpoint that exposes stored data
+    (`GET /consumers` included) stays behind a session or bearer
+    token, and this keeps that same posture rather than carving out
+    an exception.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -95,11 +99,15 @@ def sync(
     own public key as an additional sealing recipient when the
     owner-recipient opt-in checkbox is checked
     (specs/secret-objects/spec.md's "Opt-in owner-recipient inclusion
-    at create time" requirement). Session-gated, unlike
-    `GET /auth/status`: an age public key isn't secret on its own, but
-    every other endpoint that exposes stored data (`GET /consumers`
-    included) stays behind a session or bearer token, and this keeps
-    that same posture rather than carving out an exception.
+    at create time" requirement). An SDK client reads it too, with a
+    write bearer token and no session, to honour `keep_readable_copy`
+    on a create or update: the key is the same whichever credential
+    asks, since there is one user to read it from. Credentialed,
+    unlike `GET /auth/status`: an age public key isn't secret on its
+    own, but every other endpoint that exposes stored data
+    (`GET /consumers` included) stays behind a session or bearer
+    token, and this keeps that same posture rather than carving out
+    an exception.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -124,11 +132,15 @@ async def asyncio_detailed(
     own public key as an additional sealing recipient when the
     owner-recipient opt-in checkbox is checked
     (specs/secret-objects/spec.md's "Opt-in owner-recipient inclusion
-    at create time" requirement). Session-gated, unlike
-    `GET /auth/status`: an age public key isn't secret on its own, but
-    every other endpoint that exposes stored data (`GET /consumers`
-    included) stays behind a session or bearer token, and this keeps
-    that same posture rather than carving out an exception.
+    at create time" requirement). An SDK client reads it too, with a
+    write bearer token and no session, to honour `keep_readable_copy`
+    on a create or update: the key is the same whichever credential
+    asks, since there is one user to read it from. Credentialed,
+    unlike `GET /auth/status`: an age public key isn't secret on its
+    own, but every other endpoint that exposes stored data
+    (`GET /consumers` included) stays behind a session or bearer
+    token, and this keeps that same posture rather than carving out
+    an exception.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -155,11 +167,15 @@ async def asyncio(
     own public key as an additional sealing recipient when the
     owner-recipient opt-in checkbox is checked
     (specs/secret-objects/spec.md's "Opt-in owner-recipient inclusion
-    at create time" requirement). Session-gated, unlike
-    `GET /auth/status`: an age public key isn't secret on its own, but
-    every other endpoint that exposes stored data (`GET /consumers`
-    included) stays behind a session or bearer token, and this keeps
-    that same posture rather than carving out an exception.
+    at create time" requirement). An SDK client reads it too, with a
+    write bearer token and no session, to honour `keep_readable_copy`
+    on a create or update: the key is the same whichever credential
+    asks, since there is one user to read it from. Credentialed,
+    unlike `GET /auth/status`: an age public key isn't secret on its
+    own, but every other endpoint that exposes stored data
+    (`GET /consumers` included) stays behind a session or bearer
+    token, and this keeps that same posture rather than carving out
+    an exception.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
