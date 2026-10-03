@@ -61,6 +61,11 @@ def _parse_response(
 
         return response_404
 
+    if response.status_code == 422:
+        response_422 = Error.from_dict(response.json())
+
+        return response_422
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -88,7 +93,10 @@ def sync_detailed(
 ) -> Response[Error | ObjectMetadata]:
     """Rotate an object's value
 
-     Replaces the stored ciphertext for an existing object. The
+     Replaces the stored ciphertext for an existing object. The new
+    value is checked the same way a created one is: not base64 of a
+    well-formed age file, or no recipient in its header, is a 422
+    and the stored value is left alone. The
     object's slug and description metadata are always preserved
     unchanged. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
@@ -138,7 +146,10 @@ def sync(
 ) -> Error | ObjectMetadata | None:
     """Rotate an object's value
 
-     Replaces the stored ciphertext for an existing object. The
+     Replaces the stored ciphertext for an existing object. The new
+    value is checked the same way a created one is: not base64 of a
+    well-formed age file, or no recipient in its header, is a 422
+    and the stored value is left alone. The
     object's slug and description metadata are always preserved
     unchanged. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
@@ -183,7 +194,10 @@ async def asyncio_detailed(
 ) -> Response[Error | ObjectMetadata]:
     """Rotate an object's value
 
-     Replaces the stored ciphertext for an existing object. The
+     Replaces the stored ciphertext for an existing object. The new
+    value is checked the same way a created one is: not base64 of a
+    well-formed age file, or no recipient in its header, is a 422
+    and the stored value is left alone. The
     object's slug and description metadata are always preserved
     unchanged. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
@@ -231,7 +245,10 @@ async def asyncio(
 ) -> Error | ObjectMetadata | None:
     """Rotate an object's value
 
-     Replaces the stored ciphertext for an existing object. The
+     Replaces the stored ciphertext for an existing object. The new
+    value is checked the same way a created one is: not base64 of a
+    well-formed age file, or no recipient in its header, is a 422
+    and the stored value is left alone. The
     object's slug and description metadata are always preserved
     unchanged. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's

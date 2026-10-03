@@ -22,7 +22,9 @@ class CreateObjectRequest:
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
-        value (str): The sealed (encrypted) value, base64-encoded.
+        value (str): The sealed (encrypted) value, base64-encoded. It has to be a
+            well-formed age file naming at least one recipient; the
+            service reads only its header, never the payload.
         used_by (list[str] | Unset): The consumers (repos or hosts) recorded as depending on this
             object. Set at creation, and replaceable later via
             UpdateObjectRequest's own used_by field - a plain value update
