@@ -38,8 +38,8 @@ def test_query_audit_log():
         pact.upon_receiving("a request to query the audit log")
         .given("the audit log has at least one entry")
         .with_request("GET", "/audit-log")
-        # query_audit_log() doesn't expose limit or order, so the generated
-        # client always sends their defaults (50, asc) on every real call.
+        # query_audit_log() doesn't expose limit, so the generated client
+        # always sends its default (50). order defaults to asc.
         .with_query_parameter("limit", "50")
         .with_query_parameter("order", "asc")
         .will_respond_with(200)
@@ -60,5 +60,35 @@ def test_query_audit_log():
     with pact.serve() as srv:
         client = Client(str(srv.url))
         entries = client.query_audit_log()
+        assert len(entries) >= 1
+    pact.write_file("pact/pacts", overwrite=True)
+
+
+def test_query_audit_log_newest_first():
+    pact = Pact("hush-hush-python", "hush-hush")
+    (
+        pact.upon_receiving("a request to query the audit log, newest first")
+        .given("the audit log has at least one entry")
+        .with_request("GET", "/audit-log")
+        .with_query_parameter("limit", "50")
+        .with_query_parameter("order", "desc")
+        .will_respond_with(200)
+        .with_body(
+            match.each_like(
+                {
+                    "id": match.like(1),
+                    "object_id": match.like("my-object"),
+                    "action": match.regex("read", regex="create|read|update|delete"),
+                    "timestamp": match.timestamp(),
+                    "ip": match.regex("203.0.113.1", regex=r"\d{1,3}(\.\d{1,3}){3}"),
+                },
+                min=1,
+            ),
+            content_type="application/json",
+        )
+    )
+    with pact.serve() as srv:
+        client = Client(str(srv.url))
+        entries = client.query_audit_log(order="desc")
         assert len(entries) >= 1
     pact.write_file("pact/pacts", overwrite=True)

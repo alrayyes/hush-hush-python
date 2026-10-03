@@ -5,6 +5,7 @@ from __future__ import annotations
 import base64
 import os
 from datetime import datetime
+from typing import Literal
 
 import httpx
 
@@ -21,6 +22,7 @@ from ._generated.models.audit_log_entry import AuditLogEntry
 from ._generated.models.create_object_request import CreateObjectRequest as _CreateObjectRequestBody
 from ._generated.models.health import Health
 from ._generated.models.object_metadata import ObjectMetadata
+from ._generated.models.query_audit_log_order import QueryAuditLogOrder
 from ._generated.models.update_object_request import UpdateObjectRequest as _UpdateObjectRequestBody
 from ._generated.models.used_by import UsedBy
 from ._generated.types import UNSET
@@ -252,6 +254,7 @@ class Client:
         caller: str | None = None,
         from_: datetime | None = None,
         to: datetime | None = None,
+        order: Literal["asc", "desc"] = "asc",
     ) -> list[AuditLogEntry]:
         """Queries the audit log — every create, read, update, and delete
         call is recorded here. Needs no credential. Filters combine with
@@ -266,9 +269,12 @@ class Client:
             caller: Restrict to entries recorded with this caller identity.
             from_: Restrict to entries at or after this time.
             to: Restrict to entries at or before this time.
+            order: "asc" (the default) returns oldest entries first, "desc"
+                newest first. Only "asc" and "desc" are accepted, and a type
+                checker rejects anything else.
 
         Returns:
-            Matching audit log entries, oldest first.
+            Matching audit log entries, in the requested order.
 
         Raises:
             APIError: If the server responds with anything other than 200.
@@ -279,6 +285,7 @@ class Client:
             caller=caller or UNSET,
             from_=from_ or UNSET,
             to=to or UNSET,
+            order=QueryAuditLogOrder(order),
         )
         _raise_for_status(response, 200)
         assert isinstance(response.parsed, list)
@@ -380,6 +387,7 @@ class AsyncClient:
         caller: str | None = None,
         from_: datetime | None = None,
         to: datetime | None = None,
+        order: Literal["asc", "desc"] = "asc",
     ) -> list[AuditLogEntry]:
         """See [Client.query_audit_log][hush_hush.Client.query_audit_log]."""
         response = await _query_audit_log.asyncio_detailed(
@@ -388,6 +396,7 @@ class AsyncClient:
             caller=caller or UNSET,
             from_=from_ or UNSET,
             to=to or UNSET,
+            order=QueryAuditLogOrder(order),
         )
         _raise_for_status(response, 200)
         assert isinstance(response.parsed, list)

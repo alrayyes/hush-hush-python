@@ -33,9 +33,9 @@ value = client.get_object("my-first-secret")
 print(f"got {len(value)} bytes of sealed ciphertext")
 
 # The audit log records every read and write; querying it needs no
-# credential either, and returns the full matching result set (there's
-# no pagination on this endpoint).
-for entry in client.query_audit_log():
+# credential either. Entries come oldest first; pass order="desc" for
+# newest first.
+for entry in client.query_audit_log(order="desc"):
     print(entry.action, entry.object_id, entry.timestamp)
 ```
 
