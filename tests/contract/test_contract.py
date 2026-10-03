@@ -39,3 +39,7 @@ def test_create_get_delete_object(client):
 
 def test_query_audit_log(client):
     client.query_audit_log()
+
+
+def test_query_audit_log_newest_first(client):
+    client.query_audit_log(order="desc")
