@@ -57,6 +57,11 @@ def _parse_response(
 
         return response_409
 
+    if response.status_code == 422:
+        response_422 = Error.from_dict(response.json())
+
+        return response_422
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -85,9 +90,11 @@ def sync_detailed(
 
      Stores an already-sealed value under a new, caller-chosen slug -
     the object's own internal id is generated server-side and never
-    returned as something addressable. The value is opaque ciphertext
-    to this service - it is never decrypted, and the service has no
-    notion of which recipients it was sealed to. A session-
+    returned as something addressable. The service never decrypts the
+    value, and it can't know how many recipients it was sealed to or
+    whether any key is right. It does read the age header: a value
+    that isn't base64 of a well-formed age file, or whose header
+    names no recipient, is a 422 and nothing is stored. A session-
     authenticated call needs its CSRF token too; a bearer-token-
     authenticated one doesn't, since there's no session to have one.
 
@@ -128,9 +135,11 @@ def sync(
 
      Stores an already-sealed value under a new, caller-chosen slug -
     the object's own internal id is generated server-side and never
-    returned as something addressable. The value is opaque ciphertext
-    to this service - it is never decrypted, and the service has no
-    notion of which recipients it was sealed to. A session-
+    returned as something addressable. The service never decrypts the
+    value, and it can't know how many recipients it was sealed to or
+    whether any key is right. It does read the age header: a value
+    that isn't base64 of a well-formed age file, or whose header
+    names no recipient, is a 422 and nothing is stored. A session-
     authenticated call needs its CSRF token too; a bearer-token-
     authenticated one doesn't, since there's no session to have one.
 
@@ -166,9 +175,11 @@ async def asyncio_detailed(
 
      Stores an already-sealed value under a new, caller-chosen slug -
     the object's own internal id is generated server-side and never
-    returned as something addressable. The value is opaque ciphertext
-    to this service - it is never decrypted, and the service has no
-    notion of which recipients it was sealed to. A session-
+    returned as something addressable. The service never decrypts the
+    value, and it can't know how many recipients it was sealed to or
+    whether any key is right. It does read the age header: a value
+    that isn't base64 of a well-formed age file, or whose header
+    names no recipient, is a 422 and nothing is stored. A session-
     authenticated call needs its CSRF token too; a bearer-token-
     authenticated one doesn't, since there's no session to have one.
 
@@ -207,9 +218,11 @@ async def asyncio(
 
      Stores an already-sealed value under a new, caller-chosen slug -
     the object's own internal id is generated server-side and never
-    returned as something addressable. The value is opaque ciphertext
-    to this service - it is never decrypted, and the service has no
-    notion of which recipients it was sealed to. A session-
+    returned as something addressable. The service never decrypts the
+    value, and it can't know how many recipients it was sealed to or
+    whether any key is right. It does read the age header: a value
+    that isn't base64 of a well-formed age file, or whose header
+    names no recipient, is a 422 and nothing is stored. A session-
     authenticated call needs its CSRF token too; a bearer-token-
     authenticated one doesn't, since there's no session to have one.
 

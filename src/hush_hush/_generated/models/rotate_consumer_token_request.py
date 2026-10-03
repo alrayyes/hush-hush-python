@@ -15,7 +15,16 @@ T = TypeVar("T", bound="RotateConsumerTokenRequest")
 class RotateConsumerTokenRequest:
     """
     Attributes:
-        ttl_seconds (int): How long the rotated token stays valid for, starting now.
+        ttl_seconds (int): How long a token stays valid for, starting now. The default is 90
+            days (7776000), and the cap is 365 days (31536000): a longer
+            lifetime is a 422 that names the limit. A zero or negative value is
+            a 400. The cap applies when a token is minted or rotated; a token
+            issued before it existed keeps working until it expires.
+
+            The field stays `required` so generated clients keep a plain
+            integer rather than an optional one, which would change their types
+            for a limit they don't need. A request that leaves it out anyway is
+            given the default rather than rejected.
     """
 
     ttl_seconds: int
