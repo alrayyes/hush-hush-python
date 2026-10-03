@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.1.0](https://github.com/alrayyes/hush-hush-python/compare/v4.0.8...v4.1.0) (2026-10-03)
+
+
+### Features
+
+* let query_audit_log choose the order of its results ([#175](https://github.com/alrayyes/hush-hush-python/issues/175)) ([7a20bbd](https://github.com/alrayyes/hush-hush-python/commit/7a20bbdc5ec0b0fcc7aae1eafd798b5d323c112e)), closes [#165](https://github.com/alrayyes/hush-hush-python/issues/165)
+
+
+### Bug Fixes
+
+* regenerate client from updated hush-hush spec ([#177](https://github.com/alrayyes/hush-hush-python/issues/177)) ([5c966cf](https://github.com/alrayyes/hush-hush-python/commit/5c966cf4830d1e74a3923777c9c4fd1467280962))
+
 ## [4.0.8](https://github.com/alrayyes/hush-hush-python/compare/v4.0.7...v4.0.8) (2026-10-02)
 
 
