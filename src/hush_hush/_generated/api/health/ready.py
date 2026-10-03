@@ -58,11 +58,19 @@ def sync_detailed(
     """Readiness
 
      Answers 200 when the database can serve a request and 503 when it
-    can't. The container image's own health check asks this, so a
-    container whose database has become unusable shows as unhealthy,
-    where `/healthz` would stay green because the process is still up.
-    Unauthenticated like `/healthz`, so a failure never says why - the
-    reason goes to the server's log.
+    can't, or when the server is shutting down. The container image's
+    own health check asks this, so a container whose database has become
+    unusable shows as unhealthy, where `/healthz` would stay green
+    because the process is still up. Unauthenticated like `/healthz`,
+    so a failure never says why - the reason goes to the server's log.
+
+    The database check is given 2 seconds and its answer is reused for
+    about 3, so a burst of probes costs one database call and a hung
+    database reads as not ready instead of hanging the probe. On
+    SIGTERM the server answers 503 here at once and keeps serving for 3
+    seconds before it stops accepting connections, so a load balancer
+    stops sending traffic first and the requests already on their way
+    aren't refused. `/healthz` stays 200 throughout.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -88,11 +96,19 @@ def sync(
     """Readiness
 
      Answers 200 when the database can serve a request and 503 when it
-    can't. The container image's own health check asks this, so a
-    container whose database has become unusable shows as unhealthy,
-    where `/healthz` would stay green because the process is still up.
-    Unauthenticated like `/healthz`, so a failure never says why - the
-    reason goes to the server's log.
+    can't, or when the server is shutting down. The container image's
+    own health check asks this, so a container whose database has become
+    unusable shows as unhealthy, where `/healthz` would stay green
+    because the process is still up. Unauthenticated like `/healthz`,
+    so a failure never says why - the reason goes to the server's log.
+
+    The database check is given 2 seconds and its answer is reused for
+    about 3, so a burst of probes costs one database call and a hung
+    database reads as not ready instead of hanging the probe. On
+    SIGTERM the server answers 503 here at once and keeps serving for 3
+    seconds before it stops accepting connections, so a load balancer
+    stops sending traffic first and the requests already on their way
+    aren't refused. `/healthz` stays 200 throughout.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -114,11 +130,19 @@ async def asyncio_detailed(
     """Readiness
 
      Answers 200 when the database can serve a request and 503 when it
-    can't. The container image's own health check asks this, so a
-    container whose database has become unusable shows as unhealthy,
-    where `/healthz` would stay green because the process is still up.
-    Unauthenticated like `/healthz`, so a failure never says why - the
-    reason goes to the server's log.
+    can't, or when the server is shutting down. The container image's
+    own health check asks this, so a container whose database has become
+    unusable shows as unhealthy, where `/healthz` would stay green
+    because the process is still up. Unauthenticated like `/healthz`,
+    so a failure never says why - the reason goes to the server's log.
+
+    The database check is given 2 seconds and its answer is reused for
+    about 3, so a burst of probes costs one database call and a hung
+    database reads as not ready instead of hanging the probe. On
+    SIGTERM the server answers 503 here at once and keeps serving for 3
+    seconds before it stops accepting connections, so a load balancer
+    stops sending traffic first and the requests already on their way
+    aren't refused. `/healthz` stays 200 throughout.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -142,11 +166,19 @@ async def asyncio(
     """Readiness
 
      Answers 200 when the database can serve a request and 503 when it
-    can't. The container image's own health check asks this, so a
-    container whose database has become unusable shows as unhealthy,
-    where `/healthz` would stay green because the process is still up.
-    Unauthenticated like `/healthz`, so a failure never says why - the
-    reason goes to the server's log.
+    can't, or when the server is shutting down. The container image's
+    own health check asks this, so a container whose database has become
+    unusable shows as unhealthy, where `/healthz` would stay green
+    because the process is still up. Unauthenticated like `/healthz`,
+    so a failure never says why - the reason goes to the server's log.
+
+    The database check is given 2 seconds and its answer is reused for
+    about 3, so a burst of probes costs one database call and a hung
+    database reads as not ready instead of hanging the probe. On
+    SIGTERM the server answers 503 here at once and keeps serving for 3
+    seconds before it stops accepting connections, so a load balancer
+    stops sending traffic first and the requests already on their way
+    aren't refused. `/healthz` stays 200 throughout.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
