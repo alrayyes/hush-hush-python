@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.1.4](https://github.com/alrayyes/hush-hush-python/compare/v4.1.3...v4.1.4) (2026-10-05)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump ruff ([#190](https://github.com/alrayyes/hush-hush-python/issues/190)) ([12b26e0](https://github.com/alrayyes/hush-hush-python/commit/12b26e0fb1f3d7e7802495a09b3d3872ff383774))
+* regenerate client from updated hush-hush spec ([#192](https://github.com/alrayyes/hush-hush-python/issues/192)) ([000a73d](https://github.com/alrayyes/hush-hush-python/commit/000a73d898c1b750ad26338fffa97278f55fece0))
+
 ## [4.1.3](https://github.com/alrayyes/hush-hush-python/compare/v4.1.2...v4.1.3) (2026-10-03)
 
 
