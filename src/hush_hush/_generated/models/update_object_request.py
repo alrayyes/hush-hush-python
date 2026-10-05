@@ -19,7 +19,8 @@ class UpdateObjectRequest:
     Attributes:
         value (str): The new sealed (encrypted) value, base64-encoded. It has to be
             a well-formed age file naming at least one recipient; the
-            service reads only its header, never the payload.
+            service reads only its header, never the payload. At most 1 MiB
+            once decoded.
         used_by (list[str] | Unset): The consumers (repos or hosts) recorded as depending on this
             object. Set at creation, and replaceable later via
             UpdateObjectRequest's own used_by field - a plain value update
