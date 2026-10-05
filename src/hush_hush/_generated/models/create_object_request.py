@@ -30,6 +30,7 @@ class CreateObjectRequest:
             object. Set at creation, and replaceable later via
             UpdateObjectRequest's own used_by field - a plain value update
             that omits it leaves the list as it was.
+            A consumer named more than once is recorded once.
         tags (list[str] | Unset): Labels for grouping and filtering objects (`GET /objects?tag=`).
             Free-form, 1 to 32 characters from `a-z 0-9 . _ / -`, at most 10
             per object. Uppercase is converted to lowercase and duplicates are dropped.

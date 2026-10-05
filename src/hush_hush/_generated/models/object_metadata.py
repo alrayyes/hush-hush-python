@@ -36,6 +36,7 @@ class ObjectMetadata:
             object. Set at creation, and replaceable later via
             UpdateObjectRequest's own used_by field - a plain value update
             that omits it leaves the list as it was.
+            A consumer named more than once is recorded once.
         description (str | Unset): A free-text label set at creation, for a reader who only knows the
             slug. Fixed at creation - there is no way to change it later.
         keep_readable_copy (bool | Unset): Requests that the owner's own escrowed identity public key be

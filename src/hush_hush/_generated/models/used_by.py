@@ -19,6 +19,7 @@ class UsedBy:
             object. Set at creation, and replaceable later via
             UpdateObjectRequest's own used_by field - a plain value update
             that omits it leaves the list as it was.
+            A consumer named more than once is recorded once.
     """
 
     used_by: list[str]
