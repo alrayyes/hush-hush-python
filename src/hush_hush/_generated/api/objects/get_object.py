@@ -4,6 +4,7 @@ from http import HTTPStatus
 from io import BytesIO
 from typing import Any
 from urllib.parse import quote
+from uuid import UUID
 
 import httpx
 
@@ -16,17 +17,28 @@ from ...types import UNSET, File, Response, Unset
 def _get_kwargs(
     slug: str,
     *,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
     if not isinstance(x_caller, Unset):
         headers["X-Caller"] = x_caller
 
+    params: dict[str, Any] = {}
+
+    json_id: str | Unset = UNSET
+    if not isinstance(id, Unset):
+        json_id = str(id)
+    params["id"] = json_id
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/objects/{slug}".format(
             slug=quote(str(slug), safe=""),
         ),
+        "params": params,
     }
 
     _kwargs["headers"] = headers
@@ -41,6 +53,11 @@ def _parse_response(
 
         return response_200
 
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+        return response_400
+
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
 
@@ -50,6 +67,11 @@ def _parse_response(
         response_404 = Error.from_dict(response.json())
 
         return response_404
+
+    if response.status_code == 409:
+        response_409 = Error.from_dict(response.json())
+
+        return response_409
 
     if response.status_code == 422:
         response_422 = Error.from_dict(response.json())
@@ -77,6 +99,7 @@ def sync_detailed(
     slug: str,
     *,
     client: AuthenticatedClient,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> Response[Error | File]:
     """Fetch an object's sealed ciphertext
@@ -101,6 +124,7 @@ def sync_detailed(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
         x_caller (str | Unset):
 
     Raises:
@@ -113,6 +137,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         slug=slug,
+        id=id,
         x_caller=x_caller,
     )
 
@@ -127,6 +152,7 @@ def sync(
     slug: str,
     *,
     client: AuthenticatedClient,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> Error | File | None:
     """Fetch an object's sealed ciphertext
@@ -151,6 +177,7 @@ def sync(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
         x_caller (str | Unset):
 
     Raises:
@@ -164,6 +191,7 @@ def sync(
     return sync_detailed(
         slug=slug,
         client=client,
+        id=id,
         x_caller=x_caller,
     ).parsed
 
@@ -172,6 +200,7 @@ async def asyncio_detailed(
     slug: str,
     *,
     client: AuthenticatedClient,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> Response[Error | File]:
     """Fetch an object's sealed ciphertext
@@ -196,6 +225,7 @@ async def asyncio_detailed(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
         x_caller (str | Unset):
 
     Raises:
@@ -208,6 +238,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         slug=slug,
+        id=id,
         x_caller=x_caller,
     )
 
@@ -220,6 +251,7 @@ async def asyncio(
     slug: str,
     *,
     client: AuthenticatedClient,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> Error | File | None:
     """Fetch an object's sealed ciphertext
@@ -244,6 +276,7 @@ async def asyncio(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
         x_caller (str | Unset):
 
     Raises:
@@ -258,6 +291,7 @@ async def asyncio(
         await asyncio_detailed(
             slug=slug,
             client=client,
+            id=id,
             x_caller=x_caller,
         )
     ).parsed

@@ -9,14 +9,27 @@ from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.credential import Credential
 from ...models.error import Error
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
-def _get_kwargs() -> dict[str, Any]:
+def _get_kwargs(
+    *,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
+) -> dict[str, Any]:
+
+    params: dict[str, Any] = {}
+
+    params["limit"] = limit
+
+    params["offset"] = offset
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/credentials",
+        "params": params,
     }
 
     return _kwargs
@@ -34,6 +47,11 @@ def _parse_response(
             response_200.append(response_200_item)
 
         return response_200
+
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+        return response_400
 
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
@@ -60,11 +78,17 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
 ) -> Response[Error | list[Credential]]:
     """List registered passkeys
 
      Returns every credential registered to the admin account -
     nickname, timestamps, never the public key material.
+
+    Args:
+        limit (int | Unset):  Default: 50.
+        offset (int | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -74,7 +98,10 @@ def sync_detailed(
         Response[Error | list[Credential]]
     """
 
-    kwargs = _get_kwargs()
+    kwargs = _get_kwargs(
+        limit=limit,
+        offset=offset,
+    )
 
     response = client.get_httpx_client().request(
         **kwargs,
@@ -86,11 +113,17 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
 ) -> Error | list[Credential] | None:
     """List registered passkeys
 
      Returns every credential registered to the admin account -
     nickname, timestamps, never the public key material.
+
+    Args:
+        limit (int | Unset):  Default: 50.
+        offset (int | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -102,17 +135,25 @@ def sync(
 
     return sync_detailed(
         client=client,
+        limit=limit,
+        offset=offset,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
 ) -> Response[Error | list[Credential]]:
     """List registered passkeys
 
      Returns every credential registered to the admin account -
     nickname, timestamps, never the public key material.
+
+    Args:
+        limit (int | Unset):  Default: 50.
+        offset (int | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -122,7 +163,10 @@ async def asyncio_detailed(
         Response[Error | list[Credential]]
     """
 
-    kwargs = _get_kwargs()
+    kwargs = _get_kwargs(
+        limit=limit,
+        offset=offset,
+    )
 
     response = await client.get_async_httpx_client().request(**kwargs)
 
@@ -132,11 +176,17 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
 ) -> Error | list[Credential] | None:
     """List registered passkeys
 
      Returns every credential registered to the admin account -
     nickname, timestamps, never the public key material.
+
+    Args:
+        limit (int | Unset):  Default: 50.
+        offset (int | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -149,5 +199,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            limit=limit,
+            offset=offset,
         )
     ).parsed

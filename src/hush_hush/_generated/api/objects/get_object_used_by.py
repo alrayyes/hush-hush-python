@@ -3,6 +3,7 @@
 from http import HTTPStatus
 from typing import Any
 from urllib.parse import quote
+from uuid import UUID
 
 import httpx
 
@@ -10,18 +11,30 @@ from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.error import Error
 from ...models.used_by import UsedBy
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     slug: str,
+    *,
+    id: UUID | Unset = UNSET,
 ) -> dict[str, Any]:
+
+    params: dict[str, Any] = {}
+
+    json_id: str | Unset = UNSET
+    if not isinstance(id, Unset):
+        json_id = str(id)
+    params["id"] = json_id
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/objects/{slug}/used-by".format(
             slug=quote(str(slug), safe=""),
         ),
+        "params": params,
     }
 
     return _kwargs
@@ -35,10 +48,25 @@ def _parse_response(
 
         return response_200
 
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+        return response_400
+
     if response.status_code == 404:
         response_404 = Error.from_dict(response.json())
 
         return response_404
+
+    if response.status_code == 409:
+        response_409 = Error.from_dict(response.json())
+
+        return response_409
+
+    if response.status_code == 422:
+        response_422 = Error.from_dict(response.json())
+
+        return response_422
 
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -61,6 +89,7 @@ def sync_detailed(
     slug: str,
     *,
     client: AuthenticatedClient | Client,
+    id: UUID | Unset = UNSET,
 ) -> Response[Error | UsedBy]:
     """Query what depends on an object
 
@@ -74,6 +103,7 @@ def sync_detailed(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -85,6 +115,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         slug=slug,
+        id=id,
     )
 
     response = client.get_httpx_client().request(
@@ -98,6 +129,7 @@ def sync(
     slug: str,
     *,
     client: AuthenticatedClient | Client,
+    id: UUID | Unset = UNSET,
 ) -> Error | UsedBy | None:
     """Query what depends on an object
 
@@ -111,6 +143,7 @@ def sync(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -123,6 +156,7 @@ def sync(
     return sync_detailed(
         slug=slug,
         client=client,
+        id=id,
     ).parsed
 
 
@@ -130,6 +164,7 @@ async def asyncio_detailed(
     slug: str,
     *,
     client: AuthenticatedClient | Client,
+    id: UUID | Unset = UNSET,
 ) -> Response[Error | UsedBy]:
     """Query what depends on an object
 
@@ -143,6 +178,7 @@ async def asyncio_detailed(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -154,6 +190,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         slug=slug,
+        id=id,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -165,6 +202,7 @@ async def asyncio(
     slug: str,
     *,
     client: AuthenticatedClient | Client,
+    id: UUID | Unset = UNSET,
 ) -> Error | UsedBy | None:
     """Query what depends on an object
 
@@ -178,6 +216,7 @@ async def asyncio(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -191,5 +230,6 @@ async def asyncio(
         await asyncio_detailed(
             slug=slug,
             client=client,
+            id=id,
         )
     ).parsed
