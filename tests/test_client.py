@@ -4,6 +4,9 @@ import pytest
 
 from hush_hush import AsyncClient, Client
 
+# The object's UUID, which the API returns on every object.
+OBJECT_ID = "0b9f6c1e-3c7a-4a52-9d57-4f2a1c8e5b10"
+
 
 def test_credential_from_environment(make_server, monkeypatch):
     monkeypatch.setenv("HUSH_HUSH_API_KEY", "env-token")
@@ -11,7 +14,7 @@ def test_credential_from_environment(make_server, monkeypatch):
 
     def handler(req):
         got_auth["value"] = req.headers.get("Authorization")
-        req.send_json(201, json.dumps({"slug": "x", "tags": []}).encode())
+        req.send_json(201, json.dumps({"id": OBJECT_ID, "slug": "x", "tags": []}).encode())
 
     server = make_server(handler)
     client = Client(server.base_url)
@@ -25,7 +28,7 @@ def test_explicit_credential_overrides_environment(make_server, monkeypatch):
 
     def handler(req):
         got_auth["value"] = req.headers.get("Authorization")
-        req.send_json(201, json.dumps({"slug": "x", "tags": []}).encode())
+        req.send_json(201, json.dumps({"id": OBJECT_ID, "slug": "x", "tags": []}).encode())
 
     server = make_server(handler)
     client = Client(server.base_url, api_key="explicit-token")
