@@ -3,6 +3,7 @@
 from http import HTTPStatus
 from typing import Any
 from urllib.parse import quote
+from uuid import UUID
 
 import httpx
 
@@ -18,6 +19,7 @@ def _get_kwargs(
     slug: str,
     *,
     body: UpdateObjectRequest,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> dict[str, Any]:
@@ -28,11 +30,21 @@ def _get_kwargs(
     if not isinstance(x_csrf_token, Unset):
         headers["X-CSRF-Token"] = x_csrf_token
 
+    params: dict[str, Any] = {}
+
+    json_id: str | Unset = UNSET
+    if not isinstance(id, Unset):
+        json_id = str(id)
+    params["id"] = json_id
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
     _kwargs: dict[str, Any] = {
         "method": "put",
         "url": "/objects/{slug}".format(
             slug=quote(str(slug), safe=""),
         ),
+        "params": params,
     }
 
     _kwargs["json"] = body.to_dict()
@@ -51,6 +63,11 @@ def _parse_response(
 
         return response_200
 
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+        return response_400
+
     if response.status_code == 401:
         response_401 = Error.from_dict(response.json())
 
@@ -60,6 +77,11 @@ def _parse_response(
         response_404 = Error.from_dict(response.json())
 
         return response_404
+
+    if response.status_code == 409:
+        response_409 = Error.from_dict(response.json())
+
+        return response_409
 
     if response.status_code == 413:
         response_413 = Error.from_dict(response.json())
@@ -93,6 +115,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Response[Error | ObjectMetadata]:
@@ -115,6 +138,7 @@ def sync_detailed(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -130,6 +154,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         slug=slug,
         body=body,
+        id=id,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     )
@@ -146,6 +171,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Error | ObjectMetadata | None:
@@ -168,6 +194,7 @@ def sync(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -184,6 +211,7 @@ def sync(
         slug=slug,
         client=client,
         body=body,
+        id=id,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     ).parsed
@@ -194,6 +222,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Response[Error | ObjectMetadata]:
@@ -216,6 +245,7 @@ async def asyncio_detailed(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -231,6 +261,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         slug=slug,
         body=body,
+        id=id,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     )
@@ -245,6 +276,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
+    id: UUID | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Error | ObjectMetadata | None:
@@ -267,6 +299,7 @@ async def asyncio(
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
+        id (UUID | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -284,6 +317,7 @@ async def asyncio(
             slug=slug,
             client=client,
             body=body,
+            id=id,
             x_caller=x_caller,
             x_csrf_token=x_csrf_token,
         )

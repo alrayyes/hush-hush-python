@@ -16,6 +16,8 @@ def _get_kwargs(
     *,
     used_by: str | Unset = UNSET,
     tag: list[str] | Unset = UNSET,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
 ) -> dict[str, Any]:
 
     params: dict[str, Any] = {}
@@ -27,6 +29,10 @@ def _get_kwargs(
         json_tag = tag
 
     params["tag"] = json_tag
+
+    params["limit"] = limit
+
+    params["offset"] = offset
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -89,6 +95,8 @@ def sync_detailed(
     client: AuthenticatedClient,
     used_by: str | Unset = UNSET,
     tag: list[str] | Unset = UNSET,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
 ) -> Response[Error | list[ObjectMetadata]]:
     """List stored objects
 
@@ -107,6 +115,8 @@ def sync_detailed(
     Args:
         used_by (str | Unset):
         tag (list[str] | Unset):
+        limit (int | Unset):  Default: 50.
+        offset (int | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -119,6 +129,8 @@ def sync_detailed(
     kwargs = _get_kwargs(
         used_by=used_by,
         tag=tag,
+        limit=limit,
+        offset=offset,
     )
 
     response = client.get_httpx_client().request(
@@ -133,6 +145,8 @@ def sync(
     client: AuthenticatedClient,
     used_by: str | Unset = UNSET,
     tag: list[str] | Unset = UNSET,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
 ) -> Error | list[ObjectMetadata] | None:
     """List stored objects
 
@@ -151,6 +165,8 @@ def sync(
     Args:
         used_by (str | Unset):
         tag (list[str] | Unset):
+        limit (int | Unset):  Default: 50.
+        offset (int | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -164,6 +180,8 @@ def sync(
         client=client,
         used_by=used_by,
         tag=tag,
+        limit=limit,
+        offset=offset,
     ).parsed
 
 
@@ -172,6 +190,8 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     used_by: str | Unset = UNSET,
     tag: list[str] | Unset = UNSET,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
 ) -> Response[Error | list[ObjectMetadata]]:
     """List stored objects
 
@@ -190,6 +210,8 @@ async def asyncio_detailed(
     Args:
         used_by (str | Unset):
         tag (list[str] | Unset):
+        limit (int | Unset):  Default: 50.
+        offset (int | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -202,6 +224,8 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         used_by=used_by,
         tag=tag,
+        limit=limit,
+        offset=offset,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -214,6 +238,8 @@ async def asyncio(
     client: AuthenticatedClient,
     used_by: str | Unset = UNSET,
     tag: list[str] | Unset = UNSET,
+    limit: int | Unset = 50,
+    offset: int | Unset = UNSET,
 ) -> Error | list[ObjectMetadata] | None:
     """List stored objects
 
@@ -232,6 +258,8 @@ async def asyncio(
     Args:
         used_by (str | Unset):
         tag (list[str] | Unset):
+        limit (int | Unset):  Default: 50.
+        offset (int | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -246,5 +274,7 @@ async def asyncio(
             client=client,
             used_by=used_by,
             tag=tag,
+            limit=limit,
+            offset=offset,
         )
     ).parsed

@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar, cast
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -22,6 +23,8 @@ T = TypeVar("T", bound="ObjectMetadata")
 class ObjectMetadata:
     """
     Attributes:
+        id (UUID): The object's UUID. Several objects can share a name (each is a variant, with its own value and
+            consumers), so this is what tells them apart and what `id` selects.
         slug (str): A caller-chosen, unique identifier for an object - what every
             documented request path (URL, CLI, API) addresses it by. The
             object's internal id is a separate, opaque value never exposed to
@@ -69,6 +72,7 @@ class ObjectMetadata:
             the same values `GET /audit-log` reports.
     """
 
+    id: UUID
     slug: str
     tags: list[str]
     used_by: list[str] | Unset = UNSET
@@ -81,6 +85,8 @@ class ObjectMetadata:
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        id = str(self.id)
+
         slug = self.slug
 
         tags = self.tags
@@ -113,6 +119,7 @@ class ObjectMetadata:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "id": id,
                 "slug": slug,
                 "tags": tags,
             }
@@ -139,6 +146,8 @@ class ObjectMetadata:
         from ..models.actor import Actor  # noqa: PLC0415
 
         d = dict(src_dict)
+        id = UUID(d.pop("id"))
+
         slug = d.pop("slug")
 
         tags = cast(list[str], d.pop("tags"))
@@ -172,6 +181,7 @@ class ObjectMetadata:
         updated_by = UNSET if isinstance(_updated_by, Unset) else Actor.from_dict(_updated_by)
 
         object_metadata = cls(
+            id=id,
             slug=slug,
             tags=tags,
             used_by=used_by,
