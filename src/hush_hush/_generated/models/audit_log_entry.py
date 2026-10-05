@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime
 from collections.abc import Mapping
 from typing import Any, TypeVar
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -35,6 +36,8 @@ class AuditLogEntry:
             address; this service isn't deployed behind a reverse proxy or
             load balancer, so X-Forwarded-For (or similar) support isn't
             implemented yet.
+        variant_id (UUID | Unset): The UUID of the object the entry is about. `object_id` is only its name, which
+            several variants can share. Left out of an entry written before this was recorded.
         caller (str | Unset): The caller's presented identity, if any.
         actor_type (AuditLogEntryActorType | Unset): The kind of verified credential that authenticated this call -
             absent for an unauthenticated read. Unlike caller, this is
@@ -48,6 +51,7 @@ class AuditLogEntry:
     action: AuditLogEntryAction
     timestamp: datetime.datetime
     ip: str
+    variant_id: UUID | Unset = UNSET
     caller: str | Unset = UNSET
     actor_type: AuditLogEntryActorType | Unset = UNSET
     actor_id: str | Unset = UNSET
@@ -63,6 +67,10 @@ class AuditLogEntry:
         timestamp = self.timestamp.isoformat()
 
         ip = self.ip
+
+        variant_id: str | Unset = UNSET
+        if not isinstance(self.variant_id, Unset):
+            variant_id = str(self.variant_id)
 
         caller = self.caller
 
@@ -83,6 +91,8 @@ class AuditLogEntry:
                 "ip": ip,
             }
         )
+        if variant_id is not UNSET:
+            field_dict["variant_id"] = variant_id
         if caller is not UNSET:
             field_dict["caller"] = caller
         if actor_type is not UNSET:
@@ -105,6 +115,10 @@ class AuditLogEntry:
 
         ip = d.pop("ip")
 
+        _variant_id = d.pop("variant_id", UNSET)
+        variant_id: UUID | Unset
+        variant_id = UNSET if isinstance(_variant_id, Unset) else UUID(_variant_id)
+
         caller = d.pop("caller", UNSET)
 
         _actor_type = d.pop("actor_type", UNSET)
@@ -122,6 +136,7 @@ class AuditLogEntry:
             action=action,
             timestamp=timestamp,
             ip=ip,
+            variant_id=variant_id,
             caller=caller,
             actor_type=actor_type,
             actor_id=actor_id,
