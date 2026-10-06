@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.1.11](https://github.com/alrayyes/hush-hush-python/compare/v4.1.10...v4.1.11) (2026-10-06)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump multidict past CVE-2026-104874 ([3d2a3dc](https://github.com/alrayyes/hush-hush-python/commit/3d2a3dc46d4999f410f8ea4802eacd049012371b))
+* **deps-dev:** bump multidict past CVE-2026-104874 ([85645d6](https://github.com/alrayyes/hush-hush-python/commit/85645d63f4152ab59d24cd2abff9e84b846f6bdd))
+
 ## [4.1.10](https://github.com/alrayyes/hush-hush-python/compare/v4.1.9...v4.1.10) (2026-10-05)
 
 
