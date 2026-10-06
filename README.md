@@ -44,7 +44,8 @@ async code. The API key is only required for write operations
 (create/update/delete); reads (get, used-by, audit-log query) work without
 one. `caller`, accepted by most methods, is optional. See the
 [full API reference](https://alrayyes.github.io/hush-hush-python/) for
-everything else.
+everything else. The latest green run's test and coverage reports are at
+<https://apis.ryankes.eu/hush-hush-python/reports/>.
 
 ## Versioning
 
