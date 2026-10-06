@@ -68,6 +68,21 @@ jobs:
       - run: uv sync --all-extras
       - name: pytest (hand-written layer only; see design.md's testing layers)
         run: uv run pytest --cov=hush_hush --cov-report=term-missing --cov-report=xml --junitxml=junit.xml
+      # The reports ship from the pages job on a push to main, so they are
+      # assembled on every run: a broken step fails here, before the merge.
+      - name: Assemble the test and coverage reports
+        run: |
+          uv run coverage lcov -o lcov.info
+          uv run coverage html -d htmlcov
+          mkdir -p reports/tests reports/coverage
+          cp junit.xml reports/tests/junit.xml
+          cp -r htmlcov/. reports/coverage/
+          cp coverage.xml lcov.info reports/coverage/
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: reports
+          path: reports
+          if-no-files-found: error
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
@@ -236,3 +251,70 @@ jobs:
             --from "${{ github.event.pull_request.base.sha }}" \
             --to "${{ github.event.pull_request.head.sha }}" \
             --verbose
+
+  # One site, one Pages deployment: a second deploy replaces the first, so the
+  # docs and the reports ship together. Assembled on every run so a broken
+  # mkdocs build or report fails a pull request; only the deploy below is
+  # limited to main. Needs every other job, so a red run publishes nothing.
+  pages:
+    needs:
+      - actionlint
+      - lint
+      - pip-audit
+      - test
+      - build
+      - codegen-drift
+      - markdown
+      - grammar
+      - style
+      - contract
+      - pact-consumer
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --all-extras --group docs
+      # The docs stay at the site root, where they have always been served.
+      - run: uv run --group docs mkdocs build --strict
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: reports
+          path: site/reports
+      - run: cp scripts/reports-index.html site/reports/index.html
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        if: github.event_name == 'push'
+        with:
+          path: site
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: pages
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+      # The deploy succeeds even when the site it serves 404s, so fetch the
+      # real file. The retries cover the CDN catching up.
+      - name: Check the live coverage report
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          curl --fail --silent --show-error --location --retry 6 --retry-delay 10 \
+            --retry-all-errors --output coverage.xml \
+            "${PAGE_URL%/}/reports/coverage/coverage.xml"
+          grep -q '<coverage ' coverage.xml
