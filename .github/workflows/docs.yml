@@ -28,11 +28,29 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
       - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
           version: "0.12.7"
       - run: uv sync --all-extras --group docs
       - run: uv run --group docs mkdocs build --strict
+      # A Pages deploy replaces the whole site, so the test and coverage
+      # reports ship from this job on every push to main. Running pytest
+      # here, not downloading ci.yml's results, keeps the two workflows
+      # independent; a red run fails the build and so publishes nothing.
+      - name: Test and coverage reports
+        if: github.event_name == 'push'
+        run: |
+          uv run pytest --cov=hush_hush --cov-report= --junitxml=junit.xml
+          uv run coverage xml -o coverage.xml
+          uv run coverage lcov -o lcov.info
+          uv run coverage html -d htmlcov
+          mkdir -p site/reports/tests site/reports/coverage
+          cp junit.xml site/reports/tests/junit.xml
+          cp -r htmlcov/. site/reports/coverage/
+          cp coverage.xml lcov.info site/reports/coverage/
+          cp scripts/reports-index.html site/reports/index.html
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site

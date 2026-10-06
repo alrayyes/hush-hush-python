@@ -25,3 +25,5 @@ pact/pacts/
 
 # Written by the release job, not by hand.
 CHANGELOG.md
+junit.xml
+lcov.info
