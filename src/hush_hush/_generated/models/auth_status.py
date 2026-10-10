@@ -16,19 +16,27 @@ class AuthStatus:
     """
     Attributes:
         bootstrapped (bool): Whether an admin account has been created yet.
+        authenticated (bool): Whether the request carries a valid, unexpired session cookie.
+            False for no cookie, an expired one or one that doesn't match a
+            session - still a 200, so a client can ask without being
+            answered with a 401.
     """
 
     bootstrapped: bool
+    authenticated: bool
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         bootstrapped = self.bootstrapped
+
+        authenticated = self.authenticated
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "bootstrapped": bootstrapped,
+                "authenticated": authenticated,
             }
         )
 
@@ -39,8 +47,11 @@ class AuthStatus:
         d = dict(src_dict)
         bootstrapped = d.pop("bootstrapped")
 
+        authenticated = d.pop("authenticated")
+
         auth_status = cls(
             bootstrapped=bootstrapped,
+            authenticated=authenticated,
         )
 
         auth_status.additional_properties = d
