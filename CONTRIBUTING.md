@@ -19,6 +19,13 @@ bun install
 The `prepare` script runs `lefthook install` for you — an uninstalled hook
 silently does nothing, which is worse than not having one.
 
+The `pre-commit` hook judges only the files you staged, and fetches nothing.
+Vale's style packages therefore aren't downloaded for you: run
+`./scripts/lint-vale.sh` once on a fresh clone, or the first commit that
+touches Markdown fails with `style 'Google' does not exist`. Whole-tree checks
+(`actionlint`, the full Vale and LanguageTool runs, the tests) run at
+`pre-push`, and in CI.
+
 This repo pulls hush-hush's OpenAPI spec in as a git submodule. Clone with
 `git clone --recurse-submodules`, or run `git submodule update --init` after
 a plain clone.

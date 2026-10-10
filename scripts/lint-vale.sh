@@ -11,10 +11,23 @@ IMAGE=jdkato/vale:v3.17.1@sha256:7dba3c9104ba366f172d119022c4ec53a005f7d14dc1b80
 
 cd "$(dirname "$0")/.."
 
-if command -v vale >/dev/null 2>&1; then
-  vale sync
-  vale README.md CONTRIBUTING.md CLAUDE.md SECURITY.md
+# Given files, lint exactly those and never sync: that is the pre-commit path,
+# which judges only what the commit contains and must not touch the network
+# (rules/linting.md). The style packages are fetched by a bare run, which is
+# what pre-push and CI do; run it once on a fresh clone. With no arguments,
+# sync and lint the whole documented set.
+if [ "$#" -eq 0 ]; then
+  set -- README.md CONTRIBUTING.md CLAUDE.md SECURITY.md
+  sync=1
 else
-  docker run --rm -v "$PWD:/work" -w /work --entrypoint sh "$IMAGE" \
-    -c "vale sync && vale README.md CONTRIBUTING.md CLAUDE.md SECURITY.md"
+  sync=0
+fi
+
+if command -v vale >/dev/null 2>&1; then
+  [ "$sync" -eq 1 ] && vale sync
+  vale "$@"
+else
+  docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/work" -w /work \
+    -e SYNC="$sync" --entrypoint sh "$IMAGE" \
+    -c '[ "$SYNC" -eq 1 ] && vale sync; exec vale "$@"' sh "$@"
 fi
