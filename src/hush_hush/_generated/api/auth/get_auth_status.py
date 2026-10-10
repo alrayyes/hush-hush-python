@@ -50,7 +50,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient | Client,
 ) -> Response[AuthStatus]:
-    """Report whether an admin account exists yet
+    """Report whether an admin account exists and whether the caller has a session
 
      A read-only, side-effect-free check the login page uses to decide
     whether to offer registering the first passkey or logging in with
@@ -58,6 +58,9 @@ def sync_detailed(
     `POST /auth/login/begin` already reveals this same boolean today
     via its 400 error body
     (openspec/changes/gate-passkey-registration-ui/design.md).
+    `authenticated` reports only the caller's own state, so the web UI
+    can tell whether to show the signed-in navigation without probing
+    a credentialed endpoint and being answered with a 401.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -80,7 +83,7 @@ def sync(
     *,
     client: AuthenticatedClient | Client,
 ) -> AuthStatus | None:
-    """Report whether an admin account exists yet
+    """Report whether an admin account exists and whether the caller has a session
 
      A read-only, side-effect-free check the login page uses to decide
     whether to offer registering the first passkey or logging in with
@@ -88,6 +91,9 @@ def sync(
     `POST /auth/login/begin` already reveals this same boolean today
     via its 400 error body
     (openspec/changes/gate-passkey-registration-ui/design.md).
+    `authenticated` reports only the caller's own state, so the web UI
+    can tell whether to show the signed-in navigation without probing
+    a credentialed endpoint and being answered with a 401.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -106,7 +112,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient | Client,
 ) -> Response[AuthStatus]:
-    """Report whether an admin account exists yet
+    """Report whether an admin account exists and whether the caller has a session
 
      A read-only, side-effect-free check the login page uses to decide
     whether to offer registering the first passkey or logging in with
@@ -114,6 +120,9 @@ async def asyncio_detailed(
     `POST /auth/login/begin` already reveals this same boolean today
     via its 400 error body
     (openspec/changes/gate-passkey-registration-ui/design.md).
+    `authenticated` reports only the caller's own state, so the web UI
+    can tell whether to show the signed-in navigation without probing
+    a credentialed endpoint and being answered with a 401.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -134,7 +143,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient | Client,
 ) -> AuthStatus | None:
-    """Report whether an admin account exists yet
+    """Report whether an admin account exists and whether the caller has a session
 
      A read-only, side-effect-free check the login page uses to decide
     whether to offer registering the first passkey or logging in with
@@ -142,6 +151,9 @@ async def asyncio(
     `POST /auth/login/begin` already reveals this same boolean today
     via its 400 error body
     (openspec/changes/gate-passkey-registration-ui/design.md).
+    `authenticated` reports only the caller's own state, so the web UI
+    can tell whether to show the signed-in navigation without probing
+    a credentialed endpoint and being answered with a 401.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
