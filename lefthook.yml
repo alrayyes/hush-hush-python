@@ -29,15 +29,20 @@ pre-commit:
 
     - name: markdownlint
       glob: "*.md"
-      run: bunx markdownlint-cli2 {staged_files}
+      # --no-globs: .markdownlint-cli2.yaml names every Markdown file, which
+      # would lint the whole tree on top of the staged ones.
+      run: bunx markdownlint-cli2 --no-globs {staged_files}
 
     - name: vale
       glob: "*.md"
-      run: ./scripts/lint-vale.sh
+      # Given files, the script lints just those and fetches nothing. A bare
+      # run (pre-push, CI) syncs the style packages first.
+      run: ./scripts/lint-vale.sh {staged_files}
 
-    - name: actionlint
-      glob: ".github/workflows/*.{yml,yaml}"
-      run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
+    # No actionlint here. It reads every workflow rather than the staged ones,
+    # so a commit would be judged on files it doesn't contain
+    # (rules/linting.md, "pre-commit judges only what the commit contains").
+    # pre-push and CI's `actionlint` job run it over the whole tree.
 
     - name: pyproject-fmt
       glob: "pyproject.toml"
@@ -63,6 +68,9 @@ pre-push:
 
     - name: pyproject-fmt
       run: uvx pyproject-fmt@2.29.3 --keep-full-version --check pyproject.toml
+
+    - name: actionlint
+      run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
 
     - name: prettier
       run: bun run format:check
