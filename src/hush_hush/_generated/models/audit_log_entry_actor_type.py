@@ -4,6 +4,7 @@ from enum import StrEnum
 
 
 class AuditLogEntryActorType(StrEnum):
+    CONSUMER_TOKEN = "consumer_token"
     SESSION = "session"
     TOKEN = "token"
 
