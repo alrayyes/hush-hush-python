@@ -117,7 +117,9 @@ def sync_detailed(
     A `public_key` in the request body registers or replaces that age
     public key on the (possibly just-renamed) consumer, upserting a
     directory entry for it even if it had none before - unlike a bare
-    rename, this never 404s on an unrecognized name. Sending both
+    rename, this never 404s on an unrecognized name. It must be a valid
+    age X25519 recipient (`age1...`); anything else, a private key
+    included, is a 400 and nothing in the request is applied. Sending both
     fields in the same call renames first, then sets the key on the
     resulting name.
 
@@ -177,7 +179,9 @@ def sync(
     A `public_key` in the request body registers or replaces that age
     public key on the (possibly just-renamed) consumer, upserting a
     directory entry for it even if it had none before - unlike a bare
-    rename, this never 404s on an unrecognized name. Sending both
+    rename, this never 404s on an unrecognized name. It must be a valid
+    age X25519 recipient (`age1...`); anything else, a private key
+    included, is a 400 and nothing in the request is applied. Sending both
     fields in the same call renames first, then sets the key on the
     resulting name.
 
@@ -232,7 +236,9 @@ async def asyncio_detailed(
     A `public_key` in the request body registers or replaces that age
     public key on the (possibly just-renamed) consumer, upserting a
     directory entry for it even if it had none before - unlike a bare
-    rename, this never 404s on an unrecognized name. Sending both
+    rename, this never 404s on an unrecognized name. It must be a valid
+    age X25519 recipient (`age1...`); anything else, a private key
+    included, is a 400 and nothing in the request is applied. Sending both
     fields in the same call renames first, then sets the key on the
     resulting name.
 
@@ -290,7 +296,9 @@ async def asyncio(
     A `public_key` in the request body registers or replaces that age
     public key on the (possibly just-renamed) consumer, upserting a
     directory entry for it even if it had none before - unlike a bare
-    rename, this never 404s on an unrecognized name. Sending both
+    rename, this never 404s on an unrecognized name. It must be a valid
+    age X25519 recipient (`age1...`); anything else, a private key
+    included, is a 400 and nothing in the request is applied. Sending both
     fields in the same call renames first, then sets the key on the
     resulting name.
 
