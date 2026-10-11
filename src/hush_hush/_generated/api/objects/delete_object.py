@@ -17,6 +17,7 @@ def _get_kwargs(
     slug: str,
     *,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> dict[str, Any]:
@@ -33,6 +34,8 @@ def _get_kwargs(
     if not isinstance(id, Unset):
         json_id = str(id)
     params["id"] = json_id
+
+    params["consumer"] = consumer
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -102,6 +105,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Response[Any | Error]:
@@ -118,6 +122,7 @@ def sync_detailed(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
 
@@ -132,6 +137,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         slug=slug,
         id=id,
+        consumer=consumer,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     )
@@ -148,6 +154,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Any | Error | None:
@@ -164,6 +171,7 @@ def sync(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
 
@@ -179,6 +187,7 @@ def sync(
         slug=slug,
         client=client,
         id=id,
+        consumer=consumer,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     ).parsed
@@ -189,6 +198,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Response[Any | Error]:
@@ -205,6 +215,7 @@ async def asyncio_detailed(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
 
@@ -219,6 +230,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         slug=slug,
         id=id,
+        consumer=consumer,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     )
@@ -233,6 +245,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Any | Error | None:
@@ -249,6 +262,7 @@ async def asyncio(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
 
@@ -265,6 +279,7 @@ async def asyncio(
             slug=slug,
             client=client,
             id=id,
+            consumer=consumer,
             x_caller=x_caller,
             x_csrf_token=x_csrf_token,
         )

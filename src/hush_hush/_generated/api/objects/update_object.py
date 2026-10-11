@@ -20,6 +20,7 @@ def _get_kwargs(
     *,
     body: UpdateObjectRequest,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> dict[str, Any]:
@@ -36,6 +37,8 @@ def _get_kwargs(
     if not isinstance(id, Unset):
         json_id = str(id)
     params["id"] = json_id
+
+    params["consumer"] = consumer
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -116,6 +119,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Response[Error | ObjectMetadata]:
@@ -139,6 +143,7 @@ def sync_detailed(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -155,6 +160,7 @@ def sync_detailed(
         slug=slug,
         body=body,
         id=id,
+        consumer=consumer,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     )
@@ -172,6 +178,7 @@ def sync(
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Error | ObjectMetadata | None:
@@ -195,6 +202,7 @@ def sync(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -212,6 +220,7 @@ def sync(
         client=client,
         body=body,
         id=id,
+        consumer=consumer,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     ).parsed
@@ -223,6 +232,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Response[Error | ObjectMetadata]:
@@ -246,6 +256,7 @@ async def asyncio_detailed(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -262,6 +273,7 @@ async def asyncio_detailed(
         slug=slug,
         body=body,
         id=id,
+        consumer=consumer,
         x_caller=x_caller,
         x_csrf_token=x_csrf_token,
     )
@@ -277,6 +289,7 @@ async def asyncio(
     client: AuthenticatedClient,
     body: UpdateObjectRequest,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
     x_csrf_token: str | Unset = UNSET,
 ) -> Error | ObjectMetadata | None:
@@ -300,6 +313,7 @@ async def asyncio(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
         x_csrf_token (str | Unset):
         body (UpdateObjectRequest):
@@ -318,6 +332,7 @@ async def asyncio(
             client=client,
             body=body,
             id=id,
+            consumer=consumer,
             x_caller=x_caller,
             x_csrf_token=x_csrf_token,
         )
