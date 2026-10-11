@@ -19,7 +19,9 @@ class AuditActorOption:
 
     Attributes:
         value (str): What to send back as the `actor` query parameter to select this actor.
-        label (str): What to show the user - "admin", "token:<id>", or "none".
+        label (str): What to show the user - "admin", "token:<id>" for a write token,
+            "consumer-token:<id>" for a consumer token, or "none" for an
+            unauthenticated read.
     """
 
     value: str

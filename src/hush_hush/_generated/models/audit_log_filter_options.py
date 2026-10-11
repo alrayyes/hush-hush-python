@@ -20,7 +20,9 @@ class AuditLogFilterOptions:
     """
     Attributes:
         object_ids (list[str]): Every distinct object id currently recorded in the audit log.
-        actors (list[AuditActorOption]): Every distinct actor currently recorded in the audit log.
+        actors (list[AuditActorOption]): Every distinct actor currently recorded in the audit log, one
+            option each. Each `value` is unique, so a client can key a list by
+            it. `none` appears at most once and means an unauthenticated read.
         callers (list[str]): Every distinct caller currently recorded in the audit log.
     """
 
