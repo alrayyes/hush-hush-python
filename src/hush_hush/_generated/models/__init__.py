@@ -28,6 +28,7 @@ from .mcp_body import McpBody
 from .mcp_response_200 import McpResponse200
 from .object_metadata import ObjectMetadata
 from .owner_identity import OwnerIdentity
+from .patch_object_request import PatchObjectRequest
 from .query_audit_log_order import QueryAuditLogOrder
 from .ready import Ready
 from .ready_status import ReadyStatus
@@ -71,6 +72,7 @@ __all__ = (
     "McpResponse200",
     "ObjectMetadata",
     "OwnerIdentity",
+    "PatchObjectRequest",
     "QueryAuditLogOrder",
     "Ready",
     "ReadyStatus",

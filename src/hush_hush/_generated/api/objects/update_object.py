@@ -126,7 +126,7 @@ def sync_detailed(
     well-formed age file, or no recipient in its header, is a 422
     and the stored value is left alone. The
     object's slug and description metadata are always preserved
-    unchanged. used_by is preserved too, unless the request body
+    unchanged; `PATCH` is what edits them. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
     recorded consumers, the same way creating an object sets it. A
     session-authenticated call needs its CSRF token too; a
@@ -182,7 +182,7 @@ def sync(
     well-formed age file, or no recipient in its header, is a 422
     and the stored value is left alone. The
     object's slug and description metadata are always preserved
-    unchanged. used_by is preserved too, unless the request body
+    unchanged; `PATCH` is what edits them. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
     recorded consumers, the same way creating an object sets it. A
     session-authenticated call needs its CSRF token too; a
@@ -233,7 +233,7 @@ async def asyncio_detailed(
     well-formed age file, or no recipient in its header, is a 422
     and the stored value is left alone. The
     object's slug and description metadata are always preserved
-    unchanged. used_by is preserved too, unless the request body
+    unchanged; `PATCH` is what edits them. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
     recorded consumers, the same way creating an object sets it. A
     session-authenticated call needs its CSRF token too; a
@@ -287,7 +287,7 @@ async def asyncio(
     well-formed age file, or no recipient in its header, is a 422
     and the stored value is left alone. The
     object's slug and description metadata are always preserved
-    unchanged. used_by is preserved too, unless the request body
+    unchanged; `PATCH` is what edits them. used_by is preserved too, unless the request body
     includes it - in which case it fully replaces the object's
     recorded consumers, the same way creating an object sets it. A
     session-authenticated call needs its CSRF token too; a
