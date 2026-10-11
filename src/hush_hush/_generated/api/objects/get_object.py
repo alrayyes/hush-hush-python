@@ -18,6 +18,7 @@ def _get_kwargs(
     slug: str,
     *,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
@@ -30,6 +31,8 @@ def _get_kwargs(
     if not isinstance(id, Unset):
         json_id = str(id)
     params["id"] = json_id
+
+    params["consumer"] = consumer
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -100,6 +103,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> Response[Error | File]:
     """Fetch an object's sealed ciphertext
@@ -125,6 +129,7 @@ def sync_detailed(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
 
     Raises:
@@ -138,6 +143,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         slug=slug,
         id=id,
+        consumer=consumer,
         x_caller=x_caller,
     )
 
@@ -153,6 +159,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> Error | File | None:
     """Fetch an object's sealed ciphertext
@@ -178,6 +185,7 @@ def sync(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
 
     Raises:
@@ -192,6 +200,7 @@ def sync(
         slug=slug,
         client=client,
         id=id,
+        consumer=consumer,
         x_caller=x_caller,
     ).parsed
 
@@ -201,6 +210,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> Response[Error | File]:
     """Fetch an object's sealed ciphertext
@@ -226,6 +236,7 @@ async def asyncio_detailed(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
 
     Raises:
@@ -239,6 +250,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         slug=slug,
         id=id,
+        consumer=consumer,
         x_caller=x_caller,
     )
 
@@ -252,6 +264,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     id: UUID | Unset = UNSET,
+    consumer: str | Unset = UNSET,
     x_caller: str | Unset = UNSET,
 ) -> Error | File | None:
     """Fetch an object's sealed ciphertext
@@ -277,6 +290,7 @@ async def asyncio(
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
         id (UUID | Unset):
+        consumer (str | Unset):
         x_caller (str | Unset):
 
     Raises:
@@ -292,6 +306,7 @@ async def asyncio(
             slug=slug,
             client=client,
             id=id,
+            consumer=consumer,
             x_caller=x_caller,
         )
     ).parsed
