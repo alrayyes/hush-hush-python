@@ -130,7 +130,10 @@ def sync_detailed(
 
     Args:
         object_id (str | Unset): A caller-chosen, unique identifier for an object - what every
-            documented request path (URL, CLI, API) addresses it by. The
+            documented request path (URL, CLI, API) addresses it by. Letters of
+            either case, digits, `_` and `-`, starting with a letter or digit;
+            names are case-sensitive, so `Api_Token` and `api_token` are two
+            secrets. Create and rename follow the same rule. The
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
@@ -192,7 +195,10 @@ def sync(
 
     Args:
         object_id (str | Unset): A caller-chosen, unique identifier for an object - what every
-            documented request path (URL, CLI, API) addresses it by. The
+            documented request path (URL, CLI, API) addresses it by. Letters of
+            either case, digits, `_` and `-`, starting with a letter or digit;
+            names are case-sensitive, so `Api_Token` and `api_token` are two
+            secrets. Create and rename follow the same rule. The
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
@@ -249,7 +255,10 @@ async def asyncio_detailed(
 
     Args:
         object_id (str | Unset): A caller-chosen, unique identifier for an object - what every
-            documented request path (URL, CLI, API) addresses it by. The
+            documented request path (URL, CLI, API) addresses it by. Letters of
+            either case, digits, `_` and `-`, starting with a letter or digit;
+            names are case-sensitive, so `Api_Token` and `api_token` are two
+            secrets. Create and rename follow the same rule. The
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
@@ -309,7 +318,10 @@ async def asyncio(
 
     Args:
         object_id (str | Unset): A caller-chosen, unique identifier for an object - what every
-            documented request path (URL, CLI, API) addresses it by. The
+            documented request path (URL, CLI, API) addresses it by. Letters of
+            either case, digits, `_` and `-`, starting with a letter or digit;
+            names are case-sensitive, so `Api_Token` and `api_token` are two
+            secrets. Create and rename follow the same rule. The
             object's internal id is a separate, opaque value never exposed to
             or accepted from a caller (specs/secret-objects/spec.md's
             "Internal id decoupled from user-facing slug" requirement).
