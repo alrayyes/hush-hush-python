@@ -80,8 +80,8 @@ def sync_detailed(
     hush-hush-cli's own operations: inject, get, update, delete, list,
     edit, which changes an object's description, tags or slug without
     its sealed value, used_by, which lists an object's consumers, and
-    list_consumers and add_consumer for the consumer directory
-    (docs/adr/0019-mcp-endpoint.md).
+    list_consumers, add_consumer, update_consumer and delete_consumer
+    for the consumer directory (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
     across every tool - including get and list, which are
@@ -132,8 +132,8 @@ def sync(
     hush-hush-cli's own operations: inject, get, update, delete, list,
     edit, which changes an object's description, tags or slug without
     its sealed value, used_by, which lists an object's consumers, and
-    list_consumers and add_consumer for the consumer directory
-    (docs/adr/0019-mcp-endpoint.md).
+    list_consumers, add_consumer, update_consumer and delete_consumer
+    for the consumer directory (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
     across every tool - including get and list, which are
@@ -179,8 +179,8 @@ async def asyncio_detailed(
     hush-hush-cli's own operations: inject, get, update, delete, list,
     edit, which changes an object's description, tags or slug without
     its sealed value, used_by, which lists an object's consumers, and
-    list_consumers and add_consumer for the consumer directory
-    (docs/adr/0019-mcp-endpoint.md).
+    list_consumers, add_consumer, update_consumer and delete_consumer
+    for the consumer directory (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
     across every tool - including get and list, which are
@@ -229,8 +229,8 @@ async def asyncio(
     hush-hush-cli's own operations: inject, get, update, delete, list,
     edit, which changes an object's description, tags or slug without
     its sealed value, used_by, which lists an object's consumers, and
-    list_consumers and add_consumer for the consumer directory
-    (docs/adr/0019-mcp-endpoint.md).
+    list_consumers, add_consumer, update_consumer and delete_consumer
+    for the consumer directory (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
     across every tool - including get and list, which are
