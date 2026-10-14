@@ -81,7 +81,8 @@ def sync_detailed(
     edit, which changes an object's description, tags or slug without
     its sealed value, used_by, which lists an object's consumers, and
     list_consumers, add_consumer, update_consumer and delete_consumer
-    for the consumer directory (docs/adr/0019-mcp-endpoint.md).
+    for the consumer directory, and audit_log, which queries the audit
+    log (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
     across every tool - including get and list, which are
@@ -133,7 +134,8 @@ def sync(
     edit, which changes an object's description, tags or slug without
     its sealed value, used_by, which lists an object's consumers, and
     list_consumers, add_consumer, update_consumer and delete_consumer
-    for the consumer directory (docs/adr/0019-mcp-endpoint.md).
+    for the consumer directory, and audit_log, which queries the audit
+    log (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
     across every tool - including get and list, which are
@@ -180,7 +182,8 @@ async def asyncio_detailed(
     edit, which changes an object's description, tags or slug without
     its sealed value, used_by, which lists an object's consumers, and
     list_consumers, add_consumer, update_consumer and delete_consumer
-    for the consumer directory (docs/adr/0019-mcp-endpoint.md).
+    for the consumer directory, and audit_log, which queries the audit
+    log (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
     across every tool - including get and list, which are
@@ -230,7 +233,8 @@ async def asyncio(
     edit, which changes an object's description, tags or slug without
     its sealed value, used_by, which lists an object's consumers, and
     list_consumers, add_consumer, update_consumer and delete_consumer
-    for the consumer directory (docs/adr/0019-mcp-endpoint.md).
+    for the consumer directory, and audit_log, which queries the audit
+    log (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
     across every tool - including get and list, which are
