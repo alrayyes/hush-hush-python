@@ -83,7 +83,10 @@ def sync_detailed(
     currently records it - the objects themselves aren't touched
     otherwise, and none are deleted even if this empties their
     `used_by` list. A subsequent `GET /consumers` no longer lists this
-    name. A session-authenticated call needs its CSRF token too; a
+    name. The consumer's read tokens are revoked in the same step, so a
+    token never outlives the consumer it was minted for and can't read
+    again if a consumer of that name is added later. A
+    session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 
     Args:
@@ -122,7 +125,10 @@ def sync(
     currently records it - the objects themselves aren't touched
     otherwise, and none are deleted even if this empties their
     `used_by` list. A subsequent `GET /consumers` no longer lists this
-    name. A session-authenticated call needs its CSRF token too; a
+    name. The consumer's read tokens are revoked in the same step, so a
+    token never outlives the consumer it was minted for and can't read
+    again if a consumer of that name is added later. A
+    session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 
     Args:
@@ -156,7 +162,10 @@ async def asyncio_detailed(
     currently records it - the objects themselves aren't touched
     otherwise, and none are deleted even if this empties their
     `used_by` list. A subsequent `GET /consumers` no longer lists this
-    name. A session-authenticated call needs its CSRF token too; a
+    name. The consumer's read tokens are revoked in the same step, so a
+    token never outlives the consumer it was minted for and can't read
+    again if a consumer of that name is added later. A
+    session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 
     Args:
@@ -193,7 +202,10 @@ async def asyncio(
     currently records it - the objects themselves aren't touched
     otherwise, and none are deleted even if this empties their
     `used_by` list. A subsequent `GET /consumers` no longer lists this
-    name. A session-authenticated call needs its CSRF token too; a
+    name. The consumer's read tokens are revoked in the same step, so a
+    token never outlives the consumer it was minted for and can't read
+    again if a consumer of that name is added later. A
+    session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 
     Args:
