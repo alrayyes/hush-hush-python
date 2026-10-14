@@ -123,6 +123,10 @@ def sync_detailed(
     fields in the same call renames first, then sets the key on the
     resulting name.
 
+    A rename also moves the consumer's read tokens to the new name, so
+    they keep reading the same secrets; when it merges into an existing
+    consumer, tokens of both names read as the merged name.
+
     A session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 
@@ -185,6 +189,10 @@ def sync(
     fields in the same call renames first, then sets the key on the
     resulting name.
 
+    A rename also moves the consumer's read tokens to the new name, so
+    they keep reading the same secrets; when it merges into an existing
+    consumer, tokens of both names read as the merged name.
+
     A session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
 
@@ -241,6 +249,10 @@ async def asyncio_detailed(
     included, is a 400 and nothing in the request is applied. Sending both
     fields in the same call renames first, then sets the key on the
     resulting name.
+
+    A rename also moves the consumer's read tokens to the new name, so
+    they keep reading the same secrets; when it merges into an existing
+    consumer, tokens of both names read as the merged name.
 
     A session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
@@ -301,6 +313,10 @@ async def asyncio(
     included, is a 400 and nothing in the request is applied. Sending both
     fields in the same call renames first, then sets the key on the
     resulting name.
+
+    A rename also moves the consumer's read tokens to the new name, so
+    they keep reading the same secrets; when it merges into an existing
+    consumer, tokens of both names read as the merged name.
 
     A session-authenticated call needs its CSRF token too; a
     bearer-token-authenticated one doesn't.
