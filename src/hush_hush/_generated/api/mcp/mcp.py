@@ -76,15 +76,16 @@ def sync_detailed(
 
      Serves the MCP Streamable HTTP transport - JSON-RPC 2.0 messages
     exchanging tool calls with an MCP-capable client
-    (https://modelcontextprotocol.io). Exposes five tools mirroring
-    hush-hush-cli's own operations one-to-one: inject, get, update,
-    delete, list (docs/adr/0019-mcp-endpoint.md).
+    (https://modelcontextprotocol.io). Exposes tools mirroring
+    hush-hush-cli's own operations: inject, get, update, delete, list,
+    and edit, which changes an object's description, tags or slug
+    without its sealed value (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
-    across all five tools - including get and list, which are
+    across every tool - including get and list, which are
     unauthenticated (get) or write-token-or-session-gated (list) over
     their plain HTTP equivalents. One authenticated MCP session
-    performs all five operations, rather than each tool reproducing
+    performs every operation, rather than each tool reproducing
     its HTTP twin's own auth shape.
 
     The request and response bodies are MCP's own JSON-RPC 2.0
@@ -125,15 +126,16 @@ def sync(
 
      Serves the MCP Streamable HTTP transport - JSON-RPC 2.0 messages
     exchanging tool calls with an MCP-capable client
-    (https://modelcontextprotocol.io). Exposes five tools mirroring
-    hush-hush-cli's own operations one-to-one: inject, get, update,
-    delete, list (docs/adr/0019-mcp-endpoint.md).
+    (https://modelcontextprotocol.io). Exposes tools mirroring
+    hush-hush-cli's own operations: inject, get, update, delete, list,
+    and edit, which changes an object's description, tags or slug
+    without its sealed value (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
-    across all five tools - including get and list, which are
+    across every tool - including get and list, which are
     unauthenticated (get) or write-token-or-session-gated (list) over
     their plain HTTP equivalents. One authenticated MCP session
-    performs all five operations, rather than each tool reproducing
+    performs every operation, rather than each tool reproducing
     its HTTP twin's own auth shape.
 
     The request and response bodies are MCP's own JSON-RPC 2.0
@@ -169,15 +171,16 @@ async def asyncio_detailed(
 
      Serves the MCP Streamable HTTP transport - JSON-RPC 2.0 messages
     exchanging tool calls with an MCP-capable client
-    (https://modelcontextprotocol.io). Exposes five tools mirroring
-    hush-hush-cli's own operations one-to-one: inject, get, update,
-    delete, list (docs/adr/0019-mcp-endpoint.md).
+    (https://modelcontextprotocol.io). Exposes tools mirroring
+    hush-hush-cli's own operations: inject, get, update, delete, list,
+    and edit, which changes an object's description, tags or slug
+    without its sealed value (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
-    across all five tools - including get and list, which are
+    across every tool - including get and list, which are
     unauthenticated (get) or write-token-or-session-gated (list) over
     their plain HTTP equivalents. One authenticated MCP session
-    performs all five operations, rather than each tool reproducing
+    performs every operation, rather than each tool reproducing
     its HTTP twin's own auth shape.
 
     The request and response bodies are MCP's own JSON-RPC 2.0
@@ -216,15 +219,16 @@ async def asyncio(
 
      Serves the MCP Streamable HTTP transport - JSON-RPC 2.0 messages
     exchanging tool calls with an MCP-capable client
-    (https://modelcontextprotocol.io). Exposes five tools mirroring
-    hush-hush-cli's own operations one-to-one: inject, get, update,
-    delete, list (docs/adr/0019-mcp-endpoint.md).
+    (https://modelcontextprotocol.io). Exposes tools mirroring
+    hush-hush-cli's own operations: inject, get, update, delete, list,
+    and edit, which changes an object's description, tags or slug
+    without its sealed value (docs/adr/0019-mcp-endpoint.md).
 
     Gated the same way every other write route is, applied uniformly
-    across all five tools - including get and list, which are
+    across every tool - including get and list, which are
     unauthenticated (get) or write-token-or-session-gated (list) over
     their plain HTTP equivalents. One authenticated MCP session
-    performs all five operations, rather than each tool reproducing
+    performs every operation, rather than each tool reproducing
     its HTTP twin's own auth shape.
 
     The request and response bodies are MCP's own JSON-RPC 2.0
