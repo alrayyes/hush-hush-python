@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.22](https://github.com/alrayyes/hush-hush-python/compare/v4.1.21...v4.1.22) (2026-10-14)
+
+
+### Bug Fixes
+
+* regenerate client from updated hush-hush spec ([#243](https://github.com/alrayyes/hush-hush-python/issues/243)) ([1a5fe8e](https://github.com/alrayyes/hush-hush-python/commit/1a5fe8e89fd925965ded0bbdda9b22d4fd89de61))
+
 ## [4.1.21](https://github.com/alrayyes/hush-hush-python/compare/v4.1.20...v4.1.21) (2026-10-14)
 
 
