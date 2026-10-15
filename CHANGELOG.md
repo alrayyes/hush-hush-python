@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.29](https://github.com/alrayyes/hush-hush-python/compare/v4.1.28...v4.1.29) (2026-10-15)
+
+
+### Bug Fixes
+
+* **ci:** run release-auto-merge when the autorelease label is added ([#259](https://github.com/alrayyes/hush-hush-python/issues/259)) ([ae8595a](https://github.com/alrayyes/hush-hush-python/commit/ae8595a823a0181edcf539040ed7d8928b9cf3e9)), closes [#258](https://github.com/alrayyes/hush-hush-python/issues/258)
+
 ## [4.1.28](https://github.com/alrayyes/hush-hush-python/compare/v4.1.27...v4.1.28) (2026-10-15)
 
 
