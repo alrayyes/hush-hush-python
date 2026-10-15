@@ -41,19 +41,38 @@ jobs:
       - run: uv run ruff check .
       - run: uvx pyproject-fmt@2.29.3 --keep-full-version --check pyproject.toml
 
-  # dependencies.md: pinning stops a version drifting under you, not a
-  # known CVE in the pinned version — run the ecosystem's own audit tool
-  # separately from whatever raises the update pull request.
+  # Fails only on advisories this change adds over its base (rules/dependencies.md).
+  # What is already on main is the scan's to track, in advisory-scan.yml. The check
+  # always reports so it can stay required; its steps run only when a pull request
+  # changes the manifest or lockfile, and always on a push to main.
   pip-audit:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          fetch-depth: 0
+      - id: deps
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [ "$EVENT" != pull_request ] || git diff --name-only "$BASE" HEAD | grep -qE '^(pyproject\.toml|uv\.lock|\.github/workflows/ci\.yml)$'; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.deps.outputs.run == 'true'
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
         with:
           version: ${{ env.UV_VERSION }}
-      - run: uv sync --all-extras
-      - run: uv run pip-audit
+      # Pinned to a main commit of alrayyes/advisory-scan until its first release; re-pin then.
+      - if: steps.deps.outputs.run == 'true'
+        uses: alrayyes/advisory-scan@425418a63e80eb10142fbd2e82127b7ef3a51d68
+        with:
+          mode: gate
+          setup: uv sync --frozen --all-extras
+          command: uv run pip-audit
 
   test:
     runs-on: ubuntu-24.04
