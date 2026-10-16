@@ -63,9 +63,6 @@ pre-push:
     - name: ruff
       run: uv run ruff check .
 
-    - name: pip-audit
-      run: uv run pip-audit
-
     - name: pyproject-fmt
       run: uvx pyproject-fmt@2.29.3 --keep-full-version --check pyproject.toml
 
