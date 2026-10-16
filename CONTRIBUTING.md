@@ -64,6 +64,19 @@ Don't edit anything under it; a spec change belongs in hush-hush, and this
 repo picks it up on the next scheduled regeneration
 (`.github/workflows/codegen.yml`).
 
+## Dependency advisories
+
+Two jobs share the work, both through
+[advisory-scan](https://github.com/alrayyes/advisory-scan). The `pip-audit`
+job in `ci.yml` runs `pip-audit` on the pull request and on its base and fails
+only on advisories the pull request adds, so an advisory published overnight
+doesn't turn unrelated pull requests red. It does its work only when
+`pyproject.toml` or `uv.lock` changes. `advisory-scan.yml` audits `main`
+daily, on every push that changes `pyproject.toml` or `uv.lock`, and on
+demand, and keeps one open issue titled "Dependency advisories" listing what
+it finds. It closes that issue when the audit is clean. There's no ignore
+list: an advisory with no fix stays in that issue until one ships.
+
 ## Commit messages
 
 [Conventional Commits](https://www.conventionalcommits.org/):
