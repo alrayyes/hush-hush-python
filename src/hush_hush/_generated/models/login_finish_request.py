@@ -41,9 +41,7 @@ class LoginFinishRequest:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.login_finish_request_credential import (
-            LoginFinishRequestCredential,  # noqa: PLC0415
-        )
+        from ..models.login_finish_request_credential import LoginFinishRequestCredential  # noqa: PLC0415
 
         d = dict(src_dict)
         credential = LoginFinishRequestCredential.from_dict(d.pop("credential"))
