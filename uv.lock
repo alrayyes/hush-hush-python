@@ -576,7 +576,7 @@ wheels = [
 
 [[package]]
 name = "hush-hush"
-version = "4.1.29"
+version = "4.1.30"
 source = { editable = "." }
 dependencies = [
     { name = "httpx" },

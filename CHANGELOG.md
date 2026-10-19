@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.1.30](https://github.com/alrayyes/hush-hush-python/compare/v4.1.29...v4.1.30) (2026-10-19)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump pact-python ([#272](https://github.com/alrayyes/hush-hush-python/issues/272)) ([d04cd86](https://github.com/alrayyes/hush-hush-python/commit/d04cd8694f4b5cdd9857234d4f9b90544457faa7))
+* **deps-dev:** bump ruff to 0.17.1 and regenerate ([#274](https://github.com/alrayyes/hush-hush-python/issues/274)) ([493132d](https://github.com/alrayyes/hush-hush-python/commit/493132dab62d0393e3f572f296119446e364a6fc)), closes [#273](https://github.com/alrayyes/hush-hush-python/issues/273)
+* **deps-dev:** update uv-build requirement ([#271](https://github.com/alrayyes/hush-hush-python/issues/271)) ([174ac39](https://github.com/alrayyes/hush-hush-python/commit/174ac3901842bcdda0d34b2071e4b22a5bf7be30))
+
 ## [4.1.29](https://github.com/alrayyes/hush-hush-python/compare/v4.1.28...v4.1.29) (2026-10-15)
 
 
