@@ -24,14 +24,14 @@ urls.Repository = "https://github.com/alrayyes/hush-hush-python"
 [dependency-groups]
 dev = [
   "openapi-python-client==0.29.1",
-  "pact-python==4.1.0",
+  "pact-python==4.2.0",
   "pip-audit==2.10.1",
   "pytest==9.1.1",
   "pytest-asyncio==1.4.0",
   "pytest-cov==7.1.0",
-  "ruff==0.17.1",
+  "ruff==0.17.2",
 ]
-docs = [ "mkdocs==1.6.1", "mkdocs-material==9.7.7", "mkdocstrings[python]==1.0.7" ]
+docs = [ "mkdocs==1.6.1", "mkdocs-material==9.7.7", "mkdocstrings[python]==1.0.8" ]
 
 [tool.ruff]
 target-version = "py311"
