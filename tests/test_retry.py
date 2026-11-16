@@ -141,3 +141,17 @@ async def test_async_does_not_retry_400(make_server):
         await client.get_object("obj")
     assert exc_info.value.status_code == 400
     assert attempts["n"] == 1
+
+
+async def test_async_network_error_after_retries_exhausted_raises_transport_error(make_server):
+    attempts = {"n": 0}
+
+    def handler(req):
+        attempts["n"] += 1
+        _drop_connection(req)
+
+    server = make_server(handler)
+    client = AsyncClient(server.base_url, max_retries=1)
+    with pytest.raises(httpx2.TransportError):
+        await client.get_object("obj")
+    assert attempts["n"] == 2
