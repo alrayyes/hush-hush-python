@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.1.31](https://github.com/alrayyes/hush-hush-python/compare/v4.1.30...v4.1.31) (2026-11-16)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump pytest-asyncio from 1.4.1 to 1.4.1.post1 ([#287](https://github.com/alrayyes/hush-hush-python/issues/287)) ([dd14153](https://github.com/alrayyes/hush-hush-python/commit/dd14153144c392b66e5a988299d6b2ae29a1eab4))
+* **deps-dev:** bump ruff ([#286](https://github.com/alrayyes/hush-hush-python/issues/286)) ([1b1d2c2](https://github.com/alrayyes/hush-hush-python/commit/1b1d2c2ed610c4d5c589cad76f3a40210041de87))
+* **deps-dev:** bump the python-dependencies group across 1 directory with 3 updates ([#279](https://github.com/alrayyes/hush-hush-python/issues/279)) ([7cab2a1](https://github.com/alrayyes/hush-hush-python/commit/7cab2a1cba9e69a05a74a02db248c970e959b5c8))
+* **deps-dev:** bump the python-dependencies group across 1 directory with 4 updates ([#284](https://github.com/alrayyes/hush-hush-python/issues/284)) ([2b13003](https://github.com/alrayyes/hush-hush-python/commit/2b13003aafd41e0d1bc7fd846dd89e504f842c9c))
+* **deps-dev:** migrate to httpx2 for openapi-python-client 0.30.0 ([#292](https://github.com/alrayyes/hush-hush-python/issues/292)) ([713ab78](https://github.com/alrayyes/hush-hush-python/commit/713ab78c0f9eaedb7f1f57e72e6f175ca1263226)), closes [#291](https://github.com/alrayyes/hush-hush-python/issues/291)
+* **deps:** bump certifi from 2026.7.22 to 2026.10.19 ([#281](https://github.com/alrayyes/hush-hush-python/issues/281)) ([8a996c3](https://github.com/alrayyes/hush-hush-python/commit/8a996c3d72ceae66721596146ad79f26f62008e2))
+* **deps:** bump filelock from 3.32.5 to 4.2.1 ([#280](https://github.com/alrayyes/hush-hush-python/issues/280)) ([8a8613f](https://github.com/alrayyes/hush-hush-python/commit/8a8613f88e28e6dd20621810037f93f6bb9f68c3))
+
 ## [4.1.30](https://github.com/alrayyes/hush-hush-python/compare/v4.1.29...v4.1.30) (2026-10-19)
 
 
