@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-import httpx
+import httpx2
 
 
 class APIError(Exception):
@@ -23,7 +23,7 @@ class APIError(Exception):
             than ``message``.
     """
 
-    def __init__(self, response: httpx.Response) -> None:
+    def __init__(self, response: httpx2.Response) -> None:
         self.status_code = response.status_code
         self.request_id: str | None = response.headers.get("X-Request-Id")
         self.body: bytes = response.content

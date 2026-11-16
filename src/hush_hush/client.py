@@ -7,7 +7,7 @@ import os
 from datetime import datetime
 from typing import Literal
 
-import httpx
+import httpx2
 
 from ._generated.api.audit_log import query_audit_log as _query_audit_log
 from ._generated.api.health import health as _health
@@ -53,7 +53,7 @@ def _resolve_api_key(api_key: str | None) -> str | None:
     return api_key if api_key is not None else os.environ.get(API_KEY_ENV_VAR)
 
 
-def _raise_for_status(response: httpx.Response, ok_status: int) -> None:
+def _raise_for_status(response: httpx2.Response, ok_status: int) -> None:
     """Raises APIError if response's status isn't the one success status
     this operation documents. hush-hush's read paths only ever document one
     success status each, so this doesn't need to handle a set of them.
@@ -91,18 +91,18 @@ class Client:
         max_retries: int = 3,
     ) -> None:
         resolved_key = _resolve_api_key(api_key)
-        transport = RetryTransport(httpx.HTTPTransport(), max_retries=max_retries)
+        transport = RetryTransport(httpx2.HTTPTransport(), max_retries=max_retries)
         httpx_args = {"transport": transport}
         if resolved_key:
             self._client = _AuthenticatedClient(
                 base_url=base_url,
                 token=resolved_key,
-                timeout=httpx.Timeout(timeout),
+                timeout=httpx2.Timeout(timeout),
                 httpx_args=httpx_args,
             )
         else:
             self._client = _GeneratedClient(
-                base_url=base_url, timeout=httpx.Timeout(timeout), httpx_args=httpx_args
+                base_url=base_url, timeout=httpx2.Timeout(timeout), httpx_args=httpx_args
             )
 
     def health(self) -> Health:
@@ -306,18 +306,18 @@ class AsyncClient:
         max_retries: int = 3,
     ) -> None:
         resolved_key = _resolve_api_key(api_key)
-        transport = AsyncRetryTransport(httpx.AsyncHTTPTransport(), max_retries=max_retries)
+        transport = AsyncRetryTransport(httpx2.AsyncHTTPTransport(), max_retries=max_retries)
         httpx_args = {"transport": transport}
         if resolved_key:
             self._client = _AuthenticatedClient(
                 base_url=base_url,
                 token=resolved_key,
-                timeout=httpx.Timeout(timeout),
+                timeout=httpx2.Timeout(timeout),
                 httpx_args=httpx_args,
             )
         else:
             self._client = _GeneratedClient(
-                base_url=base_url, timeout=httpx.Timeout(timeout), httpx_args=httpx_args
+                base_url=base_url, timeout=httpx2.Timeout(timeout), httpx_args=httpx_args
             )
 
     async def health(self) -> Health:

@@ -12,7 +12,7 @@ import random
 import time
 from datetime import UTC, datetime
 
-import httpx
+import httpx2
 
 DEFAULT_MAX_RETRIES = 3
 
@@ -21,7 +21,7 @@ def _is_retryable_status(status_code: int) -> bool:
     return status_code >= 500 or status_code == 429
 
 
-def _retry_after_seconds(response: httpx.Response) -> float | None:
+def _retry_after_seconds(response: httpx2.Response) -> float | None:
     value = response.headers.get("Retry-After")
     if not value:
         return None
@@ -40,7 +40,7 @@ def _retry_after_seconds(response: httpx.Response) -> float | None:
         return None
 
 
-def _backoff_seconds(attempt: int, response: httpx.Response | None) -> float:
+def _backoff_seconds(attempt: int, response: httpx2.Response | None) -> float:
     if response is not None:
         retry_after = _retry_after_seconds(response)
         if retry_after is not None:
@@ -49,17 +49,17 @@ def _backoff_seconds(attempt: int, response: httpx.Response | None) -> float:
     return base + random.uniform(0, base)
 
 
-class RetryTransport(httpx.BaseTransport):
+class RetryTransport(httpx2.BaseTransport):
     """Wraps a sync transport with hush-hush's retry policy."""
 
     def __init__(
-        self, transport: httpx.BaseTransport, max_retries: int = DEFAULT_MAX_RETRIES
+        self, transport: httpx2.BaseTransport, max_retries: int = DEFAULT_MAX_RETRIES
     ) -> None:
         self._transport = transport
         self._max_retries = max_retries
 
-    def handle_request(self, request: httpx.Request) -> httpx.Response:
-        last_response: httpx.Response | None = None
+    def handle_request(self, request: httpx2.Request) -> httpx2.Response:
+        last_response: httpx2.Response | None = None
         last_error: Exception | None = None
 
         for attempt in range(self._max_retries + 1):
@@ -67,7 +67,7 @@ class RetryTransport(httpx.BaseTransport):
                 time.sleep(_backoff_seconds(attempt, last_response))
             try:
                 response = self._transport.handle_request(request)
-            except httpx.TransportError as exc:
+            except httpx2.TransportError as exc:
                 last_error, last_response = exc, None
                 continue
             if not _is_retryable_status(response.status_code) or attempt == self._max_retries:
@@ -84,19 +84,19 @@ class RetryTransport(httpx.BaseTransport):
         self._transport.close()
 
 
-class AsyncRetryTransport(httpx.AsyncBaseTransport):
+class AsyncRetryTransport(httpx2.AsyncBaseTransport):
     """Wraps an async transport with hush-hush's retry policy."""
 
     def __init__(
-        self, transport: httpx.AsyncBaseTransport, max_retries: int = DEFAULT_MAX_RETRIES
+        self, transport: httpx2.AsyncBaseTransport, max_retries: int = DEFAULT_MAX_RETRIES
     ) -> None:
         self._transport = transport
         self._max_retries = max_retries
 
-    async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+    async def handle_async_request(self, request: httpx2.Request) -> httpx2.Response:
         import asyncio
 
-        last_response: httpx.Response | None = None
+        last_response: httpx2.Response | None = None
         last_error: Exception | None = None
 
         for attempt in range(self._max_retries + 1):
@@ -104,7 +104,7 @@ class AsyncRetryTransport(httpx.AsyncBaseTransport):
                 await asyncio.sleep(_backoff_seconds(attempt, last_response))
             try:
                 response = await self._transport.handle_async_request(request)
-            except httpx.TransportError as exc:
+            except httpx2.TransportError as exc:
                 last_error, last_response = exc, None
                 continue
             if not _is_retryable_status(response.status_code) or attempt == self._max_retries:

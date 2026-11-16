@@ -17,13 +17,13 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
 ]
-dependencies = [ "httpx==0.28.1" ]
+dependencies = [ "httpx2==2.16.2" ]
 urls.Homepage = "https://github.com/alrayyes/hush-hush-python"
 urls.Repository = "https://github.com/alrayyes/hush-hush-python"
 
 [dependency-groups]
 dev = [
-  "openapi-python-client==0.29.1",
+  "openapi-python-client==0.30.0",
   "pact-python==4.2.0",
   "pip-audit==2.10.1",
   "pytest==9.2.0",

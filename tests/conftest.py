@@ -1,6 +1,6 @@
 """A real local HTTP server for tests — the Python analogue of Go's
 httptest.Server. Exercises the client against real sockets rather than
-mocking httpx internals, so retry/timeout/transport behavior is tested
+mocking httpx2 internals, so retry/timeout/transport behavior is tested
 for real.
 """
 
