@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.32](https://github.com/alrayyes/hush-hush-python/compare/v4.1.31...v4.1.32) (2026-11-16)
+
+
+### Bug Fixes
+
+* **deps-dev:** bump the python-dependencies group across 1 directory with 3 updates ([#295](https://github.com/alrayyes/hush-hush-python/issues/295)) ([c2d6d29](https://github.com/alrayyes/hush-hush-python/commit/c2d6d29cbe1dee142ceebe268b2a978790e592fc))
+
 ## [4.1.31](https://github.com/alrayyes/hush-hush-python/compare/v4.1.30...v4.1.31) (2026-11-16)
 
 
