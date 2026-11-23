@@ -29,9 +29,9 @@ dev = [
   "pytest==9.2.0",
   "pytest-asyncio==1.5.0",
   "pytest-cov==7.1.0",
-  "ruff==0.17.5",
+  "ruff==0.17.6",
 ]
-docs = [ "mkdocs==1.6.1", "mkdocs-material==9.8.1", "mkdocstrings[python]==1.0.8" ]
+docs = [ "mkdocs==1.6.1", "mkdocs-material==9.8.2", "mkdocstrings[python]==1.0.8" ]
 
 [tool.ruff]
 target-version = "py311"
